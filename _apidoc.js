@@ -185,13 +185,14 @@
  * @apiName GetInfrastructure
  * @apiGroup Infrastructure
  *
- * @apiQuery {String} name Name of Infrastructure .
- * @apiQuery {String} type Type of Infrastructure. One of possible Lab, Classroom.
- * @apiQuery {String} wing Wing of Infrastructure. One of possible A,B,C.
- * @apiQuery {Number} floor Floor of Infrastructure.
- * @apiQuery {Number} capacity Capacity of Infrastructure.
+ * @apiQuery {String} [name] Name of Infrastructure .
+ * @apiQuery {String} [type] Type of Infrastructure. One of possible Lab, Classroom.
+ * @apiQuery {String} [wing] Wing of Infrastructure. One of possible A,B,C.
+ * @apiQuery {Number} [floor] Floor of Infrastructure.
+ * @apiQuery {Number} [capacity] Capacity of Infrastructure.
  *
  * @apiSuccess {Infrastructure[]} res Array of Filtered Infrastructure Doc .
+ * @apiSuccess {String} infrastructure._id ID of document given by database.
  * @apiSuccess {String} infrastructure.name Name of Infrastructure
  * @apiSuccess {String} infrastructure.type Type of Infrastructure. One of possible Lab, Classroom.
  * @apiSuccess {String} infrastructure.wing Wing of Infrastructure. One of possible A,B,C.
@@ -290,7 +291,7 @@
  * @apiError (Error 500) err Error in updating database
  *
  */
- 
+
 /**
  * @api {get} accreditation/list Get Accreditation List
  * @apiName GetAccreditation
@@ -301,10 +302,10 @@
  * @apiQuery {Date} [dateofAccreditation] Date on which accreditation was issued.
  * @apiQuery {Date} [dateofExpiry] Date till which accreditation is valid.
  *
- * @apiSuccess {accreditation[]} res Array of Filtered accreditation Doc .
- * @apiSuccess {String} accreditation.name Name of accreditation
+ * @apiSuccess {accreditation[]} res Array of Filtered accreditation Doc.
+ * @apiSuccess {String} accreditation._id ID of document given by database.
+ * @apiSuccess {String} accreditation.name Name of accreditation.
  * @apiSuccess {String} accreditation.agencyName Name of agency that issued the accreditation.
  * @apiSuccess {Date} accreditation.dateofAccreditation Date on which accreditation was issued.
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
-
