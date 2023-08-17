@@ -10,19 +10,22 @@ import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
+import { identifyUser } from "#middleware/identifyUser";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
 
+morgan.token("remote-user", (req) => req.user);
+app.use(identifyUser);
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 app.use(morgan(
   ":remote-addr - :remote-user \":method :url HTTP/:http-version\" :status \":referrer\" \":user-agent\"",
   { stream: logger.stream },
 ));
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(currDirName, "public")));
 
 app.use("/", indexRouter);
