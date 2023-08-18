@@ -1,9 +1,9 @@
-import express from "express";
 import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+import express from "express";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import { fileURLToPath } from "url";
 import { logger } from "#util";
 import indexRouter from "#routes/index";
 import usersRouter from "#routes/users";

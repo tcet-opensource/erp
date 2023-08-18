@@ -1,11 +1,11 @@
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
-import { logLevel } from "#constant";
-import crypto from "crypto";
 import "winston-daily-rotate-file";
 import winston from "winston";
 import dotenv from "dotenv";
 import bcrypt from "bcrypt";
+import { logLevel } from "#constant";
 
 const {
   combine, timestamp, align, printf, colorize, json,
