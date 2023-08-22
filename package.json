@@ -24,7 +24,7 @@
     "test:openHandels": "NODE_OPTIONS=--experimental-vm-modules npx jest --detectOpenHandles",
     "testWin": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest",
     "testWin:watch": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --watch",
-    "testWin:openHandels": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --detectOpenHandles",
+    "testWin:openHandles": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --detectOpenHandles",
     "eslint": "eslint ."
   },
   "dependencies": {
