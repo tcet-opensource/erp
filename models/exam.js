@@ -9,4 +9,4 @@ const examSchema = {
   course: { type: connector.Schema.Types.ObjectId, ref: "Course", required: "true" },
 };
 
-const exam = connector.model("exam", examSchema);
+const exam = connector.model("Exam", examSchema);
