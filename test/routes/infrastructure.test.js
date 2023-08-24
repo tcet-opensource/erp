@@ -1,4 +1,4 @@
-import infrastructureController from '../controllers/infrastructure';
+import { addinfrastructure } from '../controllers/infrastructure';
 
 describe('Infrastructure Controller', () => {
   const mockInfrastructure = {
@@ -10,10 +10,12 @@ describe('Infrastructure Controller', () => {
   };
 
   it('should add infrastructure', async () => {
-    const createSpy = jest.spyOn(infrastructureController, 'create');
+    const createSpy = jest.spyOn(addinfrastructure, 'create');
     createSpy.mockResolvedValue(mockInfrastructure);
 
-    const result = await infrastructureController.addInfrastructure(mockInfrastructure);
+    const result = await addinfrastructure.addInfrastructure(
+      mockInfrastructure
+    );
     expect(result).toEqual(mockInfrastructure);
     expect(createSpy).toHaveBeenCalledWith(
       mockInfrastructure.name,
@@ -27,10 +29,10 @@ describe('Infrastructure Controller', () => {
   it('should read infrastructure', async () => {
     const filter = { name: 'Building A' };
     const limit = 5;
-    const readSpy = jest.spyOn(infrastructureController, 'read');
+    const readSpy = jest.spyOn(addinfrastructure, 'read');
     readSpy.mockResolvedValue([mockInfrastructure]);
 
-    const result = await infrastructureController.readInfrastructure(filter, limit);
+    const result = await addinfrastructure.readInfrastructure(filter, limit);
     expect(result).toEqual([mockInfrastructure]);
     expect(readSpy).toHaveBeenCalledWith(filter, limit);
   });
@@ -39,10 +41,13 @@ describe('Infrastructure Controller', () => {
     const filter = { name: 'Building A' };
     const updateData = { capacity: 150 };
     const updatedInfrastructure = { ...mockInfrastructure, capacity: 150 };
-    const updateSpy = jest.spyOn(infrastructureController, 'update');
+    const updateSpy = jest.spyOn(addinfrastructure, 'update');
     updateSpy.mockResolvedValue(updatedInfrastructure);
 
-    const result = await infrastructureController.updateInfrastructure(filter, updateData);
+    const result = await addinfrastructure.updateInfrastructure(
+      filter,
+      updateData
+    );
     expect(result).toEqual(updatedInfrastructure);
     expect(updateSpy).toHaveBeenCalledWith(filter, updateData);
   });
@@ -50,10 +55,10 @@ describe('Infrastructure Controller', () => {
   it('should remove infrastructure', async () => {
     const filter = { name: 'Building A' };
     const removedInfrastructure = { ...mockInfrastructure };
-    const removeSpy = jest.spyOn(infrastructureController, 'remove');
+    const removeSpy = jest.spyOn(addinfrastructure, 'remove');
     removeSpy.mockResolvedValue(removedInfrastructure);
 
-    const result = await infrastructureController.removeInfrastructure(filter);
+    const result = await addinfrastructure.removeInfrastructure(filter);
     expect(result).toEqual(removedInfrastructure);
     expect(removeSpy).toHaveBeenCalledWith(filter);
   });
