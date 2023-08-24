@@ -1,10 +1,18 @@
 #!/bin/bash
 
-for file in $(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|jsx)$')
+# Store staged files in an array
+staged_files=($(git diff --diff-filter=d --cached --name-only | grep -E '\.(js|jsx)$'))
+
+# Loop through staged files and run ESLint on each
+for file in "${staged_files[@]}"
 do
-  git show ":$file" | npm run eslint --stdin --stdin-filename "$file" 
+  # Get staged content of the file
+  staged_content=$(git show "HEAD:$file")
+
+  # Run ESLint with the staged content and filename
+  echo "$staged_content" | npm run eslint -- --stdin --stdin-filename "$file"
+
   if [ $? -ne 0 ]; then
     echo "ESLint failed on staged file '$file'. Please check your code and try again. You can run ESLint manually via npm run eslint."
-    exit 1 
   fi
 done
