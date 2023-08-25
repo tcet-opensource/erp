@@ -13,7 +13,7 @@ const activitySchema = {
       },
     task: [{
         type: connector.Schema.Types.ObjectId,
-        ref: ['Topics' , 'Practical' , 'Tutorial'],
+        ref: ['Topic' , 'Practical' , 'Tutorial'],
         required: true,
       }],
     group: { type: connector.Schema.Types.ObjectId, ref: 'Group', required: true },
