@@ -9,7 +9,7 @@ const activitySchema = {
     type: {
         type: String,
         required: true,
-        enum: ["lecture", "practical", "tutorial"],
+        enum: ["Lecture", "Practical", "Tutorial"],
       },
     task: [{
         type: connector.Schema.Types.ObjectId,
