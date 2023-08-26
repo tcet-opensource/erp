@@ -38,7 +38,6 @@
     "express-validator": "^6.15.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
-    "mongoose-long": "^0.7.0",
     "morgan": "~1.9.1",
     "nodemailer": "^6.9.1",
     "supertest": "^6.3.3",
