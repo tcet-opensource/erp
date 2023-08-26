@@ -15,7 +15,7 @@ const practicalSchema = {
 // eslint-disable-next-line  no-unused-vars
 const Practical = connector.model("Practical", practicalSchema);
 
-//CRUD operations
+//  CRUD operations
 async function remove(filter) {
   const deleteResult = await Practical.deleteMany(filter);
   return deleteResult.acknowledged;

@@ -4,13 +4,13 @@ const topicSchema = {
   title: { type: String, required: true },
 };
 // eslint-disable-next-line  no-unused-vars
-const Topic = connector.model("topic", topicSchema);
+const Topic = connector.model("Topic", topicSchema);
 
-//CURD operations
+//  CURD operations
 async function create(topicData) {
-  const{
-    title
-  }=topicData;
+  const {
+    title,
+  } = topicData;
   const topic = new Topic({
     title,
   });

@@ -8,4 +8,5 @@ const paperSchema = {
   mark: { type: Number, required: true },
 };
 
+// eslint-disable-next-line  no-unused-vars
 const Paper = connector.model("Paper", paperSchema);

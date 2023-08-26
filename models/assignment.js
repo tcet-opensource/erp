@@ -23,7 +23,7 @@ async function read(filter, limit = 1) {
   return assignmentDoc;
 }
 
-async function update(filter, updateObject, options = {multi: true}) {
+async function update(filter, updateObject, options = { multi: true }) {
   const updateResult = await Assignment.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
 }
@@ -39,4 +39,3 @@ export default {
   update,
   remove,
 };
-
