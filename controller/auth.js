@@ -22,7 +22,7 @@ async function login(req, res) {
       res.json({ err: "Incorrect ID password" });
     } else {
       res.status(500);
-      res.json({ err: "Something is wrong on our side. Try again" });
+      res.json({ err: "User doesn't exist" });
     }
   }
 }
