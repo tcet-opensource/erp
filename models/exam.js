@@ -9,4 +9,32 @@ const examSchema = {
   course: { type: connector.Schema.Types.ObjectId, ref: "Course", required: "true" },
 };
 
-const exam = connector.model("Exam", examSchema);
+const Exam = connector.model("Exam", examSchema);
+
+async function create(examData) {
+  const exam = new Exam(examData);
+  const examDoc = await exam.save();
+  return examDoc;
+}
+
+async function read(filter, limit = 1) {
+  const examDoc = await Exam.find(filter).limit(limit);
+  return examDoc;
+}
+
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await Exam.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
+}
+
+async function remove(filter) {
+  const deleteResult = await Exam.deleteMany(filter).exec();
+  return deleteResult.acknowledged;
+}
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+};
