@@ -19,8 +19,8 @@ export async function userExists(uid, email) {
 
 export async function updatePassword(uid, password) {
   const hashedPassword = await hashPassword(password);
-  const user = await User.update({ uid }, { password: hashedPassword });
-  if (user.uid === uid) return user;
+  const updated = await User.update({ uid }, { password: hashedPassword });
+  if (updated) return;
   throw new databaseError.UpdateError("User");
 }
 
@@ -30,7 +30,9 @@ export async function allUsers() {
 }
 
 export async function createUser(name, password, emailId, uid, userType) {
-  const newUser = await User.create(name, password, emailId, uid, userType);
+  const newUser = await User.create({
+    name, password, emailId, uid, userType,
+  });
   if (newUser.uid === uid) {
     return newUser;
   }

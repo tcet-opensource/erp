@@ -22,7 +22,7 @@ async function login(req, res) {
       res.json({ err: "Incorrect ID password" });
     } else {
       res.status(500);
-      res.json({ err: "Something is wrong on our side. Try again" });
+      res.json({ err: "User doesn't exist" });
     }
   }
 }
@@ -51,7 +51,7 @@ async function resetPassword(req, res) {
       await updatePassword(uid, password);
       res.json({ res: "successfully updated password" });
     } catch (error) {
-      logger.log("Error while updating", error);
+      logger.error("Error while updating", error);
       res.status(500);
       if (error.name === "UpdateError") res.json({ err: "Something went wrong while updating password" });
       else res.json({ err: "something went wrong" });

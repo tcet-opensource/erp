@@ -8,11 +8,12 @@ const otpStoreSchema = {
 const OTPStore = connector.model("OTPStore", otpStoreSchema);
 
 async function remove(filter) {
-  const res = await OTPStore.findOneAndDelete(filter);
-  return res;
+  const deleteResult = await OTPStore.deleteMany(filter);
+  return deleteResult.acknowledged;
 }
 
-async function create(uid, otp) {
+async function create(otpData) {
+  const { uid, otp } = otpData;
   const otpStore = new OTPStore({
     uid,
     otp,
@@ -22,13 +23,13 @@ async function create(uid, otp) {
 }
 
 async function read(filter, limit = 1) {
-  const otpData = await OTPStore.find(filter).limit(limit);
-  return otpData;
+  const otpDoc = await OTPStore.find(filter).limit(limit);
+  return otpDoc;
 }
 
-async function update(filter, updateObject) {
-  const otpDoc = await OTPStore.findOneAndUpdate(filter, updateObject, { upsert: true, new: true });
-  return otpDoc;
+async function update(filter, updateObject, options = { upsert: true }) {
+  const updateResult = await OTPStore.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
 }
 
 export default {

@@ -10,11 +10,14 @@ const accreditationSchema = {
 const Accreditation = connector.model("Accreditation", accreditationSchema);
 
 async function remove(filter) {
-  const res = await Accreditation.findOneAndDelete(filter);
-  return res;
+  const deleteResult = await Accreditation.deleteMany(filter);
+  return deleteResult.acknowledged;
 }
 
-async function create(name, agencyName, dateofAccreditation, dateofExpiry) {
+async function create(accreditationData) {
+  const {
+    name, agencyName, dateofAccreditation, dateofExpiry,
+  } = accreditationData;
   const accreditation = new Accreditation({
     name,
     agencyName,
@@ -26,13 +29,13 @@ async function create(name, agencyName, dateofAccreditation, dateofExpiry) {
 }
 
 async function read(filter, limit = 1) {
-  const accreditationData = await Accreditation.find(filter).limit(limit);
-  return accreditationData;
+  const accreditationDoc = await Accreditation.find(filter).limit(limit);
+  return accreditationDoc;
 }
 
-async function update(filter, updateObject) {
-  const accreditation = await Accreditation.findOneAndUpdate(filter, updateObject, { new: true });
-  return accreditation;
+async function update(filter, updateObject, options = { multi: true }) {
+  const deleteResult = await Accreditation.updateMany(filter, { $set: updateObject }, options);
+  return deleteResult.acknowledged;
 }
 
 export default {

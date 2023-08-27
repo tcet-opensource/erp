@@ -1,4 +1,4 @@
-import connector from "./databaseUtil";
+import connector from "#models/databaseUtil";
 
 connector.set("debug", true);
 
@@ -13,52 +13,35 @@ const attendanceSchema = {
 
 const Attendance = connector.model("Attendance", attendanceSchema);
 
-async function create(studentId, courseId) {
-  try {
-    const attendance = new Attendance({
-      student: studentId,
-      course: courseId,
-    });
-    const createAttendance = await attendance.save();
-    return createAttendance;
-  } catch (error) {
-    console.error("Error creating attendance:", error);
-    return null;
-  }
+async function create(attendanceData) {
+  const {
+    student, course, monthlyAttended, monthlyOccured, cumulativeAttended, cumulativeOccured,
+  } = attendanceData;
+  const attendance = new Attendance({
+    student,
+    course,
+    monthlyAttended,
+    monthlyOccured,
+    cumulativeAttended,
+    cumulativeOccured,
+  });
+  const attendanceDoc = await attendance.save();
+  return attendanceDoc;
 }
 
-async function read(attendanceId) {
-  try {
-    const attendance = await Attendance.findById(attendanceId);
-    return attendance;
-  } catch (error) {
-    console.error("error reading attendance", error);
-    return null;
-  }
+async function read(filter, limit = 1) {
+  const attendanceDoc = await Attendance.find(filter).limit(limit);
+  return attendanceDoc;
 }
 
-async function update(attendanceId, updateData) {
-  try {
-    const updatedAttendance = await Attendance.findByIdAndUpdate(
-      attendanceId,
-      updateData,
-      { new: true },
-    );
-    return updatedAttendance;
-  } catch (error) {
-    console.error("error updating attendance:", error);
-    return null;
-  }
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await Attendance.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
 }
 
-async function remove(attendanceId) {
-  try {
-    const deletedAttendance = await Attendance.findByIdAndDelete(attendanceId);
-    return deletedAttendance;
-  } catch (error) {
-    console.error("error removing attendance", error);
-    return null;
-  }
+async function remove(filter) {
+  const deleteResult = await Attendance.deleteMany(filter);
+  return deleteResult.acknowledged;
 }
 export default {
   create, remove, update, read,

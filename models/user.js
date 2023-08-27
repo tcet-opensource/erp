@@ -13,15 +13,18 @@ const userSchema = {
 const User = connector.model("User", userSchema);
 
 async function remove(filter) {
-  const res = await User.findOneAndDelete(filter);
-  return res;
+  const deleteResult = await User.deleteMany(filter);
+  return deleteResult.acknowledged;
 }
 
-async function create(name, pass, emailId, uid, userType) {
-  const password = await hashPassword(pass);
+async function create(userData) {
+  const {
+    name, password, emailId, uid, userType,
+  } = userData;
+  const hashedPassword = await hashPassword(password);
   const user = new User({
     name,
-    password,
+    password: hashedPassword,
     emailId,
     uid,
     userType,
@@ -31,13 +34,13 @@ async function create(name, pass, emailId, uid, userType) {
 }
 
 async function read(filter, limit = 1) {
-  const userData = await User.find(filter).limit(limit);
-  return userData;
+  const userDoc = await User.find(filter).limit(limit);
+  return userDoc;
 }
 
-async function update(filter, updateObject) {
-  const user = await User.findOneAndUpdate(filter, updateObject, { new: true });
-  return user;
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await User.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
 }
 
 export default {
