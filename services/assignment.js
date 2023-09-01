@@ -1,4 +1,4 @@
-import Assignment from "#models/assingment";
+import Assignment from "#models/assignment";
 import databaseError from "#error/database";
 
 export async function createAssignment(no, title, type, marks) {
@@ -8,15 +8,15 @@ export async function createAssignment(no, title, type, marks) {
   if (newAssignment.name === name) {
     return newAssignment;
   }
-  throw new databaseError.DataEntryError("assingment");
+  throw new databaseError.DataEntryError("assignment");
 }
 
-export async function updateAssingmentById(id, data) {
+export async function updateAssignmentById(id, data) {
   const updated = await Assignment.update({ _id: id }, data);
   if (updated) {
     return updated;
   }
-  throw new databaseError.DataEntryError("assingment");
+  throw new databaseError.DataEntryError("assignment");
 }
 
 export async function assignmentList(filter) {
@@ -24,7 +24,7 @@ export async function assignmentList(filter) {
   return assignmentList;
 }
 
-export async function deleteAssingmentById(assignmentId) {
+export async function deleteAssignmentById(assignmentId) {
   const deleted = await Assignment.remove({ _id: assignmentId});
   if (deleted) {
     return deleted;

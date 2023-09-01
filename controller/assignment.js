@@ -1,14 +1,14 @@
 import {
-  createAssingment, deleteAssingmentById, assingmentList, updateAssingmentById,
-} from "#services/assingment";
+  createAssignment, deleteAssignmentById, assignmentList, updateAssignmentById,
+} from "#services/assignment ";
 import { logger } from "#util";
 
-async function addAssingment(req, res) {
+async function addAssignment(req, res) {
   const {
     no, title, type, marks,
   } = req.body;
   try {
-    const newAssignment = await createAssingment(no, title, type, marks);
+    const newAssignment = await createAssignment(no, title, type, marks);
     res.json({ res: `added user ${newAssignment.id}` });
   } catch (error) {
     logger.error("Error while inserting", error);
@@ -17,13 +17,13 @@ async function addAssingment(req, res) {
   }
 }
 
-async function updateAssingment(req, res) {
+async function updateAssignment(req, res) {
   const {
     id, ...data
   } = req.body;
   try {
-    await updateAssingmentById(id, data);
-    res.json({ res: `updated assingment with id ${id}` });
+    await updateAssignmentById(id, data);
+    res.json({ res: `updated assignment with id ${id}` });
   } catch (error) {
     logger.error("Error while updating", error);
     res.status(500);
@@ -31,23 +31,23 @@ async function updateAssingment(req, res) {
   }
 }
 
-async function getAssingment(req, res) {
+async function getAssignment(req, res) {
   const filter = req.query;
-  const assingmentlist = await assingmentList(filter);
+  const assingmentlist = await assignmentList(filter);
   res.json({ res: assingmentlist });
 }
 
-async function deleteAssingment(req, res) {
-  const { assingmentId } = req.params;
+async function deleteAssignment(req, res) {
+  const { assignmentId } = req.params;
   try {
-    await deleteAssingmentById(assingmentId);
+    await deleteAssignmentById(assignmentId);
 
-    res.json({ res: `Deleted assingment with ID ${assingmentId}` });
+    res.json({ res: `Deleted assignment with ID ${assignmentId}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });
   }
 }
 export default {
-  addAssingment, deleteAssingment, getAssingment, updateAssingment,
+  addAssignment, deleteAssignment, getAssignment, updateAssignment,
 };
