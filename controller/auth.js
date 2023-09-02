@@ -28,7 +28,12 @@ async function login(req, res) {
 }
 
 function validateUser(req, res) {
+  if(req.user){
   res.json({ res: req.user, msg: "user validated", err: null });
+}
+else{
+  res.status(401).json({res:null, msg:"unauthorised", err:"User not authorised"})
+}
 }
 
 async function sendOTP(req, res) {
