@@ -9,7 +9,7 @@ jest.mock("#util");
 let server;
 let agent;
 beforeAll((done) => {
-  server = app.listen(5000, () => {
+  server = app.listen(null, () => {
     agent = request.agent(server);
     connector.set("debug", false);
     done();
