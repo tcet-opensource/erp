@@ -8,7 +8,3 @@ export async function getModule(filter) {
   }
   throw new databaseError.DataNotFoundError("Module");
 }
-
-export default {
-  getModule,
-};

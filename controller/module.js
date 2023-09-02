@@ -1,9 +1,9 @@
-import getModules from "#services/module";
+import { getModule } from "#services/module";
 import { logger } from "#util";
 
 async function showModule(req, res) {
   try {
-    const modules = await getModules(req.query);
+    const modules = await getModule(req.query);
     return res.json({ res: modules });
   } catch (error) {
     logger.error("Error while fetching", error);

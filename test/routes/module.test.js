@@ -8,7 +8,7 @@ jest.mock("#util");
 let server;
 let agent;
 beforeAll((done) => {
-  server = app.listen(3000, () => {
+  server = app.listen(null, () => {
     agent = request.agent(server);
     connector.set("debug", false);
     done();
@@ -30,9 +30,9 @@ afterAll((done) => {
 });
 
 describe("checking accreditation functions", () => {
-  it("read accreditation", async () => {
+  it("read module", async () => {
     const response = await agent
-      .get("/accreditation/list")
+      .get("/module/list")
       .send({ name: "xyz" });
     expect(response.status).toBe(200);
   });
