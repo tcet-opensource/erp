@@ -14,7 +14,7 @@ export async function addNewTutorial(no, title, hours, cognitiveLevel,) {
   throw new databaseError.DataEntryError("Add Tutorial");
 }
 
-export async function gettutorials(filter) {
+export async function getTutorials(filter) {
   const tutorials = await Tutorial.read(filter);
   if (tutorials) {
     return tutorials;
@@ -39,5 +39,5 @@ export async function updateTutorialById(id, data) {
 }
 
 export default {
-  deleteTutorialById, addNewTutorial, updateTutorialById,
+  deleteTutorialById, addNewTutorial, updateTutorialById, getTutorials,
 };
