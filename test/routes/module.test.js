@@ -35,5 +35,6 @@ describe("checking accreditation functions", () => {
       .get("/module/list")
       .send({ name: "xyz" });
     expect(response.status).toBe(200);
+    expect(response.body).toBeDefined();
   });
 });
