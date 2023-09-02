@@ -29,11 +29,11 @@ afterAll((done) => {
   cleanUp(done);
 });
 
-describe("checking module functions", () => {
-  it("read module", async () => {
+describe("checking accreditation functions", () => {
+  it("read accreditation", async () => {
     const response = await agent
-      .post("/module/list")
-      .send({ name: "Module123" });
-    expect(response.body.res).not.toBeNull();
+      .get("/accreditation/list")
+      .send({ name: "xyz" });
+    expect(response.status).toBe(200);
   });
 });
