@@ -29,12 +29,12 @@ afterAll((done) => {
   cleanUp(done);
 });
 
-describe("checking accreditation functions", () => {
+describe("checking module functions", () => {
   it("read module", async () => {
     const response = await agent
       .get("/module/list")
       .send({ name: "xyz" });
     expect(response.status).toBe(200);
-    expect(response.body).toBeDefined();
+    expect(response.body.res).toBeDefined();
   });
 });
