@@ -20,7 +20,7 @@ export async function getOrganizations(filter) {
 }
 
 export async function deleteOrganizationById(organizationId) {
-  const deleted = await Organization.remove({ _id: accredationId });
+  const deleted = await Organization.remove({ _id: organizationId });
   if (deleted) {
     return deleted;
   }
