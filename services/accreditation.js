@@ -37,7 +37,3 @@ export async function updateAccreditationById(id, data) {
   }
   throw new databaseError.DataEntryError("Accrediation");
 }
-
-export default {
-  deleteAccreditationById, addNewAccreditation, updateAccreditationById,
-};

@@ -52,7 +52,7 @@ describe("Infrastructure API", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(response.body.res).toMatch(/added user/);
+    expect(response.body.res).toMatch(/added infrastructure/);
   });
 
   describe("after adding infrastructure", () => {
