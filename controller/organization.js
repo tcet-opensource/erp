@@ -1,5 +1,5 @@
 import {
-    addNewOrganization, deleteOrganizationById, updateOrganizationById, getOrganization,
+    addNewOrganization, deleteOrganizationById, updateOrganizationById, getOrganizations,
   } from "#services/organization";
   import { logger } from "#util";
   
@@ -19,8 +19,8 @@ import {
   async function deleteOrganization(req, res) {
     const { organizationId } = req.params;
     try {
-      await deleteOrganizationById(accredationId);
-      res.json({ res: "Orgaization deleted successfully" });
+      await deleteOrganizationById(organizationId);
+      res.json({ res: "Organization deleted successfully" });
     } catch (error) {
       logger.error("Error while deleting", error);
       res.status(500);
@@ -45,7 +45,7 @@ import {
   
   async function showOrganization(req, res) {
     try {
-      const organization = await getOrganization(req.query);
+      const organization = await getOrganizations(req.query);
       return res.json({ res: organization });
     } catch (error) {
       logger.error("Error while fetching", error);

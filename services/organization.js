@@ -19,7 +19,7 @@ export async function getOrganizations(filter) {
   throw new databaseError.DataNotFoundError("Organization");
 }
 
-export async function deleteOrganizationById(accredationId) {
+export async function deleteOrganizationById(organizationId) {
   const deleted = await Organization.remove({ _id: accredationId });
   if (deleted) {
     return deleted;
