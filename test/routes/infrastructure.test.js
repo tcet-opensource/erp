@@ -78,9 +78,10 @@ describe("Infrastructure API", () => {
 
     it("should read infrastructure", async () => {
       const response = await agent
-        .post("/infrastructure/list")
+        .get("/infrastructure/list")
         .send({ name: "Building A" });
-      expect(response.body.res).not.toBeNull();
+      expect(response.status).toBe(200);
+      expect(response.body.res).toBeDefined();
     });
 
     it("should update infrastructure", async () => {

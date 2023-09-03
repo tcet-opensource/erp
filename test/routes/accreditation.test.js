@@ -60,9 +60,10 @@ describe("checking accreditation functions", () => {
 
   it("read accreditation", async () => {
     const response = await agent
-      .post("/accreditation/list")
+      .get("/accreditation/list")
       .send({ name: "xyz" });
-    expect(response.body.res).not.toBeNull();
+    expect(response.status).toBe(200);
+    expect(response.body.res).toBeDefined();
   });
 
   it("update accreditation", async () => {
