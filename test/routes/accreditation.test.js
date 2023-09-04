@@ -9,7 +9,7 @@ jest.mock("#util");
 let server;
 let agent;
 beforeAll((done) => {
-  server = app.listen(5000, () => {
+  server = app.listen(null, () => {
     agent = request.agent(server);
     connector.set("debug", false);
     done();
@@ -60,9 +60,10 @@ describe("checking accreditation functions", () => {
 
   it("read accreditation", async () => {
     const response = await agent
-      .post("/accreditation/list")
+      .get("/accreditation/list")
       .send({ name: "xyz" });
-    expect(response.body.res).not.toBeNull();
+    expect(response.status).toBe(200);
+    expect(response.body.res).toBeDefined();
   });
 
   it("update accreditation", async () => {
