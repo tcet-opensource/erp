@@ -17,7 +17,7 @@ import {
     }
   }
   
-  async function updateStudentById(req, res) {
+  async function updateStudent(req, res) {
     const {
       id, ...data
     } = req.body;
@@ -31,13 +31,13 @@ import {
     }
   }
   
-  async function StudentList(req, res) {
+  async function getStudent(req, res) {
     const filter = req.query;
-    const StudentList = await StudentList(filter);
+    const StudList = await StudentList(filter);
     res.json({ res: StudentList });
   }
   
-  async function deleteStudentById(req, res) {
+  async function deleteStudent(req, res) {
     const { StudentId } = req.params;
     try {
       await deleteStudentById(StudentId);
@@ -49,6 +49,6 @@ import {
     }
   }
   export default {
-    addStudent, deleteStudentById, StudentList, updateStudentById,
+    addStudent, deleteStudent, getStudent, updateStudent,
   };
   
