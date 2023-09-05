@@ -20,8 +20,8 @@ export async function updateStudentById(id, data) {
 }
 
 export async function studentList(filter) {
-  const studentlist = await Student.read(filter, 0);
-  return studentlist;
+  const studlist = await Student.read(filter, 0);
+  return studlist;
 }
 
 export async function deleteStudentById(StudentId) {

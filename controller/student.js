@@ -34,7 +34,7 @@ import {
   async function getStudent(req, res) {
     const filter = req.query;
     const StudList = await StudentList(filter);
-    res.json({ res: StudentList });
+    res.json({ res: StudList });
   }
   
   async function deleteStudent(req, res) {
