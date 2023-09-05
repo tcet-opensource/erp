@@ -3,7 +3,7 @@ import {
   } from "#services/student";
   import { logger } from "#util";
   
-  async function createStudent(req, res) {
+  async function addStudent(req, res) {
     const {
       ERPID, name, joiningYear,  branch, division, rollNo, coursesOpted
     } = req.body;
@@ -49,6 +49,6 @@ import {
     }
   }
   export default {
-    createStudent, deleteStudentById, StudentList, updateStudentById,
+    addStudent, deleteStudentById, StudentList, updateStudentById,
   };
   
