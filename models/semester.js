@@ -1,16 +1,15 @@
 import connector from "#models/databaseUtil";
-
 const semesterSchema = {
-  number:{intenum: ["1", "2" , "3" , "4" , "5","6","7","8"],required:true},
+  number:int , {enum: ["1", "2" , "3" , "4" , "5","6","7","8"], required:true},
   academicYear: {
     type: String,
     required: true,
     validate: {
-      validator: (value) => /^2\d{3}$/.test(value),
+      validator: (value) => /^20\d{2}$/.test(value),
       message: (props) => `${props.value} is not a valid year format starting with "2"!`,
     },
   },
-  type:{ virtualenum: ["ODD", "EVEN"], required: true },
+  type:{ enum: ["ODD", "EVEN"], required: true },
 
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
@@ -22,10 +21,12 @@ const semester = connector.model("semester", semesterSchema);
 //  CURD operations
 async function create(semesterData) {
     const {
-      title,
+      number,
+      academicYear,
     } = semesterData;
     const semester = new semester({
-      title,
+      number,
+      academicyear,
     });
     const semesterDoc = await semester.save();
     return semesterDoc;
