@@ -1,5 +1,5 @@
 import {
-    createStudent, deleteStudentById, StudentList, updateStudentById,
+    createStudent, deleteStudentById, studentList, updateStudentById,
   } from "#services/student";
   import { logger } from "#util";
   
