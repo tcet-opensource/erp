@@ -21,7 +21,7 @@ const timetableSchema = {
   lunchbreakStartTime: { type: String, required: true },
   lunchbreakDuration: { type: Number, required: true },
   teabreakStartTime: { type: String, required: true },
-  teabreakDuratoin: { type: Number, required: true },
+  teabreakDuration: { type: Number, required: true },
 };
 
 const Timetable = connector.model("Timetable", timetableSchema);
@@ -33,7 +33,7 @@ async function remove(filter) {
 
 async function create(timetableData) {
   const {
-    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuratoin,
+    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuration,
   } = timetableData;
   const timetable = new Timetable({
     startDate,
@@ -44,7 +44,7 @@ async function create(timetableData) {
     lunchbreakStartTime,
     lunchbreakDuration,
     teabreakStartTime,
-    teabreakDuratoin,
+    teabreakDuration,
   });
   const timetableDoc = await timetable.save();
   return timetableDoc;
@@ -56,7 +56,7 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Module.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Timetable.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
 }
 

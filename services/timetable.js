@@ -10,7 +10,7 @@ export async function createTimetable(
   lunchbreakStartTime,
   lunchbreakDuration, 
   teabreakStartTime, 
-  teabreakDuratoin,
+  teabreakDuration,
 ) {
   const newTimetable = await Timetable.create({
     startDate, 
@@ -21,7 +21,7 @@ export async function createTimetable(
     lunchbreakStartTime, 
     lunchbreakDuration, 
     teabreakStartTime, 
-    teabreakDuratoin,
+    teabreakDuration,
   });
   if (newTimetable) {
     return newTimetable;
@@ -34,7 +34,7 @@ export async function updateTimetableById(id, data) {
   if (updated) {
     return updated;
   }
-  throw new databaseError.DataEntryError("Timetable");
+  throw new databaseError.DataEntryError("timetable");
 }
 
 export async function timetableList(filter) {

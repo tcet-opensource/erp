@@ -5,7 +5,7 @@ import { logger } from "#util";
 
 async function addTimetable(req, res) {
   const {
-    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuratoin,
+    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuration,
   } = req.body;
   try {
     const newTimetable = await createTimetable(
@@ -17,7 +17,7 @@ async function addTimetable(req, res) {
       lunchbreakStartTime, 
       lunchbreakDuration, 
       teabreakStartTime, 
-      teabreakDuratoin,
+      teabreakDuration,
     );
     res.json({ res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}` });
   } catch (error) {
@@ -33,11 +33,11 @@ async function updateTimetable(req, res) {
   } = req.body;
   try {
     await updateTimetableById(id, data);
-    res.json({ res: `updated timetable with id ${id}` });
+    res.json({ res: `timetable updated` });
   } catch (error) {
     logger.error("Error while updating", error);
     res.status(500);
-    res.json({ err: "Error while updaing in DB" });
+    res.json({ err: "Error while updating in DB" });
   }
 }
 
