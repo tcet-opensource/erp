@@ -10,7 +10,7 @@ import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
-import practicalRouter from "#models/practical";
+import practicalRouter from "#routes/practical";
 import { identifyUser } from "#middleware/identifyUser";
 
 
