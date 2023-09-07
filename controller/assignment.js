@@ -1,6 +1,6 @@
 import {
   createAssignment, deleteAssignmentById, assignmentList, updateAssignmentById,
-} from "#services/assignment ";
+} from "#services/assignment";
 import { logger } from "#util";
 
 async function addAssignment(req, res) {
