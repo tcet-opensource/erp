@@ -36,5 +36,5 @@ export async function updateOrganizationById(id, data) {
 }
 
 export default {
-  deleteOrganizationById, addNewOrganization, updateOrganizationById,
+  deleteOrganizationById, addNewOrganization, updateOrganizationById,getOrganizations,
 };
