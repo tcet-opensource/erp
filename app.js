@@ -10,7 +10,7 @@ import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
-import tutorialRouter from "#models/tutorial";
+import tutorialRouter from "#routes/tutorial";
 import { identifyUser } from "#middleware/identifyUser";
 
 const app = express();
