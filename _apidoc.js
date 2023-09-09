@@ -363,7 +363,7 @@
  * @apiGroup Coursework
  * @apiDescription Update existing coursework data.
  *
- * @apiBody {String} id ID of the timetable to be updated.
+ * @apiBody {String} id ID of the Coursework to be updated.
  * @apiBody {ObjectId} student ID of the student (ObjectId).
  * @apiBody {String} Coursework type that is either onCampus or offCampus.
  * @apiBody {ObjectId} course ID of the Course in Coursework (ObjectId).
