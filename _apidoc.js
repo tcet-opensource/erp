@@ -311,6 +311,94 @@
  */
 
 // ------------------------------------------------------------------------------------------
+// Coursework.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /coursework/add Add Coursework
+ * @apiName AddCoursework
+ * @apiGroup Coursework
+ * @apiDescription Add a new coursework entry.
+ *
+ * @apiBody {ObjectId} student ID of the student (ObjectId).
+ * @apiBody {String} Coursework type that is either onCampus or offCampus.
+ * @apiBody {ObjectId} course ID of the Course in Coursework (ObjectId).
+ * @apiBody {ObjectId} task ID of the task in Coursework (ObjectId).
+ * @apiBody {String} objectID either its practicals or tutorial or assignment .
+ * @apiBody {ObjectId} activity Id of the activity in Coursework.
+ * @apiBody {Number} Marks in the Coursework.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added coursework"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /coursework/delete/:courseworkId Delete Coursework
+ * @apiName DeleteCoursework
+ * @apiGroup Coursework
+ *
+ * @apiParam {String} courseworkId The ID of the Coursework document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /coursework/update Update Coursework
+ * @apiName UpdateCoursework
+ * @apiGroup Coursework
+ * @apiDescription Update existing coursework data.
+ *
+ * @apiBody {String} id ID of the Coursework to be updated.
+ * @apiBody {ObjectId} student ID of the student (ObjectId).
+ * @apiBody {String} Coursework type that is either onCampus or offCampus.
+ * @apiBody {ObjectId} course ID of the Course in Coursework (ObjectId).
+ * @apiBody {ObjectId} task ID of the task in Coursework (ObjectId).
+ * @apiBody {String} objectID either its practicals or tutorial or assignment .
+ * @apiBody {ObjectId} activity Id of the activity in Coursework.
+ * @apiBody {Number} Marks in the Coursework.
+ *
+ * @apiSuccess {String} res Coursework updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
+/**
+ * @api {get} /coursework/list Get Coursework List
+ * @apiName GetCourseworkList
+ * @apiGroup Coursework
+ *
+ * @apiQuery {ObjectId} student ID of the student (ObjectId).
+ * @apiQuery {String} Coursework type that is either onCampus or offCampus.
+ * @apiQuery {ObjectId} course ID of the Course in Coursework (ObjectId).
+ * @apiQuery {ObjectId} task ID of the task in Coursework (ObjectId).
+ * @apiQuery {String} objectID either its practicals or tutorial or assignment .
+ * @apiQuery {ObjectId} activity Id of the activity in Coursework.
+ * @apiQuery {Number} Marks in the Coursework.
+ *
+ * @apiSuccess {Coursework[]} res Array of filtered coursework documents.
+ * @apiSuccess {String} coursework._id ID of the coursework document given by the database.
+ * @apiSuccess {ObjectId} coursework.student ID of the student (ObjectId).
+ * @apiSuccess {String} coursework.type Coursework type that is either onCampus or offCampus.
+ * @apiSuccess {ObjectId} coursework.course ID of the Course in Coursework (ObjectId).
+ * @apiSuccess {ObjectId} coursework.task ID of the task in Coursework (ObjectId).
+ * @apiSuccess {String} coursework.objectID objectID either Practicals or Tutorial or Assignment .
+ * @apiSuccess {ObjectId} coursework.activity Id of the activity in Coursework.
+ * @apiSuccess {Number} coursework.marks Marks in the Coursework.
+ */
+=======
 // Module.
 // ------------------------------------------------------------------------------------------
 
@@ -335,4 +423,3 @@
  * @apiSuccess {Number} module.hrsPerModule Number of hours required per module.
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of attainment as per Bloom's Taxanomy (L1-L6).
  */
-
