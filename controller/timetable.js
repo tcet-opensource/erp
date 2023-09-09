@@ -51,7 +51,7 @@ async function deleteTimetable(req, res) {
   const { timetableId } = req.params;
   try {
     await deleteTimetableById(timetableId);
-    res.json({ res: `Deleted timetable with ID ${infrastructureId}` });
+    res.json({ res: `Deleted timetable with ID ${timetableId}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });
