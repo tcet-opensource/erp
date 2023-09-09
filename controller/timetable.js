@@ -5,18 +5,26 @@ import { logger } from "#util";
 
 async function addTimetable(req, res) {
   const {
-    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuration,
+    startDate,
+    endDate,
+    classIncharge,
+    group,
+    activityBlueprints,
+    lunchbreakStartTime,
+    lunchbreakDuration,
+    teabreakStartTime,
+    teabreakDuration,
   } = req.body;
   try {
     const newTimetable = await createTimetable(
-      startDate, 
-      endDate, 
-      classIncharge, 
-      group, 
-      activityBlueprints, 
-      lunchbreakStartTime, 
-      lunchbreakDuration, 
-      teabreakStartTime, 
+      startDate,
+      endDate,
+      classIncharge,
+      group,
+      activityBlueprints,
+      lunchbreakStartTime,
+      lunchbreakDuration,
+      teabreakStartTime,
       teabreakDuration,
     );
     res.json({ res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}` });
@@ -33,7 +41,7 @@ async function updateTimetable(req, res) {
   } = req.body;
   try {
     await updateTimetableById(id, data);
-    res.json({ res: `timetable updated` });
+    res.json({ res: "timetable updated" });
   } catch (error) {
     logger.error("Error while updating", error);
     res.status(500);

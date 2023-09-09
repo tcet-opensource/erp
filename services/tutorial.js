@@ -1,14 +1,14 @@
 import Tutorial from "#models/tutorial";
 import databaseError from "#error/database";
 
-export async function addNewTutorial(no, title, hours, cognitiveLevel,) {
+export async function addNewTutorial(no, title, hours, cognitiveLevel) {
   const newTutorial = await Tutorial.create({
     no,
     title,
     hours,
     cognitiveLevel,
   });
-  if (newTutorial.name === name) {
+  if (newTutorial.title === title) {
     return newTutorial;
   }
   throw new databaseError.DataEntryError("Add Tutorial");

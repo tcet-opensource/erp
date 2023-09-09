@@ -1,5 +1,5 @@
 import request from "supertest";
-import { jest } from "@jest/globals";
+import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import app from "#app";
 import timetableModel from "#models/timetable";
 import connector from "#models/databaseUtil";
@@ -80,10 +80,9 @@ describe("checking timetable functions", () => {
   it("update timetable", async () => {
     const response = await agent
       .post("/timetable/update")
-      .send({startDate: "2023-07-18T14:11:30Z" });
+      .send({ startDate: "2023-07-18T14:11:30Z" });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/timetable updated/);
   });
 });
-

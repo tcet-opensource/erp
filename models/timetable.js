@@ -3,8 +3,8 @@ import connector from "#models/databaseUtil";
 const timetableSchema = {
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
-  classIncharge: { 
-    type: connector.Schema.Types.ObjectId, 
+  classIncharge: {
+    type: connector.Schema.Types.ObjectId,
     ref: "Faculty",
     required: true,
   },
@@ -33,7 +33,15 @@ async function remove(filter) {
 
 async function create(timetableData) {
   const {
-    startDate, endDate, classIncharge, group, activityBlueprints, lunchbreakStartTime, lunchbreakDuration, teabreakStartTime, teabreakDuration,
+    startDate,
+    endDate,
+    classIncharge,
+    group,
+    activityBlueprints,
+    lunchbreakStartTime,
+    lunchbreakDuration,
+    teabreakStartTime,
+    teabreakDuration,
   } = timetableData;
   const timetable = new Timetable({
     startDate,

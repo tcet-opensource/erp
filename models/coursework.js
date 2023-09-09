@@ -19,7 +19,7 @@ async function remove(filter) {
 
 async function create(courseworkData) {
   const {
-    student, type, course, task, objectID, activity, marks,\
+    student, type, course, task, objectID, activity, marks,
   } = courseworkData;
   const coursework = new Coursework({
     student,
@@ -42,10 +42,6 @@ async function read(filter, limit = 1) {
 async function update(filter, updateObject, options = { multi: true }) {
   const updateResult = await Coursework.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
-}
-async function remove(filter) {
-  const deleteResult = await Coursework.deleteMany(filter).exec();
-  return deleteResult.acknowledged;
 }
 
 export default {

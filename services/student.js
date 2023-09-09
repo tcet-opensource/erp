@@ -1,9 +1,17 @@
 import Student from "#models/student";
 import databaseError from "#error/database";
 
-export async function createStudent(ERPID, name, joiningYear,  branch, division, rollNo, coursesOpted ) {
+export async function createStudent(
+  ERPID,
+  name,
+  joiningYear,
+  branch,
+  division,
+  rollNo,
+  coursesOpted,
+) {
   const newStudent = await Student.create({
-    ERPID, name, joiningYear,  branch, division, rollNo, coursesOpted
+    ERPID, name, joiningYear, branch, division, rollNo, coursesOpted,
   });
   if (newStudent.name === name) {
     return newStudent;
