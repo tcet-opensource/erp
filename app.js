@@ -13,6 +13,7 @@ import infrastructureRouter from "#routes/infrastructure";
 import courseworkRouter from "#routes/coursework";
 import moduleRouter from "#routes/module";
 import { identifyUser } from "#middleware/identifyUser";
+import departmentRouter from "#routes/department";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -35,6 +36,7 @@ app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/accreditation", accreditationRouter);
 app.use("/infrastructure", infrastructureRouter);
+app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
 
