@@ -8,3 +8,13 @@ export async function getModule(filter) {
   }
   throw new databaseError.DataNotFoundError("Module");
 }
+
+export async function addNewModule(no, name, outcome, contents, hrsPerModule, cognitiveLevels) {
+  const newModule = await Module.create({
+    no, name, outcome, contents, hrsPerModule, cognitiveLevels,
+  });
+  if (newModule.name === name) {
+    return newModule;
+  }
+  throw new databaseError.DataEntryError("Add Module");
+}

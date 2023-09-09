@@ -5,7 +5,7 @@ export async function createAssignment(no, title, type, marks) {
   const newAssignment = await Assignment.create({
     no, title, type, marks,
   });
-  if (newAssignment.name === name) {
+  if (newAssignment.title === title) {
     return newAssignment;
   }
   throw new databaseError.DataEntryError("assignment");
@@ -21,11 +21,11 @@ export async function updateAssignmentById(id, data) {
 
 export async function assignmentList(filter) {
   const assignmentlist = await Assignment.read(filter, 0);
-  return assignmentList;
+  return assignmentlist;
 }
 
 export async function deleteAssignmentById(assignmentId) {
-  const deleted = await Assignment.remove({ _id: assignmentId});
+  const deleted = await Assignment.remove({ _id: assignmentId });
   if (deleted) {
     return deleted;
   }

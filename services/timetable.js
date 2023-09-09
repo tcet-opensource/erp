@@ -2,25 +2,25 @@ import Timetable from "#models/timetable";
 import databaseError from "#error/database";
 
 export async function createTimetable(
-  startDate, 
-  endDate, 
-  classIncharge, 
-  group, 
+  startDate,
+  endDate,
+  classIncharge,
+  group,
   activityBlueprints,
   lunchbreakStartTime,
-  lunchbreakDuration, 
-  teabreakStartTime, 
+  lunchbreakDuration,
+  teabreakStartTime,
   teabreakDuration,
 ) {
   const newTimetable = await Timetable.create({
-    startDate, 
-    endDate, 
-    classIncharge, 
-    group, 
-    activityBlueprints, 
-    lunchbreakStartTime, 
-    lunchbreakDuration, 
-    teabreakStartTime, 
+    startDate,
+    endDate,
+    classIncharge,
+    group,
+    activityBlueprints,
+    lunchbreakStartTime,
+    lunchbreakDuration,
+    teabreakStartTime,
     teabreakDuration,
   });
   if (newTimetable) {
@@ -49,4 +49,3 @@ export async function deleteTimetableById(timetableId) {
   }
   throw new databaseError.DataDeleteError("timetable");
 }
-

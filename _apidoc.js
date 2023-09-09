@@ -320,9 +320,8 @@
  *
  * @apiBody {Number} no The number of tutorial.
  * @apiBody {String} title The title of tutorial.
- * @apiBody {Number} hours The hours required for tutorial .
- * @apiBody {String} cognitiveLevel The cognitiveLvel of tutorial.
- 
+ * @apiBody {Number} hours The hours required for tutorial.
+ * @apiBody {String} cognitiveLevel The cognitiveLevel of tutorial.
  *
  * @apiSuccess {String} res Success message with the ID of the added tutorial.
  *
@@ -340,7 +339,6 @@
  * @apiQuery {String} [title] Title of Tutorial.
  * @apiQuery {Number} [hours] Hours required for Tutorial
  * @apiQuery {String} [cognitiveLevel] Level of Tutorial.
- 
  *
  * @apiSuccess {Tutorial[]} res Array of Filtered Tutorial Doc .
  * @apiSuccess {String} tutorial._id ID of document given by database.
@@ -401,7 +399,7 @@
  * @apiBody {Number} teaBreakDuration Duration of the tea break (in minutes).
  *
  * @apiSuccess {String} res Response message.
- * @apiError (Error 500) DatabaseError Error message if there was an error inserting into the database.
+ * @apiError (Error 500) DatabaseError Error if there was an error inserting into the database.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -490,9 +488,9 @@
  * @apiSuccess {String} res updated infrastructure with id.
  * @apiError (Error 500) err Error while inserting in DB
  */
- 
-//
-// Coursework.
+
+// ------------------------------------------------------------------------------------------
+// Coursework
 // ------------------------------------------------------------------------------------------
 
 /**
@@ -567,7 +565,8 @@
  * @apiBody {Number} [teaBreakDuration] Duration of tea break (in minutes).
  *
  * @apiSuccess {String} res Timetable updated.
- 
+ */
+
 /**
  * @api {post} /coursework/update Update Coursework
  * @apiName UpdateCoursework
@@ -613,7 +612,8 @@
  * @apiSuccess {Number} timetable.lunchBreakDuration Duration of the lunch break (in minutes).
  * @apiSuccess {String} timetable.teaBreakStartTime Start time of the tea break.
  * @apiSuccess {Number} timetable.teaBreakDuration Duration of the tea break (in minutes).
- 
+ */
+
 /**
  * @api {get} /coursework/list Get Coursework List
  * @apiName GetCourseworkList
@@ -652,7 +652,8 @@
  * @apiQuery {String} [outcome] Module outcome.
  * @apiQuery {String[]} [contents] Array of contents of the module.
  * @apiQuery {Number} [hrsPerModule] Number of hours required per module.
- * @apiQuery {String[]} [cognitiveLevels] Array of cognitive levels of attainment as per Bloom's Taxanomy (L1-L6).
+ * @apiQuery {String[]} [cognitiveLevels] Array of cognitive levels
+ * of attainment as per Bloom's Taxanomy (L1-L6).
  *
  * @apiSuccess {module[]} res Array of Filtered module Doc.
  * @apiSuccess {String} module._id ID of document given by database.
@@ -661,5 +662,6 @@
  * @apiSuccess {String} module.outcome Module outcome.
  * @apiSuccess {String[]} module.contents Array of contents of the module.
  * @apiSuccess {Number} module.hrsPerModule Number of hours required per module.
- * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of attainment as per Bloom's Taxanomy (L1-L6).
+ * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
+ * attainment as per Bloom's Taxanomy (L1-L6).
  */
