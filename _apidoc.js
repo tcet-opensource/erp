@@ -311,6 +311,42 @@
  */
 
 // ------------------------------------------------------------------------------------------
+// Timetable.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /timetable/add Add Timetable
+ * @apiName AddTimetable
+ * @apiGroup Timetable
+ * @apiDescription Add a new timetable entry.
+ *
+ * @apiBody {Date} startDate Start date of the timetable.
+ * @apiBody {Date} endDate End date of the timetable.
+ * @apiBody {ObjectId} classIncharge ID of the faculty in charge (ObjectId).
+ * @apiBody {ObjectId} group ID of the group (ObjectId).
+ * @apiBody {ObjectId} activityBlueprints ID of the activity blueprint (ObjectId).
+ * @apiBody {String} lunchBreakStartTime Start time of the lunch break.
+ * @apiBody {Number} lunchBreakDuration Duration of the lunch break (in minutes).
+ * @apiBody {String} teaBreakStartTime Start time of the tea break.
+ * @apiBody {Number} teaBreakDuration Duration of the tea break (in minutes).
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Error message if there was an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added timetable for <startDate> - <endDate>"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+// ------------------------------------------------------------------------------------------
 // Department.
 // ------------------------------------------------------------------------------------------
 
@@ -420,6 +456,18 @@
  */
 
 /**
+ * @api {delete} /timetable/delete/:timetableId Delete Timetable
+ * @apiName DeleteTimetable
+ * @apiGroup Timetable
+ *
+ * @apiParam {String} timetableId The ID of the timetable document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
  * @api {delete} /coursework/delete/:courseworkId Delete Coursework
  * @apiName DeleteCoursework
  * @apiGroup Coursework
@@ -431,6 +479,25 @@
  * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
  */
 
+/**
+ * @api {post} /timetable/update Update Timetable
+ * @apiName UpdateTimetable
+ * @apiGroup Timetable
+ * @apiDescription Update existing timetable data.
+ *
+ * @apiBody {String} id ID of the timetable to be updated.
+ * @apiBody {Date} [startDate] Start date of the timetable.
+ * @apiBody {Date} [endDate] End date of the timetable.
+ * @apiBody {ObjectId} [classIncharge] ID of the faculty in charge (ObjectId).
+ * @apiBody {ObjectId} [group] ID of the group (ObjectId).
+ * @apiBody {ObjectId} [activityBlueprints] ID of activity blueprint (ObjectId).
+ * @apiBody {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiBody {Number} [lunchBreakDuration] Duration of lunch break (in minutes).
+ * @apiBody {String} [teaBreakStartTime] Start time of tea break.
+ * @apiBody {Number} [teaBreakDuration] Duration of tea break (in minutes).
+ *
+ * @apiSuccess {String} res Timetable updated.
+ 
 /**
  * @api {post} /coursework/update Update Coursework
  * @apiName UpdateCoursework
@@ -450,6 +517,33 @@
  * @apiError (Error 500) DatabaseError Error in updating the database.
  */
 
+/**
+ * @api {get} /timetable/list Get Timetable List
+ * @apiName GetTimetableList
+ * @apiGroup Timetable
+ *
+ * @apiQuery {Date} [startDate] Start date of the timetable.
+ * @apiQuery {Date} [endDate] End date of the timetable.
+ * @apiQuery {ObjectId} [classIncharge] ID of the faculty in charge (ObjectId).
+ * @apiQuery {ObjectId} [group] ID of the group (ObjectId).
+ * @apiQuery {ObjectId} [activityBlueprints] ID of the activity blueprint (ObjectId).
+ * @apiQuery {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiQuery {Number} [lunchBreakDuration] Duration of the lunch break (in minutes).
+ * @apiQuery {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiQuery {Number} [lunchBreakDuration] Duration of the lunch break (in minutes).
+ *
+ * @apiSuccess {Timetable[]} res Array of filtered timetable documents.
+ * @apiSuccess {String} timetable._id ID of the timetable document given by the database.
+ * @apiSuccess {Date} timetable.startDate Start date of the timetable.
+ * @apiSuccess {Date} timetable.endDate End date of the timetable.
+ * @apiSuccess {ObjectId} timetable.classIncharge ID of the faculty in charge (ObjectId).
+ * @apiSuccess {ObjectId} timetable.group ID of the group (ObjectId).
+ * @apiSuccess {ObjectId} timetable.activityBlueprints ID of the activity blueprint (ObjectId).
+ * @apiSuccess {String} timetable.lunchBreakStartTime Start time of the lunch break.
+ * @apiSuccess {Number} timetable.lunchBreakDuration Duration of the lunch break (in minutes).
+ * @apiSuccess {String} timetable.teaBreakStartTime Start time of the tea break.
+ * @apiSuccess {Number} timetable.teaBreakDuration Duration of the tea break (in minutes).
+ 
 /**
  * @api {get} /coursework/list Get Coursework List
  * @apiName GetCourseworkList
@@ -473,6 +567,8 @@
  * @apiSuccess {ObjectId} coursework.activity Id of the activity in Coursework.
  * @apiSuccess {Number} coursework.marks Marks in the Coursework.
  */
+
+// ------------------------------------------------------------------------------------------
 // Module.
 // ------------------------------------------------------------------------------------------
 
