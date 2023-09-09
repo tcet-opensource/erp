@@ -32,7 +32,7 @@ import {
     } = req.body;
     try {
       await updateCourseworkById(id, data);
-      res.json({ res: `Updated Coursework with ID ${id}` });
+      res.json({ res: `/Updated Coursework/` });
     } catch (error) {
       logger.error("Error while updating Coursework", error);
       res.status(500);
@@ -51,7 +51,7 @@ import {
   async function deleteCoursework(req, res) {
     const { courseworkId } = req.params;
     try {
-      await deleteCourseworkById(practicalId);
+      await deleteCourseworkById(courseworkId);
       res.json({ res: `Deleted Coursework with ID ${courseworkId}` });
     } catch (error) {
       logger.error("Error while deleting Coursework", error);

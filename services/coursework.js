@@ -19,8 +19,8 @@ export async function createCoursework({
 // Service function to update a Coursework entity by ID
 export async function updateCourseworkById(id, data) {
   try {
-    const updated = await Coursework.updateOne({ _id: id }, data);
-    if (updated.nModified > 0) {
+    const updated = await Coursework.update({ _id: id }, data);
+    if (updated) {
       return updated;
     }
     throw new databaseError.DataEntryError("coursework");
@@ -32,7 +32,7 @@ export async function updateCourseworkById(id, data) {
 // Service function to retrieve a list of Coursework entities based on filters
 export async function listCoursework(filter) {
   try {
-    const courseworkList = await Coursework.find(filter);
+    const courseworkList = await Coursework.read(filter,0);
     return courseworkList;
   } catch (error) {
     throw new databaseError.DataRetrievalError("coursework");
