@@ -59,7 +59,7 @@ async function showdepartments(req, res) {
 
 async function updatedDepartment(req, res) {
   const {
-    id, ...data
+    id, data,
   } = req.body;
   try {
     await updateDepartmentbyid(id, data);
