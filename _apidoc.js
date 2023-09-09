@@ -309,6 +309,76 @@
  * @apiSuccess {Date} accreditation.dateofAccreditation Date on which accreditation was issued.
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
+//------------------------------------------------------------------------------------------
+// Tutorials.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /tutorial/add Add Tutorial
+ * @apiName AddTutorial
+ * @apiGroup Tutorial
+ *
+ * @apiBody {Number} no The number of tutorial.
+ * @apiBody {String} title The title of tutorial.
+ * @apiBody {Number} hours The hours required for tutorial .
+ * @apiBody {String} cognitiveLevel The cognitiveLvel of tutorial.
+ 
+ *
+ * @apiSuccess {String} res Success message with the ID of the added tutorial.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new tutorial to the system.
+ */
+
+/**
+ * @api {get} tutorial/list Get Tutorial List
+ * @apiName GetTutorial
+ * @apiGroup Tutorial
+ *
+ * @apiQuery {Number} [no] Number of Tutorial.
+ * @apiQuery {String} [title] Title of Tutorial.
+ * @apiQuery {Number} [hours] Hours required for Tutorial
+ * @apiQuery {String} [cognitiveLevel] Level of Tutorial.
+ 
+ *
+ * @apiSuccess {Tutorial[]} res Array of Filtered Tutorial Doc .
+ * @apiSuccess {String} tutorial._id ID of document given by database.
+ * @apiSuccess {Number} tutorial.no Number of Tutorial.
+ * @apiSuccess {String} tutorial.title Title of Tutorial.
+ * @apiSuccess {String} tutorial.hours Hours of Tutorial.
+ * @apiSuccess {Number} tutorial.cognitiveLevel CognitiveLevel of Tutorial.
+ */
+
+/**
+ * @api {delete} /tutorial/delete/:tutorialId Delete Tutorial
+ * @apiName DeleteTutorial,
+ * @apiGroup Tutorial
+ *
+ * @apiParam {String} tutorialId The ID of the tutorial document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+/**
+ * @api {post} /tutorial/update Update tutorial details
+ * @apiName UpdateTutorial
+ * @apiGroup Tutorial
+ * @apiDescription update Existing Tutorial details
+ *
+ * @apiBody {String} id Id of the tutorial to be updated
+ * @apiBody {Number} [no] The no of tutorial.
+ * @apiBody {String} [title] The title of tutorial.
+ * @apiBody {String} [hours] The hours required for the tutorial.
+ * @apiBody {Number} [cognitiveLevel] The cognitiveLevel of tutorial.
+
+ *
+ * @apiSuccess {String} res tutorial updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
 
 // ------------------------------------------------------------------------------------------
 // Timetable.
