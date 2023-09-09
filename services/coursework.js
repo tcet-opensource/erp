@@ -4,11 +4,11 @@ import databaseError from "#error/database";
 
 // Service function to create a new Coursework entity
 export async function createCoursework({
-    student , type , course , task , objectID , activity , marks , 
+  student, type, course, task, objectID, activity, marks,
 }) {
   try {
     const newCoursework = await Coursework.create({
-        student , type , course , task , objectID , activity , marks , 
+      student, type, course, task, objectID, activity, marks,
     });
     return newCoursework;
   } catch (error) {
@@ -32,7 +32,7 @@ export async function updateCourseworkById(id, data) {
 // Service function to retrieve a list of Coursework entities based on filters
 export async function listCoursework(filter) {
   try {
-    const courseworkList = await Coursework.read(filter,0);
+    const courseworkList = await Coursework.read(filter, 0);
     return courseworkList;
   } catch (error) {
     throw new databaseError.DataRetrievalError("coursework");

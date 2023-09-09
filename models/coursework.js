@@ -12,17 +12,17 @@ const courseworkSchema = {
 
 const Coursework = connector.model("Coursework", courseworkSchema);
 
-async function create(courseworkData){
+async function create(courseworkData) {
   const {
-    student , type , course , task , objectID , activity , marks , 
-  } = courseworkData ;
+    student, type, course, task, objectID, activity, marks,
+  } = courseworkData;
   const coursework = new Coursework({
     student,
-    type, 
-    course, 
-    task, 
-    objectID, 
-    activity, 
+    type,
+    course,
+    task,
+    objectID,
+    activity,
     marks,
   });
   const courseworkDoc = await coursework.save();

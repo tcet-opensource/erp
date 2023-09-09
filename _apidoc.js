@@ -310,7 +310,6 @@
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
 
-
 // ------------------------------------------------------------------------------------------
 // Coursework.
 // ------------------------------------------------------------------------------------------
@@ -330,7 +329,7 @@
  * @apiBody {Number} Marks in the Coursework.
  *
  * @apiSuccess {String} res Response message.
- * @apiError (Error 500) DatabaseError Error message if there was an error inserting into the database.
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -395,7 +394,7 @@
  * @apiSuccess {String} coursework.type Coursework type that is either onCampus or offCampus.
  * @apiSuccess {ObjectId} coursework.course ID of the Course in Coursework (ObjectId).
  * @apiSuccess {ObjectId} coursework.task ID of the task in Coursework (ObjectId).
- * @apiSuccess {String} coursework.objectID objectID either its practicals or tutorial or assignment .
+ * @apiSuccess {String} coursework.objectID objectID either Practicals or Tutorial or Assignment .
  * @apiSuccess {ObjectId} coursework.activity Id of the activity in Coursework.
  * @apiSuccess {Number} coursework.marks Marks in the Coursework.
  */

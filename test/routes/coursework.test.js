@@ -74,8 +74,8 @@ describe("Coursework API", () => {
 
     afterEach(async () => {
       await courseworkModel.remove({
-        student: "64fc3c8bde9fa947ea1f412f"
- });
+        student: "64fc3c8bde9fa947ea1f412f",
+      });
     });
 
     it("should read coursework", async () => {
