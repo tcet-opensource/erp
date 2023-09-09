@@ -309,8 +309,189 @@
  * @apiSuccess {Date} accreditation.dateofAccreditation Date on which accreditation was issued.
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
+//------------------------------------------------------------------------------------------
+// Tutorials.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /tutorial/add Add Tutorial
+ * @apiName AddTutorial
+ * @apiGroup Tutorial
+ *
+ * @apiBody {Number} no The number of tutorial.
+ * @apiBody {String} title The title of tutorial.
+ * @apiBody {Number} hours The hours required for tutorial .
+ * @apiBody {String} cognitiveLevel The cognitiveLvel of tutorial.
+ 
+ *
+ * @apiSuccess {String} res Success message with the ID of the added tutorial.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new tutorial to the system.
+ */
+
+/**
+ * @api {get} tutorial/list Get Tutorial List
+ * @apiName GetTutorial
+ * @apiGroup Tutorial
+ *
+ * @apiQuery {Number} [no] Number of Tutorial.
+ * @apiQuery {String} [title] Title of Tutorial.
+ * @apiQuery {Number} [hours] Hours required for Tutorial
+ * @apiQuery {String} [cognitiveLevel] Level of Tutorial.
+ 
+ *
+ * @apiSuccess {Tutorial[]} res Array of Filtered Tutorial Doc .
+ * @apiSuccess {String} tutorial._id ID of document given by database.
+ * @apiSuccess {Number} tutorial.no Number of Tutorial.
+ * @apiSuccess {String} tutorial.title Title of Tutorial.
+ * @apiSuccess {String} tutorial.hours Hours of Tutorial.
+ * @apiSuccess {Number} tutorial.cognitiveLevel CognitiveLevel of Tutorial.
+ */
+
+/**
+ * @api {delete} /tutorial/delete/:tutorialId Delete Tutorial
+ * @apiName DeleteTutorial,
+ * @apiGroup Tutorial
+ *
+ * @apiParam {String} tutorialId The ID of the tutorial document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+/**
+ * @api {post} /tutorial/update Update tutorial details
+ * @apiName UpdateTutorial
+ * @apiGroup Tutorial
+ * @apiDescription update Existing Tutorial details
+ *
+ * @apiBody {String} id Id of the tutorial to be updated
+ * @apiBody {Number} [no] The no of tutorial.
+ * @apiBody {String} [title] The title of tutorial.
+ * @apiBody {String} [hours] The hours required for the tutorial.
+ * @apiBody {Number} [cognitiveLevel] The cognitiveLevel of tutorial.
+
+ *
+ * @apiSuccess {String} res tutorial updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
 
 // ------------------------------------------------------------------------------------------
+// Timetable.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /timetable/add Add Timetable
+ * @apiName AddTimetable
+ * @apiGroup Timetable
+ * @apiDescription Add a new timetable entry.
+ *
+ * @apiBody {Date} startDate Start date of the timetable.
+ * @apiBody {Date} endDate End date of the timetable.
+ * @apiBody {ObjectId} classIncharge ID of the faculty in charge (ObjectId).
+ * @apiBody {ObjectId} group ID of the group (ObjectId).
+ * @apiBody {ObjectId} activityBlueprints ID of the activity blueprint (ObjectId).
+ * @apiBody {String} lunchBreakStartTime Start time of the lunch break.
+ * @apiBody {Number} lunchBreakDuration Duration of the lunch break (in minutes).
+ * @apiBody {String} teaBreakStartTime Start time of the tea break.
+ * @apiBody {Number} teaBreakDuration Duration of the tea break (in minutes).
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Error message if there was an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added timetable for <startDate> - <endDate>"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+// ------------------------------------------------------------------------------------------
+// Department.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /department/create Create Deapartment
+ * @apiName AddDepartment
+ * @apiDescription Adds a new Department.
+ * @apiGroup Department
+ *
+ * @apiBody {String} name The name of the Department.
+ * @apiBody {String} acronym The acronym of the Department.
+ * @apiBody {Date} yearOfStarting The year of establishment of the Department.
+ * @apiBody {connector.Schema.Types.ObjectId} accreditations The accreditation which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} infrastructure The infrastructure which is associated.
+ *
+ * @apiSuccess {String} res added Department successfully.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the DB.
+ *
+ */
+
+/**
+ * @api {get} Department/list Listdown Department
+ * @apiName GetDepartment
+ * @apiDescription Listdown the Department.
+ * @apiGroup Department
+ *
+ * @apiBody {String} [name] The name of the Department.
+ * @apiBody {String} [acronym] The acronym of the Department.
+ * @apiBody {Date} [yearOfStarting] The year of establishment of the Department.
+ * @apiBody {connector.Schema.Types.ObjectId} [accreditations]  Accreditation which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} [infrastructure] Infrastructure which is associated.
+ *
+ * @apiSuccess {Department[]} res Array of Filtered Department Doc .
+ * @apiSuccess {String} department._id ID of document given by database.
+ * @apiSuccess {String} department.name Name of Infrastructure
+ * @apiSuccess {String} department.acronym The acronym of the Department.
+ * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ * @apiError (Error 500) err Error while fetching the data.
+ */
+
+/**
+ * @api {delete} /department/delete/:departmentId Delete Department
+ * @apiName DeleteDepartment
+ * @apiDescription Remove the existing Department.
+ * @apiGroup Department
+ *
+ * @apiParam {String} departmentId The ID of the department document to delete.
+ *
+ * @apiSuccess {String} res "Department deleted successfully.
+ *
+ * @apiError (Error 500) err Error while deleting from DB.
+ *
+* */
+
+/**
+ * @api {post} /department/update Update department
+ * @apiName UpdateDepartment
+ * @apiGroup Department
+ * @apiDescription Update Existing Department details except [yearOfStarting],[acronym]
+ *
+ * @apiSuccess {String} department._id ID of document given by database.
+ * @apiSuccess {String} department.name Name of Infrastructure
+ * @apiSuccess {String} department.acronym The acronym of the Department.
+ * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ *
+ * @apiSuccess {String} res updated infrastructure with id.
+ * @apiError (Error 500) err Error while inserting in DB
+ */
+ 
+//
 // Coursework.
 // ------------------------------------------------------------------------------------------
 
@@ -345,6 +526,18 @@
  */
 
 /**
+ * @api {delete} /timetable/delete/:timetableId Delete Timetable
+ * @apiName DeleteTimetable
+ * @apiGroup Timetable
+ *
+ * @apiParam {String} timetableId The ID of the timetable document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
  * @api {delete} /coursework/delete/:courseworkId Delete Coursework
  * @apiName DeleteCoursework
  * @apiGroup Coursework
@@ -356,6 +549,25 @@
  * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
  */
 
+/**
+ * @api {post} /timetable/update Update Timetable
+ * @apiName UpdateTimetable
+ * @apiGroup Timetable
+ * @apiDescription Update existing timetable data.
+ *
+ * @apiBody {String} id ID of the timetable to be updated.
+ * @apiBody {Date} [startDate] Start date of the timetable.
+ * @apiBody {Date} [endDate] End date of the timetable.
+ * @apiBody {ObjectId} [classIncharge] ID of the faculty in charge (ObjectId).
+ * @apiBody {ObjectId} [group] ID of the group (ObjectId).
+ * @apiBody {ObjectId} [activityBlueprints] ID of activity blueprint (ObjectId).
+ * @apiBody {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiBody {Number} [lunchBreakDuration] Duration of lunch break (in minutes).
+ * @apiBody {String} [teaBreakStartTime] Start time of tea break.
+ * @apiBody {Number} [teaBreakDuration] Duration of tea break (in minutes).
+ *
+ * @apiSuccess {String} res Timetable updated.
+ 
 /**
  * @api {post} /coursework/update Update Coursework
  * @apiName UpdateCoursework
@@ -375,6 +587,33 @@
  * @apiError (Error 500) DatabaseError Error in updating the database.
  */
 
+/**
+ * @api {get} /timetable/list Get Timetable List
+ * @apiName GetTimetableList
+ * @apiGroup Timetable
+ *
+ * @apiQuery {Date} [startDate] Start date of the timetable.
+ * @apiQuery {Date} [endDate] End date of the timetable.
+ * @apiQuery {ObjectId} [classIncharge] ID of the faculty in charge (ObjectId).
+ * @apiQuery {ObjectId} [group] ID of the group (ObjectId).
+ * @apiQuery {ObjectId} [activityBlueprints] ID of the activity blueprint (ObjectId).
+ * @apiQuery {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiQuery {Number} [lunchBreakDuration] Duration of the lunch break (in minutes).
+ * @apiQuery {String} [lunchBreakStartTime] Start time of the lunch break.
+ * @apiQuery {Number} [lunchBreakDuration] Duration of the lunch break (in minutes).
+ *
+ * @apiSuccess {Timetable[]} res Array of filtered timetable documents.
+ * @apiSuccess {String} timetable._id ID of the timetable document given by the database.
+ * @apiSuccess {Date} timetable.startDate Start date of the timetable.
+ * @apiSuccess {Date} timetable.endDate End date of the timetable.
+ * @apiSuccess {ObjectId} timetable.classIncharge ID of the faculty in charge (ObjectId).
+ * @apiSuccess {ObjectId} timetable.group ID of the group (ObjectId).
+ * @apiSuccess {ObjectId} timetable.activityBlueprints ID of the activity blueprint (ObjectId).
+ * @apiSuccess {String} timetable.lunchBreakStartTime Start time of the lunch break.
+ * @apiSuccess {Number} timetable.lunchBreakDuration Duration of the lunch break (in minutes).
+ * @apiSuccess {String} timetable.teaBreakStartTime Start time of the tea break.
+ * @apiSuccess {Number} timetable.teaBreakDuration Duration of the tea break (in minutes).
+ 
 /**
  * @api {get} /coursework/list Get Coursework List
  * @apiName GetCourseworkList
@@ -398,7 +637,8 @@
  * @apiSuccess {ObjectId} coursework.activity Id of the activity in Coursework.
  * @apiSuccess {Number} coursework.marks Marks in the Coursework.
  */
-=======
+
+// ------------------------------------------------------------------------------------------
 // Module.
 // ------------------------------------------------------------------------------------------
 
