@@ -1,7 +1,7 @@
 import connector from "#models/databaseUtil";
 
 const departmentSchema = {
-  name: { type:String, required: true },
+  name: { type: String, required: true },
   acronym: { type: String, required: true, immutable: true },
   yearOfStarting: { type: Date, immutable: true, required: true },
   accreditations: [{
@@ -21,13 +21,13 @@ const Department = connector.model("Department", departmentSchema);
 // for creating
 async function create(departmentData) {
   const {
-    name, acronym, yearOfStarting, accreditions, infrastructures,
+    name, acronym, yearOfStarting, accreditations, infrastructures,
   } = departmentData;
   const department = new Department({
     name,
     acronym,
     yearOfStarting,
-    accreditions,
+    accreditations,
     infrastructures,
   });
   const departmentDoc = await department.save();
@@ -40,12 +40,12 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Department.findOneAndUpdate(filter, { $set: updateObject }, options);
+  const updateResult = await Department.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
 }
 
 async function remove(filter) {
-  const deleteResult = await Department.findOneAndDelete(filter);
+  const deleteResult = await Department.deleteMany(filter);
   return deleteResult.acknowledged;
 }
 
