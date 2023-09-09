@@ -11,6 +11,8 @@ import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
 import practicalRouter from "#routes/practical";
+import courseworkRouter from "#routes/coursework";
+import moduleRouter from "#routes/module";
 import { identifyUser } from "#middleware/identifyUser";
 
 
@@ -36,4 +38,7 @@ app.use("/auth", authRouter);
 app.use("/accreditation", accreditationRouter);
 app.use("/infrastructure", infrastructureRouter);
 app.use("/practical", practicalRouter);
+app.use("/coursework", courseworkRouter);
+app.use("/module", moduleRouter);
+
 export default app;

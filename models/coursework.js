@@ -10,5 +10,43 @@ const courseworkSchema = {
   marks: { type: Number, required: true },
 };
 
-// eslint-disable-next-line  no-unused-vars
 const Coursework = connector.model("Coursework", courseworkSchema);
+
+async function create(courseworkData) {
+  const {
+    student, type, course, task, objectID, activity, marks,
+  } = courseworkData;
+  const coursework = new Coursework({
+    student,
+    type,
+    course,
+    task,
+    objectID,
+    activity,
+    marks,
+  });
+  const courseworkDoc = await coursework.save();
+  return courseworkDoc;
+}
+
+async function read(filter, limit = 1) {
+  const courseworkDoc = await Coursework.find(filter).limit(limit);
+  return courseworkDoc;
+}
+
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await Coursework.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
+}
+
+async function remove(filter) {
+  const deleteResult = await Coursework.deleteMany(filter).exec();
+  return deleteResult.acknowledged;
+}
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+};

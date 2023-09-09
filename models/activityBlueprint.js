@@ -6,7 +6,7 @@ const activityBluePrintSchema = {
     type: String,
     required: true,
     validate: {
-      validator: (value) => /^20\d{2}$/.test(value), //changed the valid year format starting from "20" !!
+      validator: (value) => /^20\d{2}$/.test(value), // changed the valid year format starting from "20" !!
       message: (props) => `${props.value} is not a valid year format starting with "2"!`,
     },
   },
@@ -26,12 +26,12 @@ async function remove(filter) {
 async function create(activityBlueprintData) {
   const {
     number, academicYear, type, startDate, endDate,
-  } = activityBlueprintDataData;
+  } = activityBlueprintData;
   const activityblueprint = new ActivityBlueprint({
     number,
-    academicYear, 
-    type, 
-    startDate, 
+    academicYear,
+    type,
+    startDate,
     endDate,
   });
   const activityblueprintDoc = await activityblueprint.save();
@@ -48,6 +48,6 @@ async function update(filter, updateObject, options = { multi: true }) {
   return deleteResult.acknowledged;
 }
 
-export default{
+export default {
   create, read, update, remove,
-}
+};
