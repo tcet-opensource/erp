@@ -1,7 +1,7 @@
 import connector from "#models/databaseUtil";
 
 const departmentSchema = {
-  name: { type: Number, required: true },
+  name: { type:String, required: true },
   acronym: { type: String, required: true, immutable: true },
   yearOfStarting: { type: Date, immutable: true, required: true },
   accreditations: [{
