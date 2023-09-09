@@ -11,7 +11,13 @@ import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
 import studentRouter from "#routes/student";
+import tutorialRouter from "#routes/tutorial";
+import assignmentRouter from "#routes/assignment";
+import timetableRouter from "#routes/timetable";
+import courseworkRouter from "#routes/coursework";
+import moduleRouter from "#routes/module";
 import { identifyUser } from "#middleware/identifyUser";
+import departmentRouter from "#routes/department";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -35,5 +41,11 @@ app.use("/auth", authRouter);
 app.use("/accreditation", accreditationRouter);
 app.use("/infrastructure", infrastructureRouter);
 app.use("/student", studentRouter);
+app.use("/tutorial", tutorialRouter);
+app.use("/assignment", assignmentRouter);
+app.use("/timetable", timetableRouter);
+app.use("/department", departmentRouter);
+app.use("/coursework", courseworkRouter);
+app.use("/module", moduleRouter);
 
 export default app;
