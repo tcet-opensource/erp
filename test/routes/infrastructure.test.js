@@ -10,7 +10,7 @@ let server;
 let agent;
 
 beforeAll((done) => {
-  server = app.listen(5000, () => {
+  server = app.listen(null, () => {
     agent = request.agent(server);
     connector.set("debug", false);
     done();
@@ -52,7 +52,7 @@ describe("Infrastructure API", () => {
     });
 
     expect(response.status).toBe(200);
-    expect(response.body.res).toMatch(/added user/);
+    expect(response.body.res).toMatch(/added infrastructure/);
   });
 
   describe("after adding infrastructure", () => {
@@ -78,9 +78,10 @@ describe("Infrastructure API", () => {
 
     it("should read infrastructure", async () => {
       const response = await agent
-        .post("/infrastructure/list")
+        .get("/infrastructure/list")
         .send({ name: "Building A" });
-      expect(response.body.res).not.toBeNull();
+      expect(response.status).toBe(200);
+      expect(response.body.res).toBeDefined();
     });
 
     it("should update infrastructure", async () => {
