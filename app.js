@@ -10,6 +10,8 @@ import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
+import courseworkRouter from "#routes/coursework";
+import moduleRouter from "#routes/module";
 import { identifyUser } from "#middleware/identifyUser";
 
 const app = express();
@@ -33,5 +35,7 @@ app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/accreditation", accreditationRouter);
 app.use("/infrastructure", infrastructureRouter);
+app.use("/coursework", courseworkRouter);
+app.use("/module", moduleRouter);
 
 export default app;
