@@ -26,7 +26,7 @@ async function remove(filter) {
 async function create(activityBlueprintData) {
   const {
     number, academicYear, type, startDate, endDate,
-  } = activityBlueprintDataData;
+  } = activityBlueprintData;
   const activityblueprint = new ActivityBlueprint({
     number,
     academicYear,

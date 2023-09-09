@@ -398,3 +398,28 @@
  * @apiSuccess {ObjectId} coursework.activity Id of the activity in Coursework.
  * @apiSuccess {Number} coursework.marks Marks in the Coursework.
  */
+=======
+// Module.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {get} module/list Get Module List
+ * @apiName GetModule
+ * @apiGroup Module
+ *
+ * @apiQuery {Number} [no] Module number.
+ * @apiQuery {String} [name] Name of the module.
+ * @apiQuery {String} [outcome] Module outcome.
+ * @apiQuery {String[]} [contents] Array of contents of the module.
+ * @apiQuery {Number} [hrsPerModule] Number of hours required per module.
+ * @apiQuery {String[]} [cognitiveLevels] Array of cognitive levels of attainment as per Bloom's Taxanomy (L1-L6).
+ *
+ * @apiSuccess {module[]} res Array of Filtered module Doc.
+ * @apiSuccess {String} module._id ID of document given by database.
+ * @apiSuccess {String} module.no Module number.
+ * @apiSuccess {String} module.name Name of the module.
+ * @apiSuccess {String} module.outcome Module outcome.
+ * @apiSuccess {String[]} module.contents Array of contents of the module.
+ * @apiSuccess {Number} module.hrsPerModule Number of hours required per module.
+ * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of attainment as per Bloom's Taxanomy (L1-L6).
+ */
