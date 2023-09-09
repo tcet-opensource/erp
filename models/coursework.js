@@ -10,7 +10,6 @@ const courseworkSchema = {
   marks: { type: Number, required: true },
 };
 
-// eslint-disable-next-line  no-unused-vars
 const Coursework = connector.model("Coursework", courseworkSchema);
 
 async function remove(filter) {
@@ -20,7 +19,7 @@ async function remove(filter) {
 
 async function create(courseworkData) {
   const {
-    student,type,course,task,objectID,activity,marks
+    student, type, course, task, objectID, activity, marks,\
   } = courseworkData;
   const coursework = new Coursework({
     student,
@@ -29,7 +28,7 @@ async function create(courseworkData) {
     task,
     objectID,
     activity,
-    marks
+    marks,
   });
   const courseworkDoc = await coursework.save();
   return courseworkDoc;
@@ -44,7 +43,14 @@ async function update(filter, updateObject, options = { multi: true }) {
   const updateResult = await Coursework.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
 }
+async function remove(filter) {
+  const deleteResult = await Coursework.deleteMany(filter).exec();
+  return deleteResult.acknowledged;
+}
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };
