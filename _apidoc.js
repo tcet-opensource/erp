@@ -309,3 +309,79 @@
  * @apiSuccess {Date} accreditation.dateofAccreditation Date on which accreditation was issued.
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
+
+// ------------------------------------------------------------------------------------------
+// Department.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /department/create Create Deapartment
+ * @apiName AddDepartment
+ * @apiDescription Adds a new Department.
+ * @apiGroup Department
+ *
+ * @apiBody {String} name The name of the Department.
+ * @apiBody {String} acronym The acronym of the Department.
+ * @apiBody {Date} yearOfStarting The year of establishment of the Department.
+ * @apiBody {connector.Schema.Types.ObjectId} accreditations The accreditation which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} infrastructure The infrastructure which is associated.
+ *
+ * @apiSuccess {String} res added Department successfully.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the DB.
+ *
+ */
+
+/**
+ * @api {get} Department/list Listdown Department
+ * @apiName GetDepartment
+ * @apiDescription Listdown the Department.
+ * @apiGroup Department
+ *
+ * @apiBody {String} [name] The name of the Department.
+ * @apiBody {String} [acronym] The acronym of the Department.
+ * @apiBody {Date} [yearOfStarting] The year of establishment of the Department.
+ * @apiBody {connector.Schema.Types.ObjectId} [accreditations]  Accreditation which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} [infrastructure] Infrastructure which is associated.
+ *
+ * @apiSuccess {Department[]} res Array of Filtered Department Doc .
+ * @apiSuccess {String} department._id ID of document given by database.
+ * @apiSuccess {String} department.name Name of Infrastructure
+ * @apiSuccess {String} department.acronym The acronym of the Department.
+ * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ * @apiError (Error 500) err Error while fetching the data.
+ */
+
+/**
+ * @api {delete} /department/delete/:departmentId Delete Department
+ * @apiName DeleteDepartment
+ * @apiDescription Remove the existing Department.
+ * @apiGroup Department
+ *
+ * @apiParam {String} departmentId The ID of the department document to delete.
+ *
+ * @apiSuccess {String} res "Department deleted successfully.
+ *
+ * @apiError (Error 500) err Error while deleting from DB.
+ *
+* */
+
+/**
+ * @api {post} /department/update Update department
+ * @apiName UpdateDepartment
+ * @apiGroup Department
+ * @apiDescription Update Existing Department details except [yearOfStarting],[acronym]
+ *
+ * @apiSuccess {String} department._id ID of document given by database.
+ * @apiSuccess {String} department.name Name of Infrastructure
+ * @apiSuccess {String} department.acronym The acronym of the Department.
+ * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ *
+ * @apiSuccess {String} res updated infrastructure with id.
+ * @apiError (Error 500) err Error while inserting in DB
+ *
+ */
