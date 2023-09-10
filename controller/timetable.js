@@ -27,7 +27,7 @@ async function addTimetable(req, res) {
       teabreakStartTime,
       teabreakDuration,
     );
-    res.json({ res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}` });
+    res.json({ res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}`, id: newTimetable.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -36,8 +36,9 @@ async function addTimetable(req, res) {
 }
 
 async function updateTimetable(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateTimetableById(id, data);
@@ -56,10 +57,10 @@ async function getTimetable(req, res) {
 }
 
 async function deleteTimetable(req, res) {
-  const { timetableId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteTimetableById(timetableId);
-    res.json({ res: `Deleted timetable with ID ${timetableId}` });
+    await deleteTimetableById(id);
+    res.json({ res: `Deleted timetable with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });

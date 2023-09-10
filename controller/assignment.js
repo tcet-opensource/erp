@@ -9,7 +9,7 @@ async function addAssignment(req, res) {
   } = req.body;
   try {
     const newAssignment = await createAssignment(no, title, type, marks);
-    res.json({ res: `added user ${newAssignment.id}` });
+    res.json({ res: `added user ${newAssignment.id}`, id: newAssignment.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -18,8 +18,9 @@ async function addAssignment(req, res) {
 }
 
 async function updateAssignment(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateAssignmentById(id, data);
@@ -38,11 +39,11 @@ async function getAssignment(req, res) {
 }
 
 async function deleteAssignment(req, res) {
-  const { assignmentId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteAssignmentById(assignmentId);
+    await deleteAssignmentById(id);
 
-    res.json({ res: `Deleted assignment with ID ${assignmentId}` });
+    res.json({ res: `Deleted assignment with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });

@@ -17,7 +17,7 @@ async function addStudent(req, res) {
       rollNo,
       coursesOpted,
     );
-    res.json({ res: `added user ${newStudent.id}` });
+    res.json({ res: `added user ${newStudent.id}`, id: newStudent.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -26,8 +26,9 @@ async function addStudent(req, res) {
 }
 
 async function updateStudent(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateStudentById(id, data);
@@ -46,11 +47,11 @@ async function getStudent(req, res) {
 }
 
 async function deleteStudent(req, res) {
-  const { StudentId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteStudentById(StudentId);
+    await deleteStudentById(id);
 
-    res.json({ res: `Deleted Student with ID ${StudentId}` });
+    res.json({ res: `Deleted Student with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });

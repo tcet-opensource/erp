@@ -38,12 +38,12 @@ afterAll((done) => {
 describe("checking module functions", () => {
   it("create module", async () => {
     const response = await agent
-      .get("/module/add")
+      .post("/module/add")
       .send({
         no: 1,
         name: "Module 1",
         outcome: "I am good at debugging",
-        contents: ["i", "ii", "iii", "iv", "v", "vi",],
+        contents: ["i", "ii", "iii", "iv", "v", "vi"],
         hrsPerModule: 3,
         cognitiveLevels: "L1",
       });
@@ -56,7 +56,7 @@ describe("checking module functions", () => {
       no: 1,
       name: "Module 1",
       outcome: "I am good at debugging",
-      contents: ["i", "ii", "iii", "iv", "v", "vi",],
+      contents: ["i", "ii", "iii", "iv", "v", "vi"],
       hrsPerModule: 3,
       cognitiveLevels: "L1",
     });
