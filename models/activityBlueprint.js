@@ -44,8 +44,8 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const deleteResult = await ActivityBlueprint.updateMany(filter, { $set: updateObject }, options);
-  return deleteResult.acknowledged;
+  const updateResult = await ActivityBlueprint.updateMany(filter, { $set: updateObject }, options);
+  return updateResult.acknowledged;
 }
 
 export default {
