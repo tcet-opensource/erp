@@ -62,7 +62,7 @@ describe("Coursework API", () => {
   describe("after adding coursework", () => {
     let id;
     beforeEach(async () => {
-      id=await agent.post("/coursework/add").send({
+      id = await agent.post("/coursework/add").send({
         student: "64fc3c8bde9fa947ea1f412f",
         type: "onCampus",
         course: "64fc3c8bde9fa947ea1f412f",
@@ -71,7 +71,7 @@ describe("Coursework API", () => {
         activity: "64fc3c8bde9fa947ea1f412f",
         marks: 97,
       });
-      id=JSON.parse(id.res.text).id
+      id = JSON.parse(id.res.text).id;
     });
 
     afterEach(async () => {
@@ -90,7 +90,7 @@ describe("Coursework API", () => {
 
     it("should update coursework", async () => {
       const response = await agent
-        .post("/coursework/update/"+id)
+        .post(`/coursework/update/${id}`)
         .send({ student: "64fc3c8bde9fa947ea1f412f" });
 
       expect(response.status).toBe(200);

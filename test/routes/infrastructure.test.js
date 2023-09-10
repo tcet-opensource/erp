@@ -58,14 +58,14 @@ describe("Infrastructure API", () => {
   describe("after adding infrastructure", () => {
     let id;
     beforeEach(async () => {
-      id=await agent.post("/infrastructure/add").send({
+      id = await agent.post("/infrastructure/add").send({
         name: "Building A",
         type: "Office",
         wing: "East",
         floor: 3,
         capacity: 100,
       });
-      id=JSON.parse(id.res.text).id
+      id = JSON.parse(id.res.text).id;
     });
 
     afterEach(async () => {
@@ -88,7 +88,7 @@ describe("Infrastructure API", () => {
 
     it("should update infrastructure", async () => {
       const response = await agent
-        .post("/infrastructure/update/"+id)
+        .post(`/infrastructure/update/${id}`)
         .send({ name: "Building A" }, { capacity: 150 });
 
       expect(response.status).toBe(200);

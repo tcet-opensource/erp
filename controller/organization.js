@@ -9,7 +9,7 @@ async function addOrganization(req, res) {
   } = req.body;
   try {
     const organization = await addNewOrganization(parent, startDate, name, accreditation);
-    res.json({ res: `added organization${organization.name}`, id:organization.id });
+    res.json({ res: `added organization${organization.name}`, id: organization.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

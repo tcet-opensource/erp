@@ -17,7 +17,7 @@ async function addCoursework(req, res) {
     const newCoursework = await createCoursework({
       student, type, course, task, objectID, activity, marks,
     });
-    res.json({ res: `Added Coursework with ID ${newCoursework.id}`, id: newCoursework.id});
+    res.json({ res: `Added Coursework with ID ${newCoursework.id}`, id: newCoursework.id });
   } catch (error) {
     logger.error("Error while inserting Coursework", error);
     res.status(500);

@@ -9,7 +9,7 @@ async function addInfrastructure(req, res) {
   } = req.body;
   try {
     const newInfrastructure = await createInfrastructure(name, type, wing, floor, capacity);
-    res.json({ res: `added infrastructure ${newInfrastructure.id}`, id:newInfrastructure.id });
+    res.json({ res: `added infrastructure ${newInfrastructure.id}`, id: newInfrastructure.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

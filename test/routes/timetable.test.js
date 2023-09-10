@@ -63,7 +63,7 @@ describe("checking timetable functions", () => {
       teabreakStartTime: "11:30 AM",
       teabreakDuration: 15, // minutes
     });
-    id=JSON.parse(id.res.text).id
+    id = JSON.parse(id.res.text).id;
   });
 
   afterEach(async () => {
@@ -80,7 +80,7 @@ describe("checking timetable functions", () => {
 
   it("update timetable", async () => {
     const response = await agent
-      .post("/timetable/update/"+id)
+      .post(`/timetable/update/${id}`)
       .send({ startDate: "2023-07-18T14:11:30Z" });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);

@@ -10,7 +10,7 @@ async function addAccreditation(req, res) {
   try {
     // eslint-disable-next-line max-len
     const accreditation = await addNewAccreditation(name, agencyName, dateofAccreditation, dateofExpiry);
-    res.json({ res: `added accreditation ${accreditation.name}`, id:accreditation.id });
+    res.json({ res: `added accreditation ${accreditation.name}`, id: accreditation.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

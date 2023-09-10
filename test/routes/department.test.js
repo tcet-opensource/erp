@@ -65,7 +65,7 @@ describe("Department CRUD", () => {
   describe("after adding department", () => {
     let id;
     beforeEach(async () => {
-      id=await agent.post("/department/create").send(
+      id = await agent.post("/department/create").send(
         {
           name: "Computer",
           acronym: "COMPS",
@@ -74,7 +74,7 @@ describe("Department CRUD", () => {
           infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
         },
       );
-      id=JSON.parse(id.res.text).id
+      id = JSON.parse(id.res.text).id;
     });
 
     afterEach(async () => {
@@ -106,7 +106,7 @@ describe("Department CRUD", () => {
 
     it("should update department", async () => {
       const response = await agent
-        .post("/department/update/"+id)
+        .post(`/department/update/${id}`)
         .send(
           {
             name: "Electronics",
