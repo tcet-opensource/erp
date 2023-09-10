@@ -38,7 +38,7 @@ afterAll((done) => {
 describe("checking module functions", () => {
   it("create module", async () => {
     const response = await agent
-      .get("/module/add")
+      .post("/module/add")
       .send({
         no: 1,
         name: "Module 1",

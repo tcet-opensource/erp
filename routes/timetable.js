@@ -4,7 +4,7 @@ import timetableController from "#controller/timetable";
 const router = express.Router();
 router.post("/add", timetableController.addTimetable);
 router.get("/list", timetableController.getTimetable);
-router.post("/update", timetableController.updateTimetable);
-router.post("/delete/:timetableId", timetableController.deleteTimetable);
+router.post("/update/:id", timetableController.updateTimetable);
+router.delete("/delete/:id", timetableController.deleteTimetable);
 
 export default router;

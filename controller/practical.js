@@ -17,7 +17,7 @@ async function addPractical(req, res) {
     const newPractical = await createPractical({
       no, title, type, hours, cognitiveLevels,
     });
-    res.json({ res: `Added Practical with ID ${newPractical.id}` });
+    res.json({ res: `Added Practical with ID ${newPractical.id}`, id: newPractical.id });
   } catch (error) {
     logger.error("Error while inserting Practical", error);
     res.status(500);
@@ -27,8 +27,9 @@ async function addPractical(req, res) {
 
 // Controller function to update a Practical entity
 async function updatePractical(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updatePracticalById(id, data);
@@ -49,10 +50,10 @@ async function getPractical(req, res) {
 
 // Controller function to delete a Practical entity
 async function deletePractical(req, res) {
-  const { practicalId } = req.params;
+  const { id } = req.params;
   try {
-    await deletePracticalById(practicalId);
-    res.json({ res: `Deleted Practical with ID ${practicalId}` });
+    await deletePracticalById(id);
+    res.json({ res: `Deleted Practical with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting Practical", error);
     res.status(500).json({ error: "Error while deleting Practical from DB" });

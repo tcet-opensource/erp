@@ -22,6 +22,7 @@ async function addDepartment(req, res) {
     );
     res.json({
       res: `added Department successfully ${department.name}`,
+      id: department.id,
     });
   } catch (error) {
     logger.error("Error while inserting", error);
@@ -58,8 +59,9 @@ async function showdepartments(req, res) {
 }
 
 async function updatedDepartment(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateDepartmentbyid(id, data);

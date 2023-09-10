@@ -9,7 +9,7 @@ async function addInfrastructure(req, res) {
   } = req.body;
   try {
     const newInfrastructure = await createInfrastructure(name, type, wing, floor, capacity);
-    res.json({ res: `added infrastructure ${newInfrastructure.id}` });
+    res.json({ res: `added infrastructure ${newInfrastructure.id}`, id:newInfrastructure.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -18,8 +18,9 @@ async function addInfrastructure(req, res) {
 }
 
 async function updateInfrastructure(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateInfrastructureById(id, data);
@@ -38,11 +39,11 @@ async function getInfrastructure(req, res) {
 }
 
 async function deleteInfrastructure(req, res) {
-  const { infrastructureId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteInfrastructureById(infrastructureId);
+    await deleteInfrastructureById(id);
 
-    res.json({ res: `Deleted infrastructure with ID ${infrastructureId}` });
+    res.json({ res: `Deleted infrastructure with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting", error);
     res.status(500).json({ error: "Error while deleting from DB" });

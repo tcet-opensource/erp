@@ -17,7 +17,7 @@ async function addCoursework(req, res) {
     const newCoursework = await createCoursework({
       student, type, course, task, objectID, activity, marks,
     });
-    res.json({ res: `Added Coursework with ID ${newCoursework.id}` });
+    res.json({ res: `Added Coursework with ID ${newCoursework.id}`, id: newCoursework.id});
   } catch (error) {
     logger.error("Error while inserting Coursework", error);
     res.status(500);
@@ -27,8 +27,9 @@ async function addCoursework(req, res) {
 
 // Controller function to update a Coursework entity
 async function updateCoursework(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
   try {
     await updateCourseworkById(id, data);
@@ -49,10 +50,10 @@ async function getCoursework(req, res) {
 
 // Controller function to delete a Coursework entity
 async function deleteCoursework(req, res) {
-  const { courseworkId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteCourseworkById(courseworkId);
-    res.json({ res: `Deleted Coursework with ID ${courseworkId}` });
+    await deleteCourseworkById(id);
+    res.json({ res: `Deleted Coursework with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting Coursework", error);
     res.status(500).json({ error: "Error while deleting Coursework from DB" });

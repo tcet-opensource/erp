@@ -10,9 +10,9 @@ router.post("/practical/create", practicalController.addPractical);
 router.get("/practical/list", practicalController.getPractical);
 
 // Update Practical entities based on filters and update data
-router.post("/practical/update", practicalController.updatePractical);
+router.post("/practical/update/:id", practicalController.updatePractical);
 
 // Delete Practical entities based on filters
-router.post("/practical/delete", practicalController.deletePractical);
+router.delete("/practical/delete/:id", practicalController.deletePractical);
 
 export default router;
