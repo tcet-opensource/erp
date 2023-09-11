@@ -8,6 +8,7 @@ import { logger } from "#util";
 import indexRouter from "#routes/index";
 import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
+import semesterRouter from "#routes/semester";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
 import practicalRouter from "#routes/practical";
@@ -52,4 +53,6 @@ app.use("/timetable", timetableRouter);
 app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
+app.use("/semester", semesterRouter);
+
 export default app;
