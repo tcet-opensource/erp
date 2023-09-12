@@ -19,8 +19,8 @@ export async function createPractical({
 // Service function to update a Practical entity by ID
 export async function updatePracticalById(id, data) {
   try {
-    const updated = await Practical.updateOne({ _id: id }, data);
-    if (updated.nModified > 0) {
+    const updated = await Practical.update({ _id: id }, data);
+    if (updated) {
       return updated;
     }
     throw new databaseError.DataEntryError("practical");
@@ -32,10 +32,10 @@ export async function updatePracticalById(id, data) {
 // Service function to retrieve a list of Practical entities based on filters
 export async function listPractical(filter) {
   try {
-    const practicalList = await Practical.find(filter);
+    const practicalList = await Practical.read(filter);
     return practicalList;
   } catch (error) {
-    throw new databaseError.DataRetrievalError("practical");
+    throw new databaseError.DataEntryError("practical");
   }
 }
 
