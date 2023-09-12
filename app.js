@@ -18,8 +18,10 @@ import assignmentRouter from "#routes/assignment";
 import timetableRouter from "#routes/timetable";
 import courseworkRouter from "#routes/coursework";
 import moduleRouter from "#routes/module";
-import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
+import groupRouter from "#routes/group";
+
+import { identifyUser } from "#middleware/identifyUser";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -52,4 +54,6 @@ app.use("/timetable", timetableRouter);
 app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
+app.use("/group", groupRouter);
+
 export default app;
