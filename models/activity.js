@@ -22,37 +22,41 @@ const activitySchema = {
 
 const Activity = connector.model("Activity", activitySchema);
 
-// crud
+///crud operation///
 
-async function create(activityData) {
+//add a activity to the database
+async function create(activityData){
   const {
-    activityBlueprint, startTime, duration, course, faculty, type, task, group, students,
-  } = activityData;
-  const activity = new Activity({
-    activityBlueprint, startTime, duration, course, faculty, type, task, group, students,
+    startTime,duration,course,faculty,type,task,group,students,
+  }=activityData;
+  const activity= new Activity({
+    startTime,duration,course,faculty,type,task,group,students,
   });
-  const activityDoc = await activity.save();
+  const activityDoc =await activity.save();
   return activityDoc;
 }
 
-async function read(filter, limit = 1) {
-  const activityDoc = await Activity.find(filter).limit(limit);
-  return activityDoc;
+//Retrieve activity based on a given  filter and limit
+async function read(filter,limit=1){
+  const activity = await Activity.find (filter).limit(limit);
+  return activityDoc ; 
 }
 
-async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Activity.updateMany(filter, { $set: updateObject }, options);
-  return updateResult.acknowledged;
+//update activity based on a given filter 
+async function update(filter,updateObject,options={multi:true}){
+  const updateActivity= await Activity.updateMany(filter,{$set:updateObject},options);
+return updateActivity.acknowledged;
 }
 
-async function remove(filter) {
-  const deleteResult = await Activity.deleteMany(filter);
-  return deleteResult.acknowledged;
+//Delete activity based on a given filter
+async function remove(filter){
+  const deleteActivity= await Activity.deleteMany(filter).exec();
+  return deleteActivity.acknowledged
 }
 
-export default {
-  create,
-  read,
-  update,
-  remove,
+//export crud functions
+
+export default{
+  create,read,update,remove,
 };
+
