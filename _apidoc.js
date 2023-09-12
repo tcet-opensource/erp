@@ -665,3 +665,72 @@
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
+
+// ------------------------------------------------------------------------------------------
+// Group.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /group/add Add Group
+ * @apiName AddGroup
+ * @apiGroup Group
+ * @apiDescription Add a new group.
+ *
+ * @apiBody {String} title Group title.
+ * @apiBody {ObjectId[]} students Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) GroupAddError Error while adding the group
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added group Example Group"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /group/delete/:id Delete Group
+ * @apiName DeleteGroup
+ * @apiGroup Group
+ *
+ * @apiParam {ObjectId} id The ObjectID of the group to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ * @apiError (Error 500) GroupDeleteError Error while deleting the group
+ *
+ */
+
+/**
+ * @api {post} /group/update/:id Update Group Details
+ * @apiName UpdateGroup
+ * @apiGroup Group
+ * @apiDescription Update existing group details.
+ *
+ * @apiParam {ObjectId} id The ObjectID of the group to update.
+ * @apiBody {String} [title] Group title.
+ * @apiBody {ObjectId[]} [students] Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Group updated.
+ * @apiError (Error 500) GroupUpdateError Error in updating database
+ *
+ */
+
+/**
+ * @api {get} /group/list Get Group List
+ * @apiName GetGroupList
+ * @apiGroup Group
+ *
+ * @apiQuery {String} [title] Title of the group.
+ *
+ * @apiSuccess {Group[]} res Array of filtered group documents.
+ * @apiSuccess {ObjectId} group._id ObjectID of the group document in the database.
+ * @apiSuccess {String} group.title Title of the group.
+ * @apiSuccess {ObjectId[]} group.students Array of student ObjectIDs in the group.
+ */
