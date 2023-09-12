@@ -17,7 +17,14 @@ async function addModule(req, res) {
     no, name, outcome, contents, hrsPerModule, cognitiveLevels,
   } = req.body;
   try {
-    const newModule = await addNewModule(no, name, outcome, contents, hrsPerModule, cognitiveLevels);
+    const newModule = await addNewModule(
+      no,
+      name,
+      outcome,
+      contents,
+      hrsPerModule,
+      cognitiveLevels,
+    );
     res.json({ res: `added module ${newModule.name}` });
   } catch (error) {
     logger.error("Error while inserting", error);
@@ -27,5 +34,5 @@ async function addModule(req, res) {
 }
 
 export default {
-  showModule, addModule
+  showModule, addModule,
 };

@@ -10,7 +10,7 @@ async function addTutorial(req, res) {
   try {
     // eslint-disable-next-line max-len
     const tutorial = await addNewTutorial(no, title, hours, cognitiveLevel);
-    res.json({ res: `added tutorial ${tutorial.name}` });
+    res.json({ res: `added tutorial ${tutorial.name}`, id: tutorial.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -18,9 +18,9 @@ async function addTutorial(req, res) {
   }
 }
 async function deleteTutorial(req, res) {
-  const { tutorialId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteTutorialById(tutorialId);
+    await deleteTutorialById(id);
     res.json({ res: "Tutorial deleted successfully" });
   } catch (error) {
     logger.error("Error while deleting", error);
@@ -30,8 +30,9 @@ async function deleteTutorial(req, res) {
 }
 
 async function updateTutorial(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
 
   try {

@@ -9,7 +9,7 @@ async function addOrganization(req, res) {
   } = req.body;
   try {
     const organization = await addNewOrganization(parent, startDate, name, accreditation);
-    res.json({ res: `added organization${organization.name}` });
+    res.json({ res: `added organization${organization.name}`, id: organization.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -17,9 +17,9 @@ async function addOrganization(req, res) {
   }
 }
 async function deleteOrganization(req, res) {
-  const { organizationId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteOrganizationById(organizationId);
+    await deleteOrganizationById(id);
     res.json({ res: "Organization deleted successfully" });
   } catch (error) {
     logger.error("Error while deleting", error);
@@ -29,8 +29,9 @@ async function deleteOrganization(req, res) {
 }
 
 async function updateOrganization(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
 
   try {
