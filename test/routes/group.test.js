@@ -44,7 +44,7 @@ describe("group API", () => {
       title: "Group 1",
       student: "64fdc67feca8a69f01b33614",
     });
-
+    expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added group/);
   });
@@ -78,7 +78,7 @@ describe("group API", () => {
       const response = await agent
         .post(`/group/update/${id}`)
         .send({ title: "Group 1" }, { title: "Group 2" });
-
+      expect(response.headers["content-type"]).toMatch(/json/);
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(/updated group/);
     });
