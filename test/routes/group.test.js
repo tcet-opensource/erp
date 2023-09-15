@@ -20,8 +20,7 @@ beforeAll((done) => {
 function cleanUp(callback) {
   groupModel
     .remove({
-      title: "Group 1",
-      student: "64fdc67feca8a69f01b33614",
+      id: "6500594e2b7b532006c073dd",
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -61,8 +60,7 @@ describe("group API", () => {
 
     afterEach(async () => {
       await groupModel.remove({
-        title: "Group 1",
-        student: "64fdc67feca8a69f01b33614",
+        id: "6500594e2b7b532006c073dd",
       });
     });
 
