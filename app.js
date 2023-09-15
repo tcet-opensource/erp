@@ -18,6 +18,7 @@ import assignmentRouter from "#routes/assignment";
 import timetableRouter from "#routes/timetable";
 import courseworkRouter from "#routes/coursework";
 import moduleRouter from "#routes/module";
+import facultyRouter from "#routes/faculty";
 import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
 
@@ -52,4 +53,5 @@ app.use("/timetable", timetableRouter);
 app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
+app.use("/faculty", facultyRouter);
 export default app;
