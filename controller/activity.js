@@ -1,11 +1,11 @@
 import {
     createActivity,deleteActivityById, activityList ,updateActivityById,
 }from "#services/activity";
-import { assignmentList } from "#services/assignment";
-import {logger} from "util" ;
+import {logger} from "#util" ;
 
-async function addActivity(res,req) {
+async function addActivity(req,res) {
     const{
+        activityBlueprint,
         startTime,
         duration,
         course,
@@ -17,7 +17,7 @@ async function addActivity(res,req) {
     }=req.body;
     try{
         const newActivity = await createActivity(activityBlueprint,startTime,duration,course,faculty,type,task,group,students);
-        res.json ({res: `added user ${newActivity.id}`});
+        res.json ({res: `added activity ${newActivity.id}`, id: newActivity.id});
     } catch (error){
         logger.error ("Error while inserting",error);
         res.status(500);
@@ -26,8 +26,9 @@ async function addActivity(res,req) {
 }
 
 async function updateActivity(req,res){
+    const { id }=req.params;
     const {
-        id, ...data  
+        ...data  
     }=req.body;
     try {
          await updateActivityById(id,data);
@@ -47,11 +48,11 @@ async function getActivity(req,res){
 
 
 async function deleteActivity(res,req){
-    const { activityId }=req.params;
+    const { id }=req.params;
     try{
-        await deleteActivityById(activityId);
+        await deleteActivityById(id);
 
-        res.json({res:`Deleted activity with ID ${activityId}`});
+        res.json({res:`Deleted activity with ID ${id}`});
     }catch(error){
         logger.error ("Error while deleting",error);
         res.status(500).json({error:"Error while deleting from DB"});

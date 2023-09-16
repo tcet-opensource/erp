@@ -27,10 +27,10 @@ const Activity = connector.model("Activity", activitySchema);
 //add a activity to the database
 async function create(activityData){
   const {
-    startTime,duration,course,faculty,type,task,group,students,
+    activityBlueprint, startTime,duration,course,faculty,type,task,group,students,
   }=activityData;
   const activity= new Activity({
-    startTime,duration,course,faculty,type,task,group,students,
+    activityBlueprint, startTime,duration,course,faculty,type,task,group,students,
   });
   const activityDoc =await activity.save();
   return activityDoc;
@@ -38,7 +38,7 @@ async function create(activityData){
 
 //Retrieve activity based on a given  filter and limit
 async function read(filter,limit=1){
-  const activity = await Activity.find (filter).limit(limit);
+  const activityDoc = await Activity.find (filter).limit(limit);
   return activityDoc ; 
 }
 

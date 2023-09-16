@@ -1,11 +1,11 @@
 import Activity from "#models/activity" ;
 import databaseError from "#error/database";
 
-export async function createActivity (startTime,duration,course,faculty,type,task,group,students){
+export async function createActivity (activityBlueprint,startTime,duration,course,faculty,type,task,group,students){
     const newActivity = await Activity.create({
-        startTime,duration,course,faculty,task,type,group,students,
+        activityBlueprint,startTime,duration,course,faculty,task,type,group,students,
     });
-    if (newActivity.title===title){
+    if (newActivity){
         return newActivity;
     }
     throw new databaseError.DataEntryError("actvity");
@@ -24,7 +24,7 @@ export async function activityList(filter){
     return activitylist;
 }
 
-export async function deleteActivityById(activityId){
+export async function deleteActivityById(id){
     const deleted = await Activity.remove({_id:id},data);
     if(deleted){
         return deleted;
