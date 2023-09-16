@@ -34,13 +34,13 @@ afterAll((done) => {
 
 describe("checking attendance functions", () => {
   it("create attendance", async () => {
-    const response = await agent.post("/attendance/add").send({  
+    const response = await agent.post("/attendance/add").send({
       student: "xyz",
       course: "abc",
       monthlyAttended: "22",
       monthlyOccured: "42",
       cumulativeAttended: "32",
-      cumulativeOccured:"41",
+      cumulativeOccured: "41",
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);

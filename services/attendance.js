@@ -1,8 +1,9 @@
 import Attendance from "#models/attendance";
 import databaseError from "#error/database";
 
-export async function addNewAttendance(student, course, monthlyAttended, monthlyOccured,cumulativeAttended,cumulativeOccured) {
-  const NewAttendance = await Attendance.create({
+// eslint-disable-next-line max-len
+export async function addNewAttendance(student, course, monthlyAttended, monthlyOccured, cumulativeAttended, cumulativeOccured) {
+  const newAttendance = await Attendance.create({
     student,
     course,
     monthlyAttended,
