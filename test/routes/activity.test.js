@@ -103,7 +103,6 @@ describe("Activity API", () => {
     });
 
     it("should update activity", async () => {
-      console.log(id)
       const response = await agent
         .post(`/activity/update/${id}`)
         .send({
