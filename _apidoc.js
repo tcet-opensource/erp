@@ -309,3 +309,79 @@
  * @apiSuccess {Date} accreditation.dateofAccreditation Date on which accreditation was issued.
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
+// ------------------------------------------------------------------------------------------
+// Attendance.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /attendance/add Add Attendance
+ * @apiName AddAttendance
+ * @apiGroup Attendance
+ *
+ * @apiBody {String} student The name of the student for attendance.
+ * @apiBody {String} course The course for attendance.
+ * @apiBody {Number} monthylyAttended The attendance of student monthly.
+ * @apiBody {Number} monthlyOccured The monthlyOccured attendance.
+ * @apiBody {Number} cumulativeAttended The cumulative attendance.
+ * @apiBody {Number} cumulativeOccured The cumulative occured.
+ *
+ * @apiSuccess {String} res Success message with the ID of the added attendance.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new attendance to the system.
+ */
+
+/**
+ * @api {get} attendance/list Get Attendance List
+ * @apiName GetAttendance
+ * @apiGroup Attendance
+ *
+ * @apiQuery {String} [student] Student name .
+ * @apiQuery {String} [course] Course name.
+ * @apiQuery {Number} [monthlyAttended] MonthlyAttendance of the student.
+ * @apiQuery {Number} [monthlyOccured] monthlyOccured .
+ * @apiQuery {Number} [cumulativeAttended] CumulativeAttended by the student.
+ * @apiQuery {Number} [cumulativeOccured] CumulativeOccured.
+ *
+ * @apiSuccess {Infrastructure[]} res Array of Filtered Attendance Doc .
+ * @apiSuccess {String} attendance._id ID of document given by database.
+ * @apiSuccess {String} attendance.student Student name.
+ * @apiSuccess {String} attendance.course Course name.
+ * @apiSuccess {Number} attendance.monthlyAttended MonthlyAttendance of the student.
+ * @apiSuccess {Number} attendance.monthlyOccured MonthyOccured .
+ * @apiSuccess {Number} attendance.cumulativeAttended CumulativeAttended by student.
+ * @apiSuccess {Number} attendance.cumulativeOccured CumulativeOccured.
+ */
+
+/**
+ * @api {delete} /attendance/delete/:attendanceId Delete Attendance
+ * @apiName DeleteAttendance
+ * @apiGroup Attendance
+ *
+ * @apiParam {String} attendancdId The ID of the infrastructure document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+
+/**
+ * @api {post} /attendance/update Update attendance details
+ * @apiName UpdateAttendance
+ * @apiGroup Attendance
+ * @apiDescription update Existing Attendance details
+ *
+ * @apiBody {String} id Id of the attendance to be updated
+ * @apiBody {String} [student] The name of the student.
+ * @apiBody {String} [course] The course for which the attendance is given.
+ * @apiBody {Number} [monthlyAttended] The monthlyAttendance of the student.
+ * @apiBody {Number} [monthlyOccured] The monthlyOccured .
+ * @apiBody {Number} [cumulativeAttended] The cumulative attended by the student.
+ * @apiBody {Number} [cumulativeOccured] The cumulative occured.
+ *
+ * @apiSuccess {String} res attendance updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
