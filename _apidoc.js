@@ -665,3 +665,81 @@
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
+
+// ------------------------------------------------------------------------------------------
+// Assignment.
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /assignment/add Add assignment
+ * @apiName Addassignment
+ * @apiGroup assignment
+ * @apiDescription Add a new assignment.
+ *
+ * @apiBody {String} no Assignment number.
+ * @apiBody {String} title assignment title.
+ * @apiBody {String} type type of assignment.
+ * @apiBody {Number} marks marks in assignment.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) UserNotFound The  of the User was not found
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added assignment Example Assignment"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /assignment/delete/:assignmentId To delete Assignment
+ * @apiName DeleteAssignment
+ * @apiGroup Assignment
+ *
+ * @apiParam {String} assignmentId The ID of the assignment document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+
+/**
+ * @api {post} /assignment/update update assignment details
+ * @apiName UpdateAssignment
+ * @apiGroup Assignment
+ * @apiDescription update Existing assignment
+ *
+ * @apiBody {String} id Id of the assignment to be updated
+ * @apiBody {String} [no] Assignment number.
+ * @apiBody {String} [title] assignment title.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ *
+ * @apiSuccess {String} res Assignment updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
+
+/**
+ * @api {get} assignment/list Get Assignment List
+ * @apiName GetAssignment
+ * @apiGroup Assignment
+ *
+ * @apiBody {String} [no] Number of assignment.
+ * @apiBody {String} [title] Title of assignment.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ *
+ * @apiSuccess {assignment[]} res Array of Filtered assignment Doc.
+ * @apiSuccess {String} assignment._id ID of document given by database.
+ * @apiBody {String} [no] Number of assignment.
+ * @apiBody {String} [title] Title of assignment.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ */
