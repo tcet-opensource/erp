@@ -36,9 +36,9 @@ describe("checking assignment functions", () => {
   it("create assignment", async () => {
     const response = await agent.post("/assignment/add").send({
       no: "123",
-      agencyName: "abc",
-      dateofAccreditation: "2023-06-18T14:11:30Z",
-      dateofExpiry: "2023-05-28T14:10:30Z",
+        title: "xyz",
+        type: "FA",
+        marks: 100,
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -49,7 +49,7 @@ describe("checking assignment functions", () => {
     id = await agent.post("/assignment/add").send({
         no: "123",
         title: "xyz",
-        type: "abc",
+        type: "FA",
         marks: 100,
     });
     id = JSON.parse(id.res.text).id;
