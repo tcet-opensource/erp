@@ -35,9 +35,9 @@ afterAll((done) => {
 describe("checking assignment functions", () => {
   it("create assignment", async () => {
     const response = await agent.post("/assignment/add").send({
-      no: "123",
+        no: 123,
         title: "xyz",
-        type: ["FA"],
+        type: "FA",
         marks: 100,
     });
     expect(response.headers["content-type"]).toMatch(/json/);
@@ -49,7 +49,7 @@ describe("checking assignment functions", () => {
     id = await agent.post("/assignment/add").send({
         no: "123",
         title: "xyz",
-        type: ["FA"],
+        type: "FA",
         marks: 100,
     });
     id = JSON.parse(id.res.text).id;
