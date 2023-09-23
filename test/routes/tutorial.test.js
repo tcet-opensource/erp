@@ -44,36 +44,38 @@ describe("checking tutorial functions", () => {
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added tutorial/);
   });
-
-  let tutorialId;
-  beforeEach(async () => {
-    const id = agent.post("/tutorial/add").send({
-      no: "123",
-      title: "abc",
-      hours: "3",
-      cognitiveLevel: ["L1", "L2"],
+  
+  describe("after creating a practical", () => {
+    let tutorialId;
+    beforeEach(async () => {
+      const id = await agent.post("/tutorial/add").send({
+        no: "456",
+        title: "dfg",
+        hours: "3",
+        cognitiveLevel: ["L1", "L2"],
+      });
+      tutorialId = JSON.parse(id.res.text).id;
     });
-    tutorialId = JSON.parse(id.res.text).id;
-  });
 
-  afterEach(async () => {
-    await tutorialModel.remove({ no: "123" });
-  });
+    afterEach(async () => {
+      await tutorialModel.remove();
+    });
 
-  it("read tutorial", async () => {
-    const response = await agent
-      .get("/tutorial/list")
-      .send({ name: "xyz" });
-    expect(response.status).toBe(200);
-    expect(response.body.res).toBeDefined();
-  });
+    it("read tutorial", async () => {
+      const response = await agent
+        .get("/tutorial/list")
+        .send({ name: "dfg" });
+      expect(response.status).toBe(200);
+      expect(response.body.res).toBeDefined();
+    });
 
-  it("update tutorial", async () => {
-    const response = await agent
-      .post(`/tutorial/update+${tutorialId}`)
-      .send({ no: "123" }, { no: "123" });
-    expect(response.headers["content-type"]).toMatch(/json/);
-    expect(response.status).toBe(200);
-    expect(response.body.res).toMatch(/tutorial updated/);
+    it("update tutorial", async () => {
+      const response = await agent
+        .post(`/tutorial/update/${tutorialId}`)
+        .send({ no: "456" });
+      expect(response.headers["content-type"]).toMatch(/json/);
+      expect(response.status).toBe(200);
+      expect(response.body.res).toMatch(/tutorial updated/);
+    });
   });
 });
