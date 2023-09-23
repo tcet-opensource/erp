@@ -83,7 +83,7 @@ describe("Organization API", () => {
           .send({ name: "your org" });
   
         expect(response.status).toBe(200);
-        expect(response.body.res).toMatch(/updated organization/);
+        expect(response.body.res).toMatch(/organization updated/);
       });
     });
   });
