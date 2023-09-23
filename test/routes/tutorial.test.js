@@ -17,7 +17,7 @@ beforeAll((done) => {
 });
 
 function cleanUp(callback) {
-  tutorialModel.remove({ no: "123git" }).then(() => {
+  tutorialModel.remove({ no: "123" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) console.log("Database dissconnnect error: ", DBerr);
       server.close((serverErr) => {
@@ -38,7 +38,7 @@ describe("checking tutorial functions", () => {
       no: "123",
       title: "abc",
       hours: "3",
-      cognitiveLevel: "abc",
+      cognitiveLevel: ["L1"],
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -50,7 +50,7 @@ describe("checking tutorial functions", () => {
       no: "123",
       title: "abc",
       hours: "3",
-      cognitiveLevel: "abc",
+      cognitiveLevel: ["L1", "L2"],
     });
   });
 
