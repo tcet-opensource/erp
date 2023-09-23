@@ -45,13 +45,15 @@ describe("checking tutorial functions", () => {
     expect(response.body.res).toMatch(/added tutorial/);
   });
 
+  let tutorialId;
   beforeEach(async () => {
-    agent.post("/tutorial/add").send({
+    const id = agent.post("/tutorial/add").send({
       no: "123",
       title: "abc",
       hours: "3",
       cognitiveLevel: ["L1", "L2"],
     });
+    tutorialId = JSON.parse(id.res.text).id;
   });
 
   afterEach(async () => {
@@ -68,7 +70,7 @@ describe("checking tutorial functions", () => {
 
   it("update tutorial", async () => {
     const response = await agent
-      .post("/tutorial/update")
+      .post(`/tutorial/update+${tutorialId}`)
       .send({ no: "123" }, { no: "123" });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
