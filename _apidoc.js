@@ -665,3 +665,80 @@
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
+
+// ------------------------------------------------------------------------------------------
+// Paper.
+// ------------------------------------------------------------------------------------------
+//
+/**
+ * @api {post} /paper/add Add Paper
+ * @apiName AddPaper
+ * @apiDescription Adds a new Paper.
+ * @apiGroup Paper
+ *
+ * @apiBody {String} [answersheetID] The id of the Answersheet.
+ * @apiBody {connector.Schema.Types.ObjectId} Exam The Exam which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} Student The Student which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} Faculty The Faculty which is associated.
+ * @apiBody {Number} [marks] marks in the paper.
+ *
+ * @apiSuccess {String} res added Paper successfully.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the DB.
+ *
+ */
+
+/**
+ * @api {get} /paper/list Listdown Paper
+ * @apiName GetPaper
+ * @apiDescription Listdown the Paper.
+ * @apiGroup Paper
+ *
+ * @apiQuery {String} [answersheetID] The id of the Answersheet.
+ * @apiQuery {connector.Schema.Types.ObjectId} Exam The Exam which is associated.
+ * @apiQuery {connector.Schema.Types.ObjectId} Student The Student which is associated.
+ * @apiQuery {connector.Schema.Types.ObjectId} Faculty The Faculty which is associated.
+ * @apiQuery {Number} [marks] marks in the paper.
+ *
+ * @apiSuccess {Paper[]} res Array of Filtered Paper Doc.
+ * @apiSuccess {String} paper._id ID of paper given by database.
+ * @apiSuccess {String} paper.answersheetID ID of answersheet.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.exam associated Exam.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.student associated Student.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.faculty associated Faculty.
+ * @apiSuccess {Number} paper.marks The marks in the Paper.
+ * @apiError (Error 500) err Error while fetching the data.
+ */
+
+/**
+ * @api {delete} /paper/delete/:id Delete Paper
+ * @apiName DeletePaper
+ * @apiDescription Remove the existing Paper.
+ * @apiGroup Paper
+ *
+ * @apiParam {String} answersheetID The ID of the answersheet to delete.
+ *
+ * @apiSuccess {String} res Paper deleted successfully.
+ *
+ * @apiError (Error 500) err Error while deleting from DB.
+ *
+* */
+
+/**
+ * @api {post} /paper/update/ Update Paper
+ * @apiName UpdatePaper
+ * @apiGroup Paper
+ * @apiDescription Update Existing Paper details except 
+ *
+ * @apiSuccess {Paper[]} res Array of Filtered Paper Doc .
+ * @apiSuccess {String} paper._id ID of paper given by database.
+ * @apiSuccess {String} paper.answersheetID Name of Infrastructure
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.exam associated Exam.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.student associated Student.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.faculty associated Faculty.
+ * @apiSuccess {Number} paper.marks The marks in the Paper.
+ * 
+ * @apiSuccess {String} res Paper updated successfully.
+ * 
+ * @apiError (Error 500) err Error while updating the data.s
+ */
