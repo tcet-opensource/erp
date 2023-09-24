@@ -73,6 +73,6 @@ describe("checking assignment functions", () => {
       .send({ no: "123" }, { no: "345" });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
-    expect(response.body.res).toMatch(/assignment updated/);
+    expect(response.body.res).toMatch(/updated assignment/);
   });
 });
