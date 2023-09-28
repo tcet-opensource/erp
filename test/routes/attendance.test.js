@@ -17,7 +17,7 @@ beforeAll((done) => {
 });
 
 function cleanUp(callback) {
-  attendanceModel.remove({ name: "xyz" }).then(() => {
+  attendanceModel.remove({ student: "xyz" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) console.log("Database dissconnnect error: ", DBerr);
       server.close((serverErr) => {
@@ -35,7 +35,7 @@ afterAll((done) => {
 describe("checking attendance functions", () => {
   it("create attendance", async () => {
     const response = await agent.post("/attendance/add").send({
-      name: "xyz",
+      student: "xyz",
       course: "XYZ",
       monthlyAttended: 123,
       monthlyOccured: 123,
@@ -49,7 +49,7 @@ describe("checking attendance functions", () => {
   let id;
   beforeEach(async () => {
     id = await agent.post("/attendance/add").send({
-        name: "xyz",
+        student: "xyz",
         course: "XYZ",
         monthlyAttended: 123,
         monthlyOccured: 123,
@@ -60,13 +60,13 @@ describe("checking attendance functions", () => {
   });
 
   afterEach(async () => {
-    await attendanceModel.remove({ name: "xyz" });
+    await attendanceModel.remove({ student: "xyz" });
   });
 
   it("read attendance", async () => {
     const response = await agent
       .get("/attendance/list")
-      .send({ name: "xyz" });
+      .send({ student: "xyz" });
     expect(response.status).toBe(200);
     expect(response.body.res).toBeDefined();
   });
@@ -74,7 +74,7 @@ describe("checking attendance functions", () => {
   it("update attendance", async () => {
     const response = await agent
       .post(`/attendance/update/${id}`)
-      .send({ name: "xyz" }, { name: "123" });
+      .send({ student: "xyz" }, { student: "123" });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/attendance updated/);
