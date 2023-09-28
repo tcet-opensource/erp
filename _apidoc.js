@@ -665,3 +665,87 @@
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
+// ------------------------------------------------------------------------------------------
+// Attendance.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /attendance/add Add Attendance
+ * @apiName AddAttendance
+ * @apiGroup Attendance
+ * @apiDescription Add a new attendance.
+ *
+ * @apiBody {String} student Student name.
+ * @apiBody {String} course Course name.
+ * @apiBody {Number} monthlyAttended Monthly attendance of student.
+ * @apiBody {Number} monthlyOccured Monthly occured.
+ * @apiBody {Number} cumulativeAttended sum of attendance of student.
+ * @apiBody {Number} cumulativeOccured sum of occured.
+ * 
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) UserNotFound The  of the User was not found
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added attendance Example Attendance"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /attendance/delete/:attendanceId To delete Attendance
+ * @apiName DeleteAttendance
+ * @apiGroup Attendance
+ *
+ * @apiParam {String} attendanceId The ID of the attendance document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+
+/**
+ * @api {post} /attendance/update update attendance details
+ * @apiName UpdateAttendance
+ * @apiGroup Attendance
+ * @apiDescription update Existing attendance
+ *
+ * @apiBody {String} [student] Student name.
+ * @apiBody {String} [course] Course name.
+ * @apiBody {Number} [monthlyAttended] Monthly attendance of student.
+ * @apiBody {Number} [monthlyOccured] Monthly occured.
+ * @apiBody {Number} [cumulativeAttended] sum of attendance of student.
+ * @apiBody {Number} [cumulativeOccured] sum of occured.
+ *
+ * @apiSuccess {String} res Attendance updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
+
+/**
+ * @api {get} attendance/list Get Attendance List
+ * @apiName GetAttendance
+ * @apiGroup Attendance
+ *
+ * @apiBody {String} [student] Student name.
+ * @apiBody {String} [course] Course name.
+ * @apiBody {Number} [monthlyAttended] Monthly attendance of student.
+ * @apiBody {Number} [monthlyOccured] Monthly occured.
+ * @apiBody {Number} [cumulativeAttended] sum of attendance of student.
+ * @apiBody {Number} [cumulativeOccured] sum of occured.
+ *
+ * @apiSuccess {attendance[]} res Array of Filtered attendance Doc.
+ * @apiSuccess {String} attendance._id ID of document given by database.
+ * @apiSuccess {String} attendance.student Name of student.
+ * @apiSuccess {String} attendance.course Name of course.
+ * @apiSuccess {Number} attendance.monthlyAttended Monthly attendance of student.
+ * @apiSuccess {Number} attendance.cumulativeAttended sum of attendance of student.
+ * @apiSuccess {Number} attendance.cumulativeOccured sum of occured.
+ */
