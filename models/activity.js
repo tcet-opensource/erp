@@ -22,9 +22,9 @@ const activitySchema = {
 
 const Activity = connector.model("Activity", activitySchema);
 
-///crud operation///
+/// crud operation///
 
-//add a activity to the database
+// add a activity to the database
 async function create(activityData){
   const {
     activityBlueprint, startTime,duration,course,faculty,type,task,group,students,
@@ -36,25 +36,25 @@ async function create(activityData){
   return activityDoc;
 }
 
-//Retrieve activity based on a given  filter and limit
+// Retrieve activity based on a given  filter and limit
 async function read(filter,limit=1){
   const activityDoc = await Activity.find (filter).limit(limit);
   return activityDoc ; 
 }
 
-//update activity based on a given filter 
+// update activity based on a given filter 
 async function update(filter,updateObject,options={multi:true}){
   const updateActivity= await Activity.updateMany(filter,{$set:updateObject},options);
 return updateActivity.acknowledged;
 }
 
-//Delete activity based on a given filter
+// Delete activity based on a given filter
 async function remove(filter){
   const deleteActivity= await Activity.deleteMany(filter).exec();
-  return deleteActivity.acknowledged
+  return deleteActivity.acknowledged;
 }
 
-//export crud functions
+// export crud functions
 
 export default{
   create,read,update,remove,

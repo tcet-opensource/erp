@@ -1,21 +1,9 @@
-import request from "supertest";
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
-import app from "#app";
 import moduleModel from "#models/module";
 import connector from "#models/databaseUtil";
 
 jest.mock("#util");
-
-let server;
-let agent;
-
-beforeAll((done) => {
-  server = app.listen(null, () => {
-    agent = request.agent(server);
-    connector.set("debug", false);
-    done();
-  });
-});
+const { agent } = global;
 
 function cleanUp(callback) {
   moduleModel.remove({ startDate: "2023-06-18T14:11:30Z" }).then(() => {
@@ -23,10 +11,7 @@ function cleanUp(callback) {
       if (DBerr) {
         console.log("Database disconnnect error: ", DBerr);
       }
-      server.close((serverErr) => {
-        if (serverErr) console.log(serverErr);
-        callback();
-      });
+      callback();
     });
   });
 }
@@ -52,7 +37,7 @@ describe("checking module functions", () => {
   });
 
   beforeEach(async () => {
-    agent.post("/module/add").send({
+    await agent.post("/module/add").send({
       no: 1,
       name: "Module 1",
       outcome: "I am good at debugging",

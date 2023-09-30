@@ -1,30 +1,17 @@
-import request from "supertest";
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
-import app from "#app";
 import accreditationModel from "#models/accreditation";
 import connector from "#models/databaseUtil";
 
 jest.mock("#util");
 
-let server;
-let agent;
-beforeAll((done) => {
-  server = app.listen(null, () => {
-    agent = request.agent(server);
-    connector.set("debug", false);
-    done();
-  });
-});
+const { agent } = global;
 
 function cleanUp(callback) {
   accreditationModel.remove({ name: "xyz" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) console.log("Database dissconnnect error: ", DBerr);
-      server.close((serverErr) => {
-        if (serverErr) console.log(serverErr);
-        callback();
-      });
     });
+    callback();
   });
 }
 
