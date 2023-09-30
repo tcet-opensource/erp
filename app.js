@@ -18,7 +18,9 @@ import tutorialRouter from "#routes/tutorial";
 import assignmentRouter from "#routes/assignment";
 import timetableRouter from "#routes/timetable";
 import courseworkRouter from "#routes/coursework";
+import activityRouter from "#routes/activity";
 import moduleRouter from "#routes/module";
+import facultyRouter from "#routes/faculty";
 import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
 
@@ -47,6 +49,7 @@ app.use("/department", departmentRouter);
 app.use("/practical", practicalRouter);
 app.use("/organization", organizationRouter);
 app.use("/student", studentRouter);
+app.use("/activity", activityRouter);
 app.use("/tutorial", tutorialRouter);
 app.use("/assignment", assignmentRouter);
 app.use("/timetable", timetableRouter);
@@ -54,5 +57,5 @@ app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
 app.use("/semester", semesterRouter);
-
+app.use("/faculty", facultyRouter);
 export default app;
