@@ -665,3 +665,65 @@
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
+
+//-----------------------------------------------------------------------------
+//Organization
+//-----------------------------------------------------------------------------
+
+/**
+ * @api {get} /organization/list Get Organisation List
+ * @apiName GetOrganizationList
+ * @apiGroup Organization
+ * 
+ * @apiQuery [parent] Id of the parent of the organization
+ * @apiQuery [startDate] starting date of the organization
+ * @apiQuery [name] name of the organization
+ * @apiQuery [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {Orgaization[]} res array of filtered organization Doc
+ * @apiSuccess {ObjectId} organization.parent Id of the parent of the organization
+ * @apiSuccess {Date} organization.startDate starting date of the organization
+ * @apiSuccess {String} organization.name name of the organization
+ * @apiSuccess {ObjectId} organization.accreditations accreditation Id of the organization
+ */
+
+/**
+ * @api {post} /organization/add Add Organisation
+ * @apiName AddOrganization
+ * @apiGroup Organization
+ * 
+ * @apiBody {ObjectId} [parent] Id of the parent of the organization
+ * @apiBody {Date} [startDate] starting date of the organization
+ * @apiBody {String} [name] name of the organization
+ * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {String} res added organization
+ * @apiError (Error 500) Error while inserting in DB
+ */
+
+/**
+ * @api {delete} /organization/delete/:organizationId Delete Organization
+ * @apiName DeleteOrganization
+ * @apiGroup Organization
+ * 
+ * @apiParam {String} organizationId The ID of the Organization document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /organization/update/:organizationId Update Organisation
+ * @apiName UpdateOrganization
+ * @apiGroup Organization
+ * 
+ * @apiBody {String} organizationId The ID of the Organization document to update
+ * @apiBody {ObjectId} [parent] Id of the parent of the organization
+ * @apiBody {Date} [startDate] starting date of the organization
+ * @apiBody {String} [name] name of the organization
+ * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {String} res organization updated
+ * @apiError (Error 500) Error while inserting in DB
+ */
