@@ -24,7 +24,7 @@ export async function updateModuleById(id,data) {
   if (updated) {
     return updated;
   }
-  throw new databaseError.DataEntryError("Module")
+  throw new databaseError.DataEntryError("Module");
 }
 
 export async function deleteModuleById(ModuleId) {
@@ -32,5 +32,5 @@ export async function deleteModuleById(ModuleId) {
   if (deleted) {
     return deleted;
   }
-  throw new databaseError.DataDeleteError("Module")
+  throw new databaseError.DataDeleteError("Module");
 }

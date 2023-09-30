@@ -25,7 +25,7 @@ export async function activityList(filter){
 }
 
 export async function deleteActivityById(id){
-    const deleted = await Activity.remove({_id:id},data);
+    const deleted = await Activity.remove({_id:id});
     if(deleted){
         return deleted;
     }
