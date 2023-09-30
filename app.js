@@ -25,8 +25,6 @@ import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
 import groupRouter from "#routes/group";
 
-import { identifyUser } from "#middleware/identifyUser";
-
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
 
