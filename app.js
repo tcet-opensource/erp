@@ -23,6 +23,7 @@ import moduleRouter from "#routes/module";
 import facultyRouter from "#routes/faculty";
 import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
+import groupRouter from "#routes/group";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -56,6 +57,7 @@ app.use("/timetable", timetableRouter);
 app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
+app.use("/group", groupRouter);
 app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 export default app;
