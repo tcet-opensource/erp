@@ -666,6 +666,403 @@
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
 
+//-----------------------------------------------------------------------------
+//Organization
+//-----------------------------------------------------------------------------
+
+/**
+ * @api {get} /organization/list Get Organisation List
+ * @apiName GetOrganizationList
+ * @apiGroup Organization
+ * 
+ * @apiQuery [parent] Id of the parent of the organization
+ * @apiQuery [startDate] starting date of the organization
+ * @apiQuery [name] name of the organization
+ * @apiQuery [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {Orgaization[]} res array of filtered organization Doc
+ * @apiSuccess {ObjectId} organization.parent Id of the parent of the organization
+ * @apiSuccess {Date} organization.startDate starting date of the organization
+ * @apiSuccess {String} organization.name name of the organization
+ * @apiSuccess {ObjectId} organization.accreditations accreditation Id of the organization
+ */
+
+/**
+ * @api {post} /organization/add Add Organisation
+ * @apiName AddOrganization
+ * @apiGroup Organization
+ * 
+ * @apiBody {ObjectId} [parent] Id of the parent of the organization
+ * @apiBody {Date} [startDate] starting date of the organization
+ * @apiBody {String} [name] name of the organization
+ * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {String} res added organization
+ * @apiError (Error 500) Error while inserting in DB
+ */
+
+/**
+ * @api {delete} /organization/delete/:organizationId Delete Organization
+ * @apiName DeleteOrganization
+ * @apiGroup Organization
+ * 
+ * @apiParam {String} organizationId The ID of the Organization document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+// ------------------------------------------------------------------------------------------
+// Paper.
+// ------------------------------------------------------------------------------------------
+//
+/**
+ * @api {post} /paper/add Add Paper
+ * @apiName AddPaper
+ * @apiDescription Adds a new Paper.
+ * @apiGroup Paper
+ *
+ * @apiBody {String} [answersheetID] The id of the Answersheet.
+ * @apiBody {connector.Schema.Types.ObjectId} Exam The Exam which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} Student The Student which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} Faculty The Faculty which is associated.
+ * @apiBody {Number} [marks] marks in the paper.
+ *
+ * @apiSuccess {String} res added Paper successfully.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the DB.
+ *
+ */
+
+/**
+ * @api {get} /paper/list Listdown Paper
+ * @apiName GetPaper
+ * @apiDescription Listdown the Paper.
+ * @apiGroup Paper
+ *
+ * @apiQuery {String} [answersheetID] The id of the Answersheet.
+ * @apiQuery {connector.Schema.Types.ObjectId} Exam The Exam which is associated.
+ * @apiQuery {connector.Schema.Types.ObjectId} Student The Student which is associated.
+ * @apiQuery {connector.Schema.Types.ObjectId} Faculty The Faculty which is associated.
+ * @apiQuery {Number} [marks] marks in the paper.
+ *
+ * @apiSuccess {Paper[]} res Array of Filtered Paper Doc.
+ * @apiSuccess {String} paper._id ID of paper given by database.
+ * @apiSuccess {String} paper.answersheetID ID of answersheet.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.exam associated Exam.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.student associated Student.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.faculty associated Faculty.
+ * @apiSuccess {Number} paper.marks The marks in the Paper.
+ * @apiError (Error 500) err Error while fetching the data.
+ */
+
+/**
+ * @api {delete} /paper/delete/:id Delete Paper
+ * @apiName DeletePaper
+ * @apiDescription Remove the existing Paper.
+ * @apiGroup Paper
+ *
+ * @apiParam {String} answersheetID The ID of the answersheet to delete.
+ *
+ * @apiSuccess {String} res Paper deleted successfully.
+ *
+ * @apiError (Error 500) err Error while deleting from DB.
+ *
+* */
+
+// ------------------------------------------------------------------------------------------
+// Assignment.
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /assignment/add Add assignment
+ * @apiName Addassignment
+ * @apiGroup assignment
+ * @apiDescription Add a new assignment.
+ *
+ * @apiBody {String} no Assignment number.
+ * @apiBody {String} title assignment title.
+ * @apiBody {String} type type of assignment.
+ * @apiBody {Number} marks marks in assignment.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) UserNotFound The  of the User was not found
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added assignment Example Assignment"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+// ------------------------------------------------------------------------------------------
+// Practical.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /practical/create Create Practical
+ * @apiName CreatePractical
+ * @apiGroup Practical
+ *
+ * @apiBody {Number} no Practical number.
+ * @apiBody {String} title Title of the practical.
+ * @apiBody {String} type Type of the practical.
+ * @apiBody {Number} hours Number of hours required.
+ * @apiBody {String[]} cognitiveLevels Array of cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object} res The created Practical entity.
+ * @apiSuccess {String} res._id ID of the created entity.
+ * @apiSuccess {Number} res.no Practical number.
+ * @apiSuccess {String} res.title Title of the practical.
+ * @apiSuccess {String} res.type Type of the practical.
+ * @apiSuccess {Number} res.hours Number of hours required.
+ * @apiSuccess {String[]} res.cognitiveLevels Array of cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {get} /practical/list List Practical
+ * @apiName ListPractical
+ * @apiGroup Practical
+ *
+ * @apiQuery {Number} [no] Filter by Practical number.
+ * @apiQuery {String} [title] Filter by title.
+ * @apiQuery {String} [type] Filter by type.
+ * @apiQuery {Number} [hours] Filter by hours.
+ * @apiQuery {String[]} [cognitiveLevels] Filter by cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object[]} res List of Practical entities.
+ * @apiSuccess {String} res._id ID of the Practical entity.
+ * @apiSuccess {Number} res.no Practical number.
+ * @apiSuccess {String} res.title Title of the Practical.
+ * @apiSuccess {String} res.type Type of the Practical.
+ * @apiSuccess {Number} res.hours Number of hours required.
+ * @apiSuccess {String[]} res.cognitiveLevels Array of cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {post} /practical/update/:id Update Practical
+ * @apiName UpdatePractical
+ * @apiGroup Practical
+ *
+ * @apiBody {String} id ID of the Practical entity to update.
+ * @apiBody {Number} [no] New Practical number.
+ * @apiBody {String} [title] New title.
+ * @apiBody {String} [type] New type.
+ * @apiBody {Number} [hours] New hours.
+ * @apiBody {String[]} [cognitiveLevels] New cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object} res The updated Practical entity.
+ * @apiSuccess {String} res._id ID of the updated entity.
+ * @apiSuccess {Number} res.no Updated Practical number.
+ * @apiSuccess {String} res.title Updated title.
+ * @apiSuccess {String} res.type Updated type.
+ * @apiSuccess {Number} res.hours Updated hours.
+ * @apiSuccess {String[]} res.cognitiveLevels Updated cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {delete} /practical/delete/:id Delete Practical
+ * @apiName DeletePractical
+ * @apiGroup Practical
+ *
+ * @apiParam {String} id ID of the Practical entity to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the entity is deleted.
+ */
+
+/**
+ * @api {error} 500 Internal Server Error
+ * @apiName InternalServerError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 500) {String} err Error message for internal server errors.
+ */
+
+/**
+ * @api {error} 404 Not Found
+ * @apiName NotFoundError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 404) {String} err Error message for resource not found.
+ */
+
+/**
+ * @api {error} 400 Bad Request
+ * @apiName BadRequestError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 400) {String} err Error message for bad requests.
+ */
+
+// ------------------------------------------------------------------------------------------
+// Group.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /group/add Add Group
+ * @apiName AddGroup
+ * @apiGroup Group
+ * @apiDescription Add a new group.
+ *
+ * @apiBody {String} title Group title.
+ * @apiBody {ObjectId[]} students Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) GroupAddError Error while adding the group
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added group Example Group"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /assignment/delete/:assignmentId To delete Assignment
+ * @apiName DeleteAssignment
+ * @apiGroup Assignment
+ *
+ * @apiParam {String} assignmentId The ID of the assignment document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+
+/**
+ * @api {post} /paper/update/ Update Paper
+ * @apiName UpdatePaper
+ * @apiGroup Paper
+ * @apiDescription Update Existing Paper details except 
+ *
+ * @apiSuccess {Paper[]} res Array of Filtered Paper Doc .
+ * @apiSuccess {String} paper._id ID of paper given by database.
+ * @apiSuccess {String} paper.answersheetID Name of Infrastructure
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.exam associated Exam.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.student associated Student.
+ * @apiSuccess {connector.Schema.Types.ObjectId} paper.faculty associated Faculty.
+ * @apiSuccess {Number} paper.marks The marks in the Paper.
+ * 
+ * @apiSuccess {String} res Paper updated successfully.
+ * 
+ * @apiError (Error 500) err Error while updating the data.s
+ */
+
+/**
+ * @api {post} /assignment/update update assignment details
+ * @apiName UpdateAssignment
+ * @apiGroup Assignment
+ * @apiDescription update Existing assignment
+ *
+ * @apiBody {String} id Id of the assignment to be updated
+ * @apiBody {String} [no] Assignment number.
+ * @apiBody {String} [title] assignment title.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ *
+ * @apiSuccess {String} res Assignment updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
+
+/**
+ * @api {get} assignment/list Get Assignment List
+ * @apiName GetAssignment
+ * @apiGroup Assignment
+ *
+ * @apiBody {String} [no] Number of assignment.
+ * @apiBody {String} [title] Title of assignment.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ *
+ * @apiSuccess {assignment[]} res Array of Filtered assignment Doc.
+ * @apiSuccess {String} assignment._id ID of document given by database.
+ * @apiBody {String} [no] Number of assignment.
+ * @apiBody {String} [title] Title of assignment.
+ * @apiBody {String} [type] type of assignment.
+ * @apiBody {Number} [marks] marks in assignment. 
+ */
+
+// ------------------------------------------------------------------------------------------
+// Semester
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /semester/add Request to add Semester information
+ * @apiName Addsemester
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {String} res Response message .
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ */
+
+/**
+ * @api {get} /semester/list Request to list Semester information
+ * @apiName semesterlist
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {semester[]} res Array of Filtered semester Doc.
+ * @apiSuccess {Number} semester.number Number of semester
+ * @apiSuccess {String} semester.academicYear To show the current academic year of the semester
+ * @apiSuccess {String} semester.type Stores the enum ODD or EVEN for semester
+ * @apiSuccess {Date} semester.startDate Start date of the semester
+ * @apiSuccess {Date} semester.endDate End date of the semester
+ *
+ */
+
+/**
+ * @api {update} /semester/update/:id Request to list Semester information
+ * @apiName Updatesemester
+ * @apiGroup Semester
+ *
+ * @apiBody {Number} [number] Number of semester
+ * @apiBody {String} [academicYear] To show the current academic year
+ * @apiBody {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiBody {Date} [startDate] Start date of the semester
+ * @apiBody {Date} [endDate] End date of the semester
+ *
+ *@apiSuccess {String} res Semester updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ *
+ */
+
+/**
+* @api {delete} /semester/delete/:id Request to list Semester information
+* @apiName Deletesemester
+* @apiGroup Semester
+*
+* @apiParam {String} id The ID of the Semester document to delete.
+*
+* @apiSuccess {String} res Success message indicating the deletion.
+*
+* @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+*/
+
+
 // ------------------------------------------------------------------------------------------
 // Activity.
 // ------------------------------------------------------------------------------------------
@@ -689,9 +1086,6 @@
  * @apiError (Error 500) DatabaseError Error while inserting in the database.
  *
  * @apiDescription Adds a new Activity to the system.
- */
-
-/**
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -707,6 +1101,45 @@
  */
 
 /**
+ * @api {delete} /group/delete/:id Delete Group
+ * @apiName DeleteGroup
+ * @apiGroup Group
+ *
+ * @apiParam {ObjectId} id The ObjectID of the group to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ * @apiError (Error 500) GroupDeleteError Error while deleting the group
+ *
+ */
+
+/**
+ * @api {post} /group/update/:id Update Group Details
+ * @apiName UpdateGroup
+ * @apiGroup Group
+ * @apiDescription Update existing group details.
+ *
+ * @apiParam {ObjectId} id The ObjectID of the group to update.
+ * @apiBody {String} [title] Group title.
+ * @apiBody {ObjectId[]} [students] Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Group updated.
+ * @apiError (Error 500) GroupUpdateError Error in updating database
+ *
+ */
+
+/**
+ * @api {get} /group/list Get Group List
+ * @apiName GetGroupList
+ * @apiGroup Group
+ *
+ * @apiQuery {String} [title] Title of the group.
+ *
+ * @apiSuccess {Group[]} res Array of filtered group documents.
+ * @apiSuccess {ObjectId} group._id ObjectID of the group document in the database.
+ * @apiSuccess {String} group.title Title of the group.
+ * @apiSuccess {ObjectId[]} group.students Array of student ObjectIDs in the group.
+ */
+/**
  * @api {delete} /timetable/delete/:timetableId Delete Timetable
  * @apiName DeleteTimetable
  * @apiGroup Timetable
@@ -716,6 +1149,21 @@
  * @apiSuccess {String} res Success message indicating the deletion.
  *
  * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /organization/update/:organizationId Update Organisation
+ * @apiName UpdateOrganization
+ * @apiGroup Organization
+ * 
+ * @apiBody {String} organizationId The ID of the Organization document to update
+ * @apiBody {ObjectId} [parent] Id of the parent of the organization
+ * @apiBody {Date} [startDate] starting date of the organization
+ * @apiBody {String} [name] name of the organization
+ * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
+ * 
+ * @apiSuccess {String} res organization updated
+ * @apiError (Error 500) Error while inserting in DB
  */
 
 /**

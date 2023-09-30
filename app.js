@@ -8,6 +8,7 @@ import { logger } from "#util";
 import indexRouter from "#routes/index";
 import usersRouter from "#routes/users";
 import authRouter from "#routes/auth";
+import semesterRouter from "#routes/semester";
 import accreditationRouter from "#routes/accreditation";
 import infrastructureRouter from "#routes/infrastructure";
 import practicalRouter from "#routes/practical";
@@ -22,6 +23,8 @@ import moduleRouter from "#routes/module";
 import facultyRouter from "#routes/faculty";
 import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
+import paperRouter from "#routes/paper";
+import groupRouter from "#routes/group";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -55,5 +58,9 @@ app.use("/timetable", timetableRouter);
 app.use("/department", departmentRouter);
 app.use("/coursework", courseworkRouter);
 app.use("/module", moduleRouter);
+app.use("/paper", paperRouter);
+app.use("/group", groupRouter);
+app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
+
 export default app;
