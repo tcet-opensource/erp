@@ -9,7 +9,7 @@ async function addAssignment(req, res) {
   } = req.body;
   try {
     const newAssignment = await createAssignment(no, title, type, marks);
-    res.json({ res: `added user ${newAssignment.id}`, id: newAssignment.id });
+    res.json({ res: `added assignment ${newAssignment.id}`, id: newAssignment.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -24,7 +24,7 @@ async function updateAssignment(req, res) {
   } = req.body;
   try {
     await updateAssignmentById(id, data);
-    res.json({ res: `updated assignment with id ${id}` });
+    res.json({ res: `updated assignment ${id}` });
   } catch (error) {
     logger.error("Error while updating", error);
     res.status(500);
