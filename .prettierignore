@@ -1,0 +1,7 @@
+**/node_modules
+**/apidoc
+**/.git
+**/_apidoc.js
+**/*.json
+**/*.css
+Dockerfile
