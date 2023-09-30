@@ -814,3 +814,91 @@
  * @apiSuccess {ObjectId} group The group of the activity (ObjectId).
  * @apiSucess {ObjectId} students the students who gonna attend the activity(ObjectId).
  */
+
+// ------------------------------------------------------------------------------------------
+// Student.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /student/add Add student
+ * @apiName AddStudent
+ * @apiGroup Student
+ * @apiDescription Add a new Student.
+ *
+ * @apiBody {String} ERP ID of the student.
+ * @apiBody {String} name of the student.
+ * @apiBody {Number} joining year of the student.
+ * @apiBody {ObjectId} branch of the student (ObjectId).
+ * @apiBody {String} division of the student.
+ * @apiBody {Number} roll no of the student.
+ * @apiBody {ObjectId} coursesOpted by the student(ObjectId).
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added student"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /student/delete/:studentId Delete Student
+ * @apiName DeleteStudent
+ * @apiGroup Student
+ *
+ * @apiParam {String} studentId The ID of the Student document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /student/update Update Student
+ * @apiName UpdateStudent
+ * @apiGroup Student
+ * @apiDescription Update existing student data.
+ *
+ * @apiBody {String} ERP ID of the student.
+ * @apiBody {String} name of the student.
+ * @apiBody {Number} joining year of the student.
+ * @apiBody {ObjectId} branch of the student (ObjectId).
+ * @apiBody {String} division of the student.
+ * @apiBody {Number} roll no of the student.
+ * @apiBody {ObjectId} coursesOpted by the student(ObjectId).
+ *
+ * @apiSuccess {String} res Student updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
+/**
+ * @api {get} /student/list Get Student List
+ * @apiName GetStudentList
+ * @apiGroup Student
+ *
+ * @apiQuery {String} ERP ID of the student.
+ * @apiQuery {String} name of the student.
+ * @apiQuery {Number} joining year of the student.
+ * @apiQuery {ObjectId} branch of the student (ObjectId).
+ * @apiQuery {String} division of the student.
+ * @apiQuery {Number} roll no of the student.
+ * @apiQuery {ObjectId} coursesOpted by the student(ObjectId).
+ *
+ * @apiSuccess {Student[]} res Array of filtered student documents.
+ * @apiSuccess {String} student._id ID of the student document given by the database.
+ * @apiSuccess {String} student.ERP ID of the student.
+ * @apiSuccess {String} student.name of the student.
+ * @apiSuccess {Number} student.joining year of the student.
+ * @apiSuccess {ObjectId} student.branch of the student (ObjectId).
+ * @apiSuccess {String} student.division of the student.
+ * @apiSuccess {Number} student.roll no of the student.
+ * @apiSuccess {ObjectId} student.coursesOpted by the student(ObjectId).
+ */ 
