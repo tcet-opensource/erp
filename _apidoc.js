@@ -667,6 +667,74 @@
  */
 
 // ------------------------------------------------------------------------------------------
+// Semester
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /semester/add Request to add Semester information
+ * @apiName Addsemester
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {String} res Response message .
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ */
+
+/**
+ * @api {get} /semester/list Request to list Semester information
+ * @apiName semesterlist
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {semester[]} res Array of Filtered semester Doc.
+ * @apiSuccess {Number} semester.number Number of semester
+ * @apiSuccess {String} semester.academicYear To show the current academic year of the semester
+ * @apiSuccess {String} semester.type Stores the enum ODD or EVEN for semester
+ * @apiSuccess {Date} semester.startDate Start date of the semester
+ * @apiSuccess {Date} semester.endDate End date of the semester
+ *
+ */
+
+/**
+ * @api {update} /semester/update/:id Request to list Semester information
+ * @apiName Updatesemester
+ * @apiGroup Semester
+ *
+ * @apiBody {Number} [number] Number of semester
+ * @apiBody {String} [academicYear] To show the current academic year
+ * @apiBody {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiBody {Date} [startDate] Start date of the semester
+ * @apiBody {Date} [endDate] End date of the semester
+ *
+ *@apiSuccess {String} res Semester updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ *
+ */
+
+/**
+* @api {delete} /semester/delete/:id Request to list Semester information
+* @apiName Deletesemester
+* @apiGroup Semester
+*
+* @apiParam {String} id The ID of the Semester document to delete.
+*
+* @apiSuccess {String} res Success message indicating the deletion.
+*
+* @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+*/
+
+
+// ------------------------------------------------------------------------------------------
 // Activity.
 // ------------------------------------------------------------------------------------------
 
