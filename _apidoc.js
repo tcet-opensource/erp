@@ -667,6 +667,105 @@
  */
 
 // ------------------------------------------------------------------------------------------
+// Practical.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /practical/create Create Practical
+ * @apiName CreatePractical
+ * @apiGroup Practical
+ *
+ * @apiBody {Number} no Practical number.
+ * @apiBody {String} title Title of the practical.
+ * @apiBody {String} type Type of the practical.
+ * @apiBody {Number} hours Number of hours required.
+ * @apiBody {String[]} cognitiveLevels Array of cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object} res The created Practical entity.
+ * @apiSuccess {String} res._id ID of the created entity.
+ * @apiSuccess {Number} res.no Practical number.
+ * @apiSuccess {String} res.title Title of the practical.
+ * @apiSuccess {String} res.type Type of the practical.
+ * @apiSuccess {Number} res.hours Number of hours required.
+ * @apiSuccess {String[]} res.cognitiveLevels Array of cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {get} /practical/list List Practical
+ * @apiName ListPractical
+ * @apiGroup Practical
+ *
+ * @apiQuery {Number} [no] Filter by Practical number.
+ * @apiQuery {String} [title] Filter by title.
+ * @apiQuery {String} [type] Filter by type.
+ * @apiQuery {Number} [hours] Filter by hours.
+ * @apiQuery {String[]} [cognitiveLevels] Filter by cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object[]} res List of Practical entities.
+ * @apiSuccess {String} res._id ID of the Practical entity.
+ * @apiSuccess {Number} res.no Practical number.
+ * @apiSuccess {String} res.title Title of the Practical.
+ * @apiSuccess {String} res.type Type of the Practical.
+ * @apiSuccess {Number} res.hours Number of hours required.
+ * @apiSuccess {String[]} res.cognitiveLevels Array of cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {post} /practical/update/:id Update Practical
+ * @apiName UpdatePractical
+ * @apiGroup Practical
+ *
+ * @apiBody {String} id ID of the Practical entity to update.
+ * @apiBody {Number} [no] New Practical number.
+ * @apiBody {String} [title] New title.
+ * @apiBody {String} [type] New type.
+ * @apiBody {Number} [hours] New hours.
+ * @apiBody {String[]} [cognitiveLevels] New cognitive levels (L1-L6).
+ *
+ * @apiSuccess {Object} res The updated Practical entity.
+ * @apiSuccess {String} res._id ID of the updated entity.
+ * @apiSuccess {Number} res.no Updated Practical number.
+ * @apiSuccess {String} res.title Updated title.
+ * @apiSuccess {String} res.type Updated type.
+ * @apiSuccess {Number} res.hours Updated hours.
+ * @apiSuccess {String[]} res.cognitiveLevels Updated cognitive levels (L1-L6).
+ */
+
+/**
+ * @api {delete} /practical/delete/:id Delete Practical
+ * @apiName DeletePractical
+ * @apiGroup Practical
+ *
+ * @apiParam {String} id ID of the Practical entity to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the entity is deleted.
+ */
+
+/**
+ * @api {error} 500 Internal Server Error
+ * @apiName InternalServerError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 500) {String} err Error message for internal server errors.
+ */
+
+/**
+ * @api {error} 404 Not Found
+ * @apiName NotFoundError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 404) {String} err Error message for resource not found.
+ */
+
+/**
+ * @api {error} 400 Bad Request
+ * @apiName BadRequestError
+ * @apiGroup Errors
+ *
+ * @apiError (Error 400) {String} err Error message for bad requests.
+ */
+
+// ------------------------------------------------------------------------------------------
 // Group.
 // ------------------------------------------------------------------------------------------
 
