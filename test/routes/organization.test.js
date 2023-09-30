@@ -18,7 +18,7 @@ beforeAll((done) => {
 });
 
 function cleanUp(callback) {
-  moduleModel.remove({ startDate: "2023-06-18T14:11:30Z" }).then(() => {
+  organizationModel.remove({ startDate: "2023-06-18T14:11:30Z" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) {
         console.log("Database disconnnect error: ", DBerr);
