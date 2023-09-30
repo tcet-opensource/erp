@@ -4,15 +4,15 @@ import practicalController from "#controller/practical";
 const router = express.Router();
 
 // Create a new Practical
-router.post("/practical/create", practicalController.addPractical);
+router.post("/create", practicalController.addPractical);
 
 // List Practical entities with optional filters
-router.get("/practical/list", practicalController.getPractical);
+router.get("/list", practicalController.getPractical);
 
 // Update Practical entities based on filters and update data
-router.post("/practical/update/:id", practicalController.updatePractical);
+router.post("/update/:id", practicalController.updatePractical);
 
 // Delete Practical entities based on filters
-router.delete("/practical/delete/:id", practicalController.deletePractical);
+router.delete("/delete/:id", practicalController.deletePractical);
 
 export default router;

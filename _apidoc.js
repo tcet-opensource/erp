@@ -695,6 +695,111 @@
  *     }
  */
 
+// ------------------------------------------------------------------------------------------
+// Semester
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /semester/add Request to add Semester information
+ * @apiName Addsemester
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {String} res Response message .
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ */
+
+/**
+ * @api {get} /semester/list Request to list Semester information
+ * @apiName semesterlist
+ * @apiGroup Semester
+ *
+ * @apiQuery {Number} [number] Number of semester
+ * @apiQuery {String} [academicYear] To show the current academic year
+ * @apiQuery {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiQuery {Date} [startDate] Start date of the semester
+ * @apiQuery {Date} [endDate] End date of the semester
+ *
+ * @apiSuccess {semester[]} res Array of Filtered semester Doc.
+ * @apiSuccess {Number} semester.number Number of semester
+ * @apiSuccess {String} semester.academicYear To show the current academic year of the semester
+ * @apiSuccess {String} semester.type Stores the enum ODD or EVEN for semester
+ * @apiSuccess {Date} semester.startDate Start date of the semester
+ * @apiSuccess {Date} semester.endDate End date of the semester
+ *
+ */
+
+/**
+ * @api {update} /semester/update/:id Request to list Semester information
+ * @apiName Updatesemester
+ * @apiGroup Semester
+ *
+ * @apiBody {Number} [number] Number of semester
+ * @apiBody {String} [academicYear] To show the current academic year
+ * @apiBody {String} [type] Stores the enum ODD or EVEN for semester
+ * @apiBody {Date} [startDate] Start date of the semester
+ * @apiBody {Date} [endDate] End date of the semester
+ *
+ *@apiSuccess {String} res Semester updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ *
+ */
+
+/**
+* @api {delete} /semester/delete/:id Request to list Semester information
+* @apiName Deletesemester
+* @apiGroup Semester
+*
+* @apiParam {String} id The ID of the Semester document to delete.
+*
+* @apiSuccess {String} res Success message indicating the deletion.
+*
+* @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+*/
+
+
+// ------------------------------------------------------------------------------------------
+// Activity.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /activity/add Add Activty.
+ * @apiName AddActivity
+ * @apiGroup Activity
+ *
+ * @apiBody {Date} startTime The startTime of the activity.
+ * @apiBody {Number} duration The duration of the activity (in minutes).
+ * @apiBody {ObjectId} course The course of the activity (ObjectId).
+ * @apiBody {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiBody {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiBody {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiBody {ObjectId} group The group of the activity (ObjectId).
+ * @apiBody {ObjectId} students the students who gonna attend the activity(ObjectId).
+ *
+ * @apiSuccess {String} res Response message.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new Activity to the system.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added activity"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
 /**
  * @api {delete} /group/delete/:id Delete Group
  * @apiName DeleteGroup
@@ -733,4 +838,112 @@
  * @apiSuccess {ObjectId} group._id ObjectID of the group document in the database.
  * @apiSuccess {String} group.title Title of the group.
  * @apiSuccess {ObjectId[]} group.students Array of student ObjectIDs in the group.
+ */
+/**
+ * @api {delete} /timetable/delete/:timetableId Delete Timetable
+ * @apiName DeleteTimetable
+ * @apiGroup Timetable
+ *
+ * @apiParam {String} timetableId The ID of the timetable document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {delete} /activity/delete/:activity Delete Activity.
+ * @apiName DeleteActivity
+ * @apiGroup Activity
+ *
+ * @apiParam {String} Activity The activity document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /timetable/update Update Timetable
+ * @apiName UpdateTimetable
+ * @apiGroup Timetable
+ * @apiDescription Update existing timetable data.
+ *
+ * @apiBody {Date} startTime The startTime of the activity.
+ * @apiBody {Number} duration The duration of the activity (in minutes).
+ * @apiBody {ObjectId} course The course of the activity (ObjectId).
+ * @apiBody {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiBody {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiBody {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiBody {ObjectId} group The group of the activity (ObjectId).
+ * @apiBody {ObjectId} students the students who gonna attend the activity(ObjectId).
+ *
+ * @apiSuccess {String} res Timetable updated.
+ */
+
+/**
+ * @api {post} /activity/update Update Activity.
+ * @apiName UpdateActivity
+ * @apiGroup Activity
+ * @apiDescription Update existing activity data.
+ *
+ * @apiBody {Date} startTime The startTime of the activity.
+ * @apiBody {Number} duration The duration of the activity (in minutes).
+ * @apiBody {ObjectId} course The course of the activity (ObjectId).
+ * @apiBody {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiBody {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiBody {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiBody {ObjectId} group The group of the activity (ObjectId).
+ * @apiBody {ObjectId} students the students who gonna attend the activity(ObjectId).
+ *
+ * @apiSuccess {String} res Activity updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
+/**
+ * @api {get} /timetable/list Get Timetable List
+ * @apiName GetTimetableList
+ * @apiGroup Timetable
+ *
+ * @apiQuery {Date} startTime The startTime of the activity.
+ * @apiQuery {Number} duration The duration of the activity (in minutes).
+ * @apiQUERY {ObjectId} course The course of the activity (ObjectId).
+ * @apiQuery {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiQuery {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiQuery {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiQuery {ObjectId} group The group of the activity (ObjectId).
+ * @apiQuery {ObjectId} students the students who gonna attend the activity(ObjectId).
+ *
+ * @apiSuccess {Date} startTime The startTime of the activity.
+ * @apiSuccess {Number} duration The duration of the activity (in minutes).
+ * @apiSuccess {ObjectId} course The course of the activity (ObjectId).
+ * @apiSuccess {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiSuccess {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiSuccess {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiSuccess {ObjectId} group The group of the activity (ObjectId).
+ * @apiSucess {ObjectId} students the students who gonna attend the activity(ObjectId).
+ */
+
+/**
+ * @api {get} /activity/list Get Activity List
+ * @apiName GetActivityList
+ * @apiGroup Activity
+ *
+ * @apiQuery {Date} startTime The startTime of the activity.
+ * @apiQuery {Number} duration The duration of the activity (in minutes).
+ * @apiQUERY {ObjectId} course The course of the activity (ObjectId).
+ * @apiQuery {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiQuery {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiQuery {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiQuery {ObjectId} group The group of the activity (ObjectId).
+ * @apiQuery {ObjectId} students the students who gonna attend the activity(ObjectId).
+ *
+ * @apiSuccess {Date} startTime The startTime of the activity.
+ * @apiSuccess {Number} duration The duration of the activity (in minutes).
+ * @apiSuccess {ObjectId} course The course of the activity (ObjectId).
+ * @apiSuccess {ObjectId} faculty The faculty alloted for the activity(ObjectId).
+ * @apiSuccess {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
+ * @apiSuccess {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
+ * @apiSuccess {ObjectId} group The group of the activity (ObjectId).
+ * @apiSucess {ObjectId} students the students who gonna attend the activity(ObjectId).
  */
