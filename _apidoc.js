@@ -666,6 +666,53 @@
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
 
+/**
+ * @api {post} /module/add Add Module
+ * @apiName AddModule
+ * @apiGroup Module
+ * 
+ * @apiBody {Number} [no] Module number.
+ * @apiBody {String} [name] Name of the module.
+ * @apiBody {String} [outcome] Module outcome.
+ * @apiBody {String[]} [contents] Array of contents of the module.
+ * @apiBody {Number} [hrsPerModule] Number of hours required per module.
+ * @apiBody {String[]} [cognitiveLevels] Array of cognitive levels
+ * of attainment as per Bloom's Taxanomy (L1-L6).
+ * 
+ * @apiSuccess {String} res added Module
+ * @apiError (Error 500) Error while inserting in DB
+ */
+
+/**
+ * @api {delete} /module/delete/:moduleId Delete Module
+ * @apiName DeleteModule
+ * @apiGroup Module
+ * 
+ * @apiParam {String} moduleId The ID of the Module document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /module/update Update Module
+ * @apiName UpdateModule
+ * @apiGroup Module
+ * @apiDescription Update existing module data.
+ *
+ * @apiBody {Number} [no] Module number.
+ * @apiBody {String} [name] Name of the module.
+ * @apiBody {String} [outcome] Module outcome.
+ * @apiBody {String[]} [contents] Array of contents of the module.
+ * @apiBody {Number} [hrsPerModule] Number of hours required per module.
+ * @apiBody {String[]} [cognitiveLevels] Array of cognitive levels
+ * of attainment as per Bloom's Taxanomy (L1-L6).
+ *
+ * @apiSuccess {String} res Module updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
 //-----------------------------------------------------------------------------
 // Organization
 //-----------------------------------------------------------------------------
