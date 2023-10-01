@@ -10,7 +10,7 @@ async function addAccreditation(req, res) {
   try {
     // eslint-disable-next-line max-len
     const accreditation = await addNewAccreditation(name, agencyName, dateofAccreditation, dateofExpiry);
-    res.json({ res: `added accreditation ${accreditation.name}` });
+    res.json({ res: `added accreditation ${accreditation.name}`, id: accreditation.id });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -18,9 +18,9 @@ async function addAccreditation(req, res) {
   }
 }
 async function deleteAccreditation(req, res) {
-  const { accredationId } = req.params;
+  const { id } = req.params;
   try {
-    await deleteAccreditationById(accredationId);
+    await deleteAccreditationById(id);
     res.json({ res: "Accreditation deleted successfully" });
   } catch (error) {
     logger.error("Error while deleting", error);
@@ -30,13 +30,14 @@ async function deleteAccreditation(req, res) {
 }
 
 async function updateAccreditation(req, res) {
+  const { id } = req.params;
   const {
-    id, ...data
+    ...data
   } = req.body;
 
   try {
     await updateAccreditationById(id, data);
-    res.json({ res: "accreditation updated" });
+    res.json({ res: `${id} accreditation updated` });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

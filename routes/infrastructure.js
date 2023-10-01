@@ -4,7 +4,7 @@ import infrastructureController from "#controller/infrastructure";
 const router = express.Router();
 router.post("/add", infrastructureController.addInfrastructure);
 router.get("/list", infrastructureController.getInfrastructure);
-router.post("/update", infrastructureController.updateInfrastructure);
-router.post("/delete/:infrastructureId", infrastructureController.deleteInfrastructure);
+router.post("/update/:id", infrastructureController.updateInfrastructure);
+router.delete("/delete/:id", infrastructureController.deleteInfrastructure);
 
 export default router;
