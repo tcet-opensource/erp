@@ -696,7 +696,7 @@
  */
 
 /**
- * @api {post} /module/update Update Module
+ * @api {post} /module/update/:id Update Module         
  * @apiName UpdateModule
  * @apiGroup Module
  * @apiDescription Update existing module data.
