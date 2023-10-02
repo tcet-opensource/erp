@@ -1,4 +1,4 @@
-import StudentCollege from "#models/student/std_college";
+import StudentCollege from "#models/student/stdCollege";
 import databaseError from "#error/database";
 
 export async function createStudentCollege(
