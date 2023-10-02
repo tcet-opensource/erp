@@ -6,55 +6,119 @@ const studentCollegeSchema = {
     required: true,
     unique: true,
   },
-  admission_year: {
+  admissionYear: {
     type: String,
     required: true,
   },
-  student_code: {
+  studentCode: {
     type: String,
   },
-  roll_no: {
+  rollNo: {
     type: String,
   },
-  admission_status: {
-    type: String,
-    required: true,
-  },
-  admission_pattern: {
-    type: String,
-  },
-  admission_category: {
+  admissionStatus: {
     type: String,
     required: true,
   },
-  seat_desc: {
+  admissionPattern: {
     type: String,
   },
-  quota_type: {
+  admissionCategory: {
     type: String,
     required: true,
   },
-  is_boarder_student: {
+  seatDesc: {
+    type: String,
+  },
+  quotaType: {
+    type: String,
+    required: true,
+  },
+  isBoarderStudent: {
     type: Boolean,
   },
-  seat_type: {
+  seatType: {
     type: String,
     required: true,
   },
-  seat_sub_type: {
+  seatSubType: {
     type: String,
     required: true,
   },
-  eligibility_no: {
+  eligibilityNo: {
     type: String,
     required: true,
   },
-  enrollment_no: {
+  enrollmentNo: {
     type: String,
     required: true,
     unique: true,
   },
 };
 
-// eslint-disable-next-line  no-unused-vars
-const studenCollege = connector.model("Student college", studentCollegeSchema);
+const StudentCollege = connector.model("Student college", studentCollegeSchema);
+
+async function create(studentCollegeData) {
+  const {
+    uid,
+    admissionYear,
+    studentCode,
+    rollNo,
+    admissionStatus,
+    admissionPattern,
+    admissionCategory,
+    seatDesc,
+    quotaType,
+    isBoarderStudent,
+    seatType,
+    seatSubType,
+    eligibilityNo,
+    enrollmentNo,
+  } = studentCollegeData;
+
+  const stdCollege = new StudentCollege({
+    uid,
+    admissionYear,
+    studentCode,
+    rollNo,
+    admissionStatus,
+    admissionPattern,
+    admissionCategory,
+    seatDesc,
+    quotaType,
+    isBoarderStudent,
+    seatType,
+    seatSubType,
+    eligibilityNo,
+    enrollmentNo,
+  });
+
+  const stdCollegeDoc = await stdCollege.save();
+  return stdCollegeDoc;
+}
+
+async function read(filter, limit = 1) {
+  const stdCollegeDoc = studentCollegeSchema.find(filter).limit(limit);
+  return stdCollegeDoc;
+}
+
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await studentCollegeSchema.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
+  return updateResult.acknowledged;
+}
+
+async function remove(stdCollegeId) {
+  const deleteResult = await studentCollegeSchema.deleteMany(stdCollegeId);
+  return deleteResult.acknowledged;
+}
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+};
