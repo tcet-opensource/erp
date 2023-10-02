@@ -1,4 +1,4 @@
-import MedicalHistory from "#models/student/std_med_history";
+import MedicalHistory from "#models/student/stdMedHistory";
 import databaseError from "#error/database";
 
 export async function createMedicalHistory(

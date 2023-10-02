@@ -2,13 +2,13 @@ import connector from "#models/databaseUtil";
 
 const studentMedicalSchema = {
   uid: { type: String, required: true },
-  blood_group: { type: String, required: true },
-  past_medical_history: { type: String, required: true },
-  immunisation_history: { type: String, required: true },
-  chronic_medical_conditions: { type: String },
-  parents_emailId: { type: String, required: true },
-  parents_contact: { type: Number, required: true },
-  relative_contacts: { type: Number, required: true },
+  bloodGroup: { type: String, required: true },
+  pastMedicalHistory: { type: String, required: true },
+  immunisationHistory: { type: String, required: true },
+  chronicMedicalConditions: { type: String },
+  parentsEmailId: { type: String, required: true },
+  parentsContact: { type: Number, required: true },
+  relativeContacts: { type: Number, required: true },
 };
 
 const MedicalHistory = connector.model("StudentMedical", studentMedicalSchema);
@@ -33,13 +33,13 @@ async function create(studentMedicalData) {
   } = studentMedicalData;
   const medicalHistory = new MedicalHistory({
     uid,
-    blood_group: bloodGroup,
-    past_medical_history: pastMedicalHistory,
-    immunisation_history: immunisationHistory,
-    chronic_medical_conditions: chronicMedicalConditions,
-    parents_emailId: parentsEmailId,
-    parents_contact: parentsContact,
-    relative_contacts: relativeContacts,
+    bloodGroup,
+    pastMedicalHistory,
+    immunisationHistory,
+    chronicMedicalConditions,
+    parentsEmailId,
+    parentsContact,
+    relativeContacts,
   });
   const medicalHistoryDoc = await medicalHistory.save();
   return medicalHistoryDoc;
