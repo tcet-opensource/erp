@@ -11,7 +11,7 @@ This ERP system will be used to manage various aspects of the operations of coll
 <img width="311" alt="mlh-logo-color" src="https://github.com/tcet-opensource/hacktober-fest/assets/55846983/d5ccae96-86a7-4fed-8f00-e9f1d0aa5cac">
 
 ### How to contribute
-Read our [workflow](https://opensource.tcetmumbai.in/docs/resources/workflows/external-workflow/) guide, and have a look at issues marked with the <bold>Hacktoberfest</bold> tag on it. Do not forget to read the rest of the README. For serious doubts, contact the project maintainers on our discord server.
+Read our [workflow](https://opensource.tcetmumbai.in/docs/resources/workflows/external-workflow/) guide, and have a look at issues marked with the <code>Hacktoberfest</code> tag on it. Do not forget to read the rest of the README. For serious doubts, contact the project maintainers on our discord server.
 
 ## Dependencies
 
