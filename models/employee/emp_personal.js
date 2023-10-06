@@ -60,7 +60,10 @@ const employeePersonalSchema = {
   previousMiddleName: { type: String },
   previousLastName: { type: String },
 };
-const EmployeePersonal = connector.model("EmplyeePersonalData", employeePersonalSchema)
+const EmployeePersonal = connector.model(
+  "EmplyeePersonalData",
+  employeePersonalSchema,
+);
 /// CRUD operations ///
 
 async function create(employeePersonalData) {
@@ -75,7 +78,11 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await EmployeePersonal.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await EmployeePersonal.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
