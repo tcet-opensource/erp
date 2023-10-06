@@ -60,7 +60,7 @@ const employeePersonalSchema = {
   previousMiddleName: { type: String },
   previousLastName: { type: String },
 };
-
+const EmployeePersonal = connector.model("EmplyeePersonalData", employeePersonalSchema)
 /// CRUD operations ///
 
 async function create(employeePersonalData) {
