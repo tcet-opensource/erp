@@ -38,4 +38,58 @@ const employeeBankSchema = {
 };
 
 // eslint-disable-next-line  no-unused-vars
-const empBank = connector.model("Employee bank", employeeBankSchema);
+const EmployeeBank = connector.model("Employee bank", employeeBankSchema);
+
+///crud operation///
+
+// employee personal details  to the database
+async function create(employeeBankData) {
+  const {
+    uid,
+    bank_name,
+    bank_acc,
+    bank_branch,
+    bank_ifsc,
+    bank_micr,
+    appointment_approve_sg_dte,
+  } = employeeBankData;
+
+  const empBank = new EmployeeBank({
+    uid,
+    bank_name,
+    bank_acc,
+    bank_branch,
+    bank_ifsc,
+    bank_micr,
+    appointment_approve_sg_dte,
+  });
+
+  const empBankDoc = await empBank.save();
+  return empBankDoc;
+}
+
+async function read(filter, limit = 1) {
+  const empBankDoc = employeeBankSchema.find(filter).limit(limit);
+  return empBankDoc;
+}
+
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await employeeBankSchema.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
+  return updateResult.acknowledged;
+}
+
+async function remove(empBankId) {
+  const deleteResult = await employeeBankSchema.deleteMany(empBankId);
+  return deleteResult.acknowledged;
+}
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+};
