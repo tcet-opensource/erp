@@ -55,7 +55,7 @@ const studentEducationSchema = {
   },
 };
 
-const studentEducation = connector.model("Student education", studentEducationSchema);
+const StudentEducation = connector.model("Student education", studentEducationSchema);
 
 async function create(studentEducationData) {
   const {
@@ -112,7 +112,7 @@ async function create(studentEducationData) {
     },
   } = studentEducationData;
 
-  const stdEducation = new studentEducation({
+  const stdEducation = new StudentEducation({
     uid,
     tenth: {
       marks,
@@ -172,7 +172,7 @@ async function create(studentEducationData) {
 
 async function read(filter, limit = 1) {
   const stdEducationDoc = studentEducationSchema.find(filter).limit(limit);
-  return stdEducationDoc
+  return stdEducationDoc;
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
