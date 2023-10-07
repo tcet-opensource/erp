@@ -41,7 +41,7 @@ afterAll((done) => {
 
 describe("Faculty API", () => {
     it("should create faculty", async () => {
-        const response = await agent.post("/faculty/add").send({
+        const response = await agent.post("/faculty/create").send({
             ERPID: "test123",
             dateOfJoining: "2023-06-18T14:11:30Z",
             dateOfLeaving: "2023-07-18T14:11:30Z",
@@ -66,7 +66,7 @@ describe("Faculty API", () => {
     describe("after adding faculty", () => {
         let id;
         beforeEach(async () => {
-            id = await agent.post("/faculty/add").send(
+            id = await agent.post("/faculty/create").send(
                 {
                     ERPID: "test123",
                     dateOfJoining: "2023-06-18T14:11:30Z",
