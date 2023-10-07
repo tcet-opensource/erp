@@ -25,7 +25,9 @@
     "testWin": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest",
     "testWin:watch": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --watch",
     "testWin:openHandles": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --detectOpenHandles",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "backup": "node ./backup/erpbackup",
+    "restore":"node ./backup/erprestore"
   },
   "dependencies": {
     "apidoc": "^1.1.0",
@@ -39,6 +41,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
     "morgan": "~1.9.1",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "supertest": "^6.3.3",
     "winston": "^3.8.2",
