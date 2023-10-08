@@ -11,7 +11,7 @@ const { agent } = global;
 function cleanUp(callback) {
   departmentmodel.remove(
     {
-      name: "Computer",
+      name: "Electronics",
       acronym: "COMPS",
       yearOfStarting: "2020-09-01T00:00:00.000Z",
       accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],

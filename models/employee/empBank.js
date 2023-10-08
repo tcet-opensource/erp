@@ -40,28 +40,28 @@ const employeeBankSchema = {
 // eslint-disable-next-line  no-unused-vars
 const EmployeeBank = connector.model("Employee bank", employeeBankSchema);
 
-///crud operation///
+/// crud operation///
 
 // employee personal details  to the database
 async function create(employeeBankData) {
   const {
     uid,
-    bank_name,
-    bank_acc,
-    bank_branch,
-    bank_ifsc,
-    bank_micr,
-    appointment_approve_sg_dte,
+    bankName,
+    bankAcc,
+    bankBranch,
+    bankIfsc,
+    bankMicr,
+    appointmentApproveSgDte,    
   } = employeeBankData;
 
   const empBank = new EmployeeBank({
     uid,
-    bank_name,
-    bank_acc,
-    bank_branch,
-    bank_ifsc,
-    bank_micr,
-    appointment_approve_sg_dte,
+    bankName,
+    bankAcc,
+    bankBranch,
+    bankIfsc,
+    bankMicr,
+    appointmentApproveSgDte,    
   });
 
   const empBankDoc = await empBank.save();

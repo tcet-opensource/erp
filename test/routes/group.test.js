@@ -8,7 +8,7 @@ const { agent } = global;
 function cleanUp(callback) {
   groupModel
     .remove({
-      id: "6500594e2b7b532006c073dd",
+      title: "Group 1",
     })
     .then(() => {
       connector.disconnect((DBerr) => {

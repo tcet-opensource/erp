@@ -1,4 +1,4 @@
-import Student from "#models/student/std_personal" ;
+import Student from "#models/student/stdPersonal" ;
 import databaseError from "#error/database";
 
 export async function createStudent (uid,

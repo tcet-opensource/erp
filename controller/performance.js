@@ -1,30 +1,26 @@
-import os from 'os';
-import semestermodel from '#models/semester'
-import dotenv from 'dotenv'
+import os from "os";
+import dotenv from "dotenv";
+import semesterModel from "#models/semester";
 
-dotenv.config()
-const PORT = process.env.PORT
+dotenv.config();
+const { PORT } = process.env;
 
 async function performance(req, res) {
-    let start_time_db = new Date().getTime();
-    let test_db = await semestermodel.read({})
-        .then((res) => {
-            let time = new Date().getTime() - start_time_db
-            return time;
-        })
-    let start_time = new Date().getTime();
-    fetch(`http://localhost:${PORT}/semester/list`)
-        .then((res) => {
-            return res.json();
-        })
-        .then((data) => {
-            let time = new Date().getTime() - start_time
-            res.json({
-                response_time: time, cpu: os.cpus(), maxmem: os.totalmem(), freemem: os.freemem(), db_time : test_db
-            });
+  const startTimeDb = new Date().getTime();
+  const testDB = await semesterModel.read({})
+    .then(() => {
+      const time = new Date().getTime() - startTimeDb;
+      return time;
+    });
 
-        })
-
+  const startTime = new Date().getTime();
+  fetch(`http://localhost:${PORT}/semester/list`)
+    .then(() => {
+      const time = new Date().getTime() - startTime;
+      res.json({
+        responseTime: time, cpu: os.cpus(), maxMem: os.totalmem(), freeMem: os.freemem(), dbTime: testDB
+      });
+    });
 }
 
-export default performance
+export default performance;
