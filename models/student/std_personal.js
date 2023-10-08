@@ -83,3 +83,198 @@ const studentPersonalSchema = {
 
 // eslint-disable-next-line  no-unused-vars
 const stdPersonal = connector.model("Student personal", studentPersonalSchema);
+
+///crud operation///
+
+// student personal details  to the database
+async function create(activityData){
+  const {
+    uid,
+  title,
+  firstName,
+  middleName,
+  motherName,
+  gender,
+  dob,
+  age,
+  birthPlace,
+  nationality,
+  motherTongue,
+  domicileState,
+  religion,
+  castCategory,
+  maharashtraKarnatakaBorderCandidate,
+  castDescription,
+  subCasteDescription,
+  nonCreamyLayerCertificateAttached,
+  hobby,
+  passportNo,
+  bloodGroup,
+  physicallyHandicapped,
+  studentMobNo,
+  studentMail,
+  parentMobNo,
+  parentMail,
+  perAddrDescr,
+  perPlotNo,
+  perStreetName,
+  perStuAddr1,
+  perStuAddr2,
+  city,
+  percellphone,
+  perpincode,
+  perresiphone,
+  permailaddress,
+  country,
+  state,
+  district,
+  tahsil,
+  correspondanceAddrDescr,
+  correspondancePlotNo,
+  correspondanceStreetName,
+  correspondanceStuAddr1,
+  correspondanceStuAddr2,
+  correspondanceCity,
+  correspondanceCellPhone,
+  correspondancePincode,
+  correspondanceResiPhone,
+  correspondanceMailAddress,
+  correspondanceCountry,
+  correspondanceState,
+  correspondanceDistrict,
+  correspondanceTahsil,
+  fatherDetails,
+  fathersOccupation,
+  parentsFirstName,
+  parentsMiddleName,
+  parentsLastName,
+  guardianMobNo,
+  guardianMailId,
+  nameAsPerTc ,
+  casteAsPerTc,
+  birthStatus,
+  maritalStatus,
+  panCardNo,
+  passportExpiry,
+  drivingLicNo,
+  drivingLicValidTo,
+  aadharCardNo,
+  electionCardNo,
+  motherMobNo,
+  motherEmailId,
+  parentIncome ,
+  photoUploaded,
+  signUploaded ,
+  thumbUploaded,
+  noOfDocumentsUploaded,
+  }=studentData;
+  const student= new student({
+    uid,
+  title,
+  firstName,
+  middleName,
+  motherName,
+  gender,
+  dob,
+  age,
+  birthPlace,
+  nationality,
+  motherTongue,
+  domicileState,
+  religion,
+  castCategory,
+  maharashtraKarnatakaBorderCandidate,
+  castDescription,
+  subCasteDescription,
+  nonCreamyLayerCertificateAttached,
+  hobby,
+  passportNo,
+  bloodGroup,
+  physicallyHandicapped,
+  studentMobNo,
+  studentMail,
+  parentMobNo,
+  parentMail,
+  perAddrDescr,
+  perPlotNo,
+  perStreetName,
+  perStuAddr1,
+  perStuAddr2,
+  city,
+  percellphone,
+  perpincode,
+  perresiphone,
+  permailaddress,
+  country,
+  state,
+  district,
+  tahsil,
+  correspondanceAddrDescr,
+  correspondancePlotNo,
+  correspondanceStreetName,
+  correspondanceStuAddr1,
+  correspondanceStuAddr2,
+  correspondanceCity,
+  correspondanceCellPhone,
+  correspondancePincode,
+  correspondanceResiPhone,
+  correspondanceMailAddress,
+  correspondanceCountry,
+  correspondanceState,
+  correspondanceDistrict,
+  correspondanceTahsil,
+  fatherDetails,
+  fathersOccupation,
+  parentsFirstName,
+  parentsMiddleName,
+  parentsLastName,
+  guardianMobNo,
+  guardianMailId,
+  nameAsPerTc ,
+  casteAsPerTc,
+  birthStatus,
+  maritalStatus,
+  panCardNo,
+  passportExpiry,
+  drivingLicNo,
+  drivingLicValidTo,
+  aadharCardNo,
+  electionCardNo,
+  motherMobNo,
+  motherEmailId,
+  parentIncome ,
+  photoUploaded,
+  signUploaded ,
+  thumbUploaded,
+  noOfDocumentsUploaded,
+  });
+  const studentDoc =await student.save();
+  return studentDoc;
+}
+
+// Retrieve student personal details  based on a given  filter and limit
+async function read(filter,limit=1){
+  const studentDoc = await Student.find (filter).limit(limit);
+  return studentDoc ; 
+}
+
+// update student personal details based on a given filter 
+async function update(filter,updateObject,options={multi:true}){
+  const updateStudent= await Student.updateMany(filter,{$set:updateObject},options);
+return updateStudent.acknowledged;
+}
+
+// Delete student personal details  based on a given filter
+async function remove(filter){
+  const deleteStudent= await Student.deleteMany(filter).exec();
+  return deleteStudent.acknowledged;
+}
+
+// export crud functions
+
+export default{
+  create,read,update,remove,
+};
+
+
+
