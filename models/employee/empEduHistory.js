@@ -34,7 +34,7 @@ const EmployeeEducationHistory =
 connector.model("Employee education history", 
 employeeEducationHistorySchema);
 
-//CRUD Operations
+// CRUD Operations
 
 async function create(employeeEducationHistoryData) {
   const {

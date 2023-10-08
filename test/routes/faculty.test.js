@@ -1,12 +1,11 @@
-import { jest } from "@jest/globals";
+import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import connector from "#models/databaseUtil";
 import facultyModel from "#models/faculty";
-import mongoose from "mongoose";
 
 jest.mock("#util");
 const {agent} = global;
 
-//test case for deletion
+// test case for deletion
 function cleanUp(callback) {
     facultyModel.remove(
         {
@@ -20,8 +19,8 @@ function cleanUp(callback) {
             areaOfSpecialization: ["Specialization 1", "Specialization 2"],
             papersPublishedPG: 10,
             papersPublishedUG: 5,
-            department: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e52")],
-            preferredSubjects: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e53")],
+            department: ["5f7b75a5c69e2d4f0c285e52"],
+            preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
             designation: "Assistant Professor",
             natureOfAssociation: "Regular",
             additionalResponsibilities: "Teaching and Research",
@@ -52,8 +51,8 @@ describe("Faculty API", () => {
             areaOfSpecialization: ["Specialization 1", "Specialization 2"],
             papersPublishedPG: 10,
             papersPublishedUG: 5,
-            department: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e52")],
-            preferredSubjects: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e53")],
+            department: ["5f7b75a5c69e2d4f0c285e52"],
+            preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
             designation: "Assistant Professor",
             natureOfAssociation: "Regular",
             additionalResponsibilities: "Teaching and Research",
@@ -78,8 +77,8 @@ describe("Faculty API", () => {
                     areaOfSpecialization: ["Specialization 1", "Specialization 2"],
                     papersPublishedPG: 10,
                     papersPublishedUG: 5,
-                    department: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e52")],
-                    preferredSubjects: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e53")],
+                    department: ["5f7b75a5c69e2d4f0c285e52"],
+                    preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
                     designation: "Assistant Professor",
                     natureOfAssociation: "Regular",
                     additionalResponsibilities: "Teaching and Research",
@@ -101,8 +100,8 @@ describe("Faculty API", () => {
                     areaOfSpecialization: ["Specialization 1", "Specialization 2"],
                     papersPublishedPG: 10,
                     papersPublishedUG: 5,
-                    department: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e52")],
-                    preferredSubjects: [mongoose.Types.ObjectId("5f7b75a5c69e2d4f0c285e53")],
+                    department: ["5f7b75a5c69e2d4f0c285e52"],
+                    preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
                     designation: "Assistant Professor",
                     natureOfAssociation: "Regular",
                     additionalResponsibilities: "Teaching and Research",

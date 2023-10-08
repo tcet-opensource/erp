@@ -214,11 +214,12 @@
 * */
 
 /**
- * @api {post} /infrastructure/update Update infrastructure details
+ * @api {post} /infrastructure/update/:id Update infrastructure details
  * @apiName UpdateInfrastructure
  * @apiGroup Infrastructure
  * @apiDescription update Existing Infrastructure details
  *
+ * @apiParam {String} id The infrastructure document to update.
  * @apiBody {String} id Id of the infrastructure to be updated
  * @apiBody {String} [name] The name of the infrastructure.
  * @apiBody {String} [type] The type of the infrastructure.
@@ -276,11 +277,12 @@
 * */
 
 /**
- * @api {post} /accreditation/update update accreditation details
+ * @api {post} /accreditation/update/:id update accreditation details
  * @apiName UpdateAccreditation
  * @apiGroup Accreditation
  * @apiDescription update Existing accreditation
  *
+ * @apiParam {String} id The accreditation document to update.
  * @apiBody {String} id Id of the accreditation to be updated
  * @apiBody {String} [name] Accreditation name.
  * @apiBody {String} [agencyName] Agency name.
@@ -361,11 +363,12 @@
  *
 * */
 /**
- * @api {post} /tutorial/update Update tutorial details
+ * @api {post} /tutorial/update/:id Update tutorial details
  * @apiName UpdateTutorial
  * @apiGroup Tutorial
  * @apiDescription update Existing Tutorial details
  *
+ * @apiParam {String} id The tutorial document to update.
  * @apiBody {String} id Id of the tutorial to be updated
  * @apiBody {Number} [no] The no of tutorial.
  * @apiBody {String} [title] The title of tutorial.
@@ -473,11 +476,12 @@
 * */
 
 /**
- * @api {post} /department/update Update department
+ * @api {post} /department/update/:id Update department
  * @apiName UpdateDepartment
  * @apiGroup Department
- * @apiDescription Update Existing Department details except [yearOfStarting],[acronym]
+ * @apiDescription Update Existing Department details except yearOfStarting, acronym
  *
+ * @apiParam {String} id The department document to update.
  * @apiSuccess {String} department._id ID of document given by database.
  * @apiSuccess {String} department.name Name of Infrastructure
  * @apiSuccess {String} department.acronym The acronym of the Department.
@@ -548,11 +552,12 @@
  */
 
 /**
- * @api {post} /timetable/update Update Timetable
+ * @api {post} /timetable/update/:id Update Timetable
  * @apiName UpdateTimetable
  * @apiGroup Timetable
  * @apiDescription Update existing timetable data.
  *
+ * @apiParam {String} id The timetable document to update.
  * @apiBody {String} id ID of the timetable to be updated.
  * @apiBody {Date} [startDate] Start date of the timetable.
  * @apiBody {Date} [endDate] End date of the timetable.
@@ -568,11 +573,12 @@
  */
 
 /**
- * @api {post} /coursework/update Update Coursework
+ * @api {post} /coursework/update/:id Update Coursework
  * @apiName UpdateCoursework
  * @apiGroup Coursework
  * @apiDescription Update existing coursework data.
  *
+ * @apiParam {String} id The coursework document to update.
  * @apiBody {String} id ID of the Coursework to be updated.
  * @apiBody {ObjectId} student ID of the student (ObjectId).
  * @apiBody {String} Coursework type that is either onCampus or offCampus.
@@ -670,7 +676,7 @@
  * @api {post} /module/add Add Module
  * @apiName AddModule
  * @apiGroup Module
- * 
+ *
  * @apiBody {Number} [no] Module number.
  * @apiBody {String} [name] Name of the module.
  * @apiBody {String} [outcome] Module outcome.
@@ -678,7 +684,7 @@
  * @apiBody {Number} [hrsPerModule] Number of hours required per module.
  * @apiBody {String[]} [cognitiveLevels] Array of cognitive levels
  * of attainment as per Bloom's Taxanomy (L1-L6).
- * 
+ *
  * @apiSuccess {String} res added Module
  * @apiError (Error 500) Error while inserting in DB
  */
@@ -687,7 +693,7 @@
  * @api {delete} /module/delete/:moduleId Delete Module
  * @apiName DeleteModule
  * @apiGroup Module
- * 
+ *
  * @apiParam {String} moduleId The ID of the Module document to delete.
  *
  * @apiSuccess {String} res Success message indicating the deletion.
@@ -696,11 +702,12 @@
  */
 
 /**
- * @api {post} /module/update/:moduleId Update Module         
+ * @api {post} /module/update/:moduleId Update Module
  * @apiName UpdateModule
  * @apiGroup Module
  * @apiDescription Update existing module data.
  *
+ * @apiParam {String} moduleId The ID of the Module document to update.
  * @apiBody {Number} [no] Module number.
  * @apiBody {String} [name] Name of the module.
  * @apiBody {String} [outcome] Module outcome.
@@ -721,12 +728,12 @@
  * @api {get} /organization/list Get Organisation List
  * @apiName GetOrganizationList
  * @apiGroup Organization
- * 
+ *
  * @apiQuery [parent] Id of the parent of the organization
  * @apiQuery [startDate] starting date of the organization
  * @apiQuery [name] name of the organization
  * @apiQuery [accreditations] accreditation Id of the organization
- * 
+ *
  * @apiSuccess {Orgaization[]} res array of filtered organization Doc
  * @apiSuccess {ObjectId} organization.parent Id of the parent of the organization
  * @apiSuccess {Date} organization.startDate starting date of the organization
@@ -738,12 +745,12 @@
  * @api {post} /organization/add Add Organisation
  * @apiName AddOrganization
  * @apiGroup Organization
- * 
+ *
  * @apiBody {ObjectId} [parent] Id of the parent of the organization
  * @apiBody {Date} [startDate] starting date of the organization
  * @apiBody {String} [name] name of the organization
  * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
- * 
+ *
  * @apiSuccess {String} res added organization
  * @apiError (Error 500) Error while inserting in DB
  */
@@ -752,7 +759,7 @@
  * @api {delete} /organization/delete/:organizationId Delete Organization
  * @apiName DeleteOrganization
  * @apiGroup Organization
- * 
+ *
  * @apiParam {String} organizationId The ID of the Organization document to delete.
  *
  * @apiSuccess {String} res Success message indicating the deletion.
@@ -810,7 +817,7 @@
  * @apiDescription Remove the existing Paper.
  * @apiGroup Paper
  *
- * @apiParam {String} answersheetID The ID of the answersheet to delete.
+ * @apiParam {String} id The ID of the Paper document to delete.
  *
  * @apiSuccess {String} res Paper deleted successfully.
  *
@@ -824,7 +831,7 @@
 /**
  * @api {post} /assignment/add Add assignment
  * @apiName Addassignment
- * @apiGroup assignment
+ * @apiGroup Assignment
  * @apiDescription Add a new assignment.
  *
  * @apiBody {String} no Assignment number.
@@ -896,6 +903,7 @@
  * @apiName UpdatePractical
  * @apiGroup Practical
  *
+ * @apiParam {String} id The ID of the Practical document to delete.
  * @apiBody {String} id ID of the Practical entity to update.
  * @apiBody {Number} [no] New Practical number.
  * @apiBody {String} [title] New title.
@@ -989,11 +997,12 @@
 * */
 
 /**
- * @api {post} /paper/update/ Update Paper
+ * @api {post} /paper/update/:id Update Paper
  * @apiName UpdatePaper
  * @apiGroup Paper
- * @apiDescription Update Existing Paper details except 
+ * @apiDescription Update Existing Paper details except
  *
+ * @apiParam {String} id The paper document to update.
  * @apiSuccess {Paper[]} res Array of Filtered Paper Doc .
  * @apiSuccess {String} paper._id ID of paper given by database.
  * @apiSuccess {String} paper.answersheetID Name of Infrastructure
@@ -1001,23 +1010,24 @@
  * @apiSuccess {connector.Schema.Types.ObjectId} paper.student associated Student.
  * @apiSuccess {connector.Schema.Types.ObjectId} paper.faculty associated Faculty.
  * @apiSuccess {Number} paper.marks The marks in the Paper.
- * 
+ *
  * @apiSuccess {String} res Paper updated successfully.
- * 
+ *
  * @apiError (Error 500) err Error while updating the data.s
  */
 
 /**
- * @api {post} /assignment/update update assignment details
+ * @api {post} /assignment/update/:id update assignment details
  * @apiName UpdateAssignment
  * @apiGroup Assignment
  * @apiDescription update Existing assignment
  *
+ * @apiParam {String} id The assignment document to update.
  * @apiBody {String} id Id of the assignment to be updated
  * @apiBody {String} [no] Assignment number.
  * @apiBody {String} [title] assignment title.
  * @apiBody {String} [type] type of assignment.
- * @apiBody {Number} [marks] marks in assignment. 
+ * @apiBody {Number} [marks] marks in assignment.
  *
  * @apiSuccess {String} res Assignment updated.
  * @apiError (Error 500) err Error in updating database
@@ -1032,14 +1042,14 @@
  * @apiBody {String} [no] Number of assignment.
  * @apiBody {String} [title] Title of assignment.
  * @apiBody {String} [type] type of assignment.
- * @apiBody {Number} [marks] marks in assignment. 
+ * @apiBody {Number} [marks] marks in assignment.
  *
  * @apiSuccess {assignment[]} res Array of Filtered assignment Doc.
  * @apiSuccess {String} assignment._id ID of document given by database.
  * @apiBody {String} [no] Number of assignment.
  * @apiBody {String} [title] Title of assignment.
  * @apiBody {String} [type] type of assignment.
- * @apiBody {Number} [marks] marks in assignment. 
+ * @apiBody {Number} [marks] marks in assignment.
  */
 
 // ------------------------------------------------------------------------------------------
@@ -1082,17 +1092,18 @@
  */
 
 /**
- * @api {update} /semester/update/:id Request to list Semester information
+ * @api {update} /semester/update/:id Request to update Semester information
  * @apiName Updatesemester
  * @apiGroup Semester
  *
+ * @apiParam {String} id The ID of the Semester document to update.
  * @apiBody {Number} [number] Number of semester
  * @apiBody {String} [academicYear] To show the current academic year
  * @apiBody {String} [type] Stores the enum ODD or EVEN for semester
  * @apiBody {Date} [startDate] Start date of the semester
  * @apiBody {Date} [endDate] End date of the semester
  *
- *@apiSuccess {String} res Semester updated.
+ * @apiSuccess {String} res Semester updated.
  * @apiError (Error 500) DatabaseError Error in updating the database.
  *
  */
@@ -1202,13 +1213,13 @@
  * @api {post} /organization/update/:organizationId Update Organisation
  * @apiName UpdateOrganization
  * @apiGroup Organization
- * 
- * @apiBody {String} organizationId The ID of the Organization document to update
+ *
+ * @apiParam {String} organizationId The ID of the organization document to update.
  * @apiBody {ObjectId} [parent] Id of the parent of the organization
  * @apiBody {Date} [startDate] starting date of the organization
  * @apiBody {String} [name] name of the organization
  * @apiBody {ObjectId} [accreditations] accreditation Id of the organization
- * 
+ *
  * @apiSuccess {String} res organization updated
  * @apiError (Error 500) Error while inserting in DB
  */
@@ -1218,7 +1229,7 @@
  * @apiName DeleteActivity
  * @apiGroup Activity
  *
- * @apiParam {String} Activity The activity document to delete.
+ * @apiParam {String} activity The activity document to delete.
  *
  * @apiSuccess {String} res Success message indicating the deletion.
  *
@@ -1226,11 +1237,12 @@
  */
 
 /**
- * @api {post} /timetable/update Update Timetable
+ * @api {post} /activity/update/:id Update Activity
  * @apiName UpdateTimetable
  * @apiGroup Timetable
  * @apiDescription Update existing timetable data.
  *
+ * @apiParam {String} id The timetable document to update.
  * @apiBody {Date} startTime The startTime of the activity.
  * @apiBody {Number} duration The duration of the activity (in minutes).
  * @apiBody {ObjectId} course The course of the activity (ObjectId).
@@ -1244,11 +1256,12 @@
  */
 
 /**
- * @api {post} /activity/update Update Activity.
+ * @api {post} /activity/update/:id Update Activity.
  * @apiName UpdateActivity
  * @apiGroup Activity
  * @apiDescription Update existing activity data.
  *
+ * @apiParam {String} id The activity document to update.
  * @apiBody {Date} startTime The startTime of the activity.
  * @apiBody {Number} duration The duration of the activity (in minutes).
  * @apiBody {ObjectId} course The course of the activity (ObjectId).
@@ -1283,7 +1296,7 @@
  * @apiSuccess {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
  * @apiSuccess {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
  * @apiSuccess {ObjectId} group The group of the activity (ObjectId).
- * @apiSucess {ObjectId} students the students who gonna attend the activity(ObjectId).
+ * @apiSuccess {ObjectId} students the students who gonna attend the activity(ObjectId).
  */
 
 /**
@@ -1307,7 +1320,7 @@
  * @apiSuccess {String} type The type of activity.One of possible LECTURE, PRACTICAL, TUTORIAL.
  * @apiSuccess {ObjectId} task The task of the activity (ObjectId).One of possible Topic,Practical,Tutorial.
  * @apiSuccess {ObjectId} group The group of the activity (ObjectId).
- * @apiSucess {ObjectId} students the students who gonna attend the activity(ObjectId).
+ * @apiSuccess {ObjectId} students the students who gonna attend the activity(ObjectId).
  */
 
 // ------------------------------------------------------------------------------------------
@@ -1357,11 +1370,12 @@
  */
 
 /**
- * @api {post} /student/update Update Student
+ * @api {post} /student/update/:id Update Student
  * @apiName UpdateStudent
  * @apiGroup Student
  * @apiDescription Update existing student data.
  *
+ * @apiParam {String} id The student document to update.
  * @apiBody {String} ERP ID of the student.
  * @apiBody {String} name of the student.
  * @apiBody {Number} joining year of the student.
@@ -1396,4 +1410,4 @@
  * @apiSuccess {String} student.division of the student.
  * @apiSuccess {Number} student.roll no of the student.
  * @apiSuccess {ObjectId} student.coursesOpted by the student(ObjectId).
- */ 
+ */

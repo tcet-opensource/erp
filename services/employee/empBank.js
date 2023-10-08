@@ -3,21 +3,21 @@ import databaseError from "#error/database";
 
 export async function createEmployeeBank(
   uid,
-  bank_name,
-  bank_acc,
-  bank_branch,
-  bank_ifsc,
-  bank_micr,
-  appointment_approve_sg_dte,
+  bankName,
+  bankAcc,
+  bankBranch,
+  bankIfsc,
+  bankMicr,
+  appointmentApproveSgDte,    
 ) {
   const newEmployeeBank = await EmployeeBank.create({
     uid,
-    bank_name,
-    bank_acc,
-    bank_branch,
-    bank_ifsc,
-    bank_micr,
-    appointment_approve_sg_dte,
+    bankName,
+    bankAcc,
+    bankBranch,
+    bankIfsc,
+    bankMicr,
+    appointmentApproveSgDte,    
   });
   if (newEmployeeBank.uid === uid) {
     return newEmployeeBank;
