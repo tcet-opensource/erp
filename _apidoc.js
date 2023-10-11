@@ -1411,3 +1411,123 @@
  * @apiSuccess {Number} student.roll no of the student.
  * @apiSuccess {ObjectId} student.coursesOpted by the student(ObjectId).
  */
+// ------------------------------------------------------------------------------------------
+// Faculty
+// ------------------------------------------------------------------------------------------
+/**
+ * @api {post} /faculty/add Add Faculty
+ * @apiName AddFaculty
+ * @apiGroup Faculty
+ * @apiDescription Add a new faculty member.
+ *
+ * @apiBody {String} ERPID Employee ID of the faculty.
+ * @apiBody {Date} dateOfJoining Date of joining the institution.
+ * @apiBody {Date} dateOfLeaving Date of leaving the institution.
+ * @apiBody {String} profileLink Link to faculty member's profile.
+ * @apiBody {String[]} qualifications List of qualifications.
+ * @apiBody {Number} totalExperience Total years of experience.
+ * @apiBody {String[]} achievements List of achievements.
+ * @apiBody {String[]} areaOfSpecialization List of areas of specialization.
+ * @apiBody {Number} papersPublishedPG Number of papers published at the PG level.
+ * @apiBody {Number} papersPublishedUG Number of papers published at the UG level.
+ * @apiBody {ObjectId} department ID of the department (ObjectId).
+ * @apiBody {ObjectId[]} preferredSubjects List of preferred subjects (ObjectId).
+ * @apiBody {String[]} designation Faculty member's designation (one of the possible values: "HOD", "Assistant Professor", "Associate Professor", "Activity Head").
+ * @apiBody {String} natureOfAssociation Nature of association with the institution (one of the possible values: "Regular", "Contract", "Adjunct").
+ * @apiBody {String} additionalResponsibilities Additional responsibilities of the faculty.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added faculty"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+/**
+ * @api {delete} /faculty/delete/:facultyId Delete Faculty
+ * @apiName DeleteFaculty
+ * @apiGroup Faculty
+ *
+ * @apiParam {String} facultyId The ID of the faculty member to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /faculty/update/:id Update Faculty
+ * @apiName UpdateFaculty
+ * @apiGroup Faculty
+ * @apiDescription Update existing faculty member's data.
+ *
+ * @apiParam {String} id The faculty member's document to update.
+ * @apiBody {String} id ID of the faculty member to be updated.
+ * @apiBody {String} ERPID Employee ID of the faculty.
+ * @apiBody {Date} dateOfJoining Date of joining the institution.
+ * @apiBody {Date} dateOfLeaving Date of leaving the institution.
+ * @apiBody {String} profileLink Link to faculty member's profile.
+ * @apiBody {String[]} qualifications List of qualifications.
+ * @apiBody {Number} totalExperience Total years of experience.
+ * @apiBody {String[]} achievements List of achievements.
+ * @apiBody {String[]} areaOfSpecialization List of areas of specialization.
+ * @apiBody {Number} papersPublishedPG Number of papers published at the PG level.
+ * @apiBody {Number} papersPublishedUG Number of papers published at the UG level.
+ * @apiBody {ObjectId} department ID of the department (ObjectId).
+ * @apiBody {ObjectId[]} preferredSubjects List of preferred subjects (ObjectId).
+ * @apiBody {String[]} designation Faculty member's designation (one of the possible values: "HOD", "Assistant Professor", "Associate Professor", "Activity Head").
+ * @apiBody {String} natureOfAssociation Nature of association with the institution (one of the possible values: "Regular", "Contract", "Adjunct").
+ * @apiBody {String} additionalResponsibilities Additional responsibilities of the faculty.
+ *
+ * @apiSuccess {String} res Faculty member's data updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
+/**
+ * @api {get} /faculty/list Get Faculty List
+ * @apiName GetFacultyList
+ * @apiGroup Faculty
+ *
+ * @apiQuery {String} ERPID Employee ID of the faculty.
+ * @apiQuery {Date} dateOfJoining Date of joining the institution.
+ * @apiQuery {Date} dateOfLeaving Date of leaving the institution.
+ * @apiQuery {String} profileLink Link to faculty member's profile.
+ * @apiQuery {String[]} qualifications List of qualifications.
+ * @apiQuery {Number} totalExperience Total years of experience.
+ * @apiQuery {String[]} achievements List of achievements.
+ * @apiQuery {String[]} areaOfSpecialization List of areas of specialization.
+ * @apiQuery {Number} papersPublishedPG Number of papers published at the PG level.
+ * @apiQuery {Number} papersPublishedUG Number of papers published at the UG level.
+ * @apiQuery {ObjectId} department ID of the department (ObjectId).
+ * @apiQuery {ObjectId[]} preferredSubjects List of preferred subjects (ObjectId).
+ * @apiQuery {String[]} designation Faculty member's designation (one of the possible values: "HOD", "Assistant Professor", "Associate Professor", "Activity Head").
+ * @apiQuery {String} natureOfAssociation Nature of association with the institution (one of the possible values: "Regular", "Contract", "Adjunct").
+ * @apiQuery {String} additionalResponsibilities Additional responsibilities of the faculty.
+ *
+ * @apiSuccess {Faculty[]} res Array of filtered faculty member documents.
+ * @apiSuccess {String} faculty._id ID of the faculty member document given by the database.
+ * @apiSuccess {String} faculty.ERPID Employee ID of the faculty.
+ * @apiSuccess {Date} faculty.dateOfJoining Date of joining the institution.
+ * @apiSuccess {Date} faculty.dateOfLeaving Date of leaving the institution.
+ * @apiSuccess {String} faculty.profileLink Link to faculty member's profile.
+ * @apiSuccess {String[]} faculty.qualifications List of qualifications.
+ * @apiSuccess {Number} faculty.totalExperience Total years of experience.
+ * @apiSuccess {String[]} faculty.achievements List of achievements.
+ * @apiSuccess {String[]} faculty.areaOfSpecialization List of areas of specialization.
+ * @apiSuccess {Number} faculty.papersPublishedPG Number of papers published at the PG level.
+ * @apiSuccess {Number} faculty.papersPublishedUG Number of papers published at the UG level.
+ * @apiSuccess {ObjectId} faculty.department ID of the department.
+ * @apiSuccess {ObjectId[]} faculty.preferredSubjects List of preferred subjects.
+ * @apiSuccess {String[]} faculty.designation Faculty member's designation.
+ * @apiSuccess {String} faculty.natureOfAssociation Nature of association with the institution.
+ * @apiSuccess {String} faculty.additionalResponsibilities Additional responsibilities of the faculty.
+ **/
