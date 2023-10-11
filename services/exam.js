@@ -1,5 +1,5 @@
-import Exam from '#models/exam';
-import databaseError from '#error/database';
+import Exam from "#models/exam";
+import databaseError from "#error/database";
 
 export async function createExam(
   date,
@@ -7,7 +7,7 @@ export async function createExam(
   duration,
   supervisor,
   infrastructure,
-  course
+  course,
 ) {
   const newExam = await Exam.create({
     date,
@@ -17,10 +17,10 @@ export async function createExam(
     infrastructure,
     course,
   });
-  if (newExam.date === date) {
+  if (Date(newExam.date) === Date(date)) {
     return newExam;
   }
-  throw new databaseError.DataEntryError('exam');
+  throw new databaseError.DataEntryError("exam");
 }
 
 export async function updateExamById(id, data) {
@@ -28,7 +28,7 @@ export async function updateExamById(id, data) {
   if (updated) {
     return updated;
   }
-  throw new databaseError.DataEntryError('exam');
+  throw new databaseError.DataEntryError("exam");
 }
 
 export async function examList(filter) {
@@ -41,5 +41,5 @@ export async function deleteExamById(examId) {
   if (deleted) {
     return deleted;
   }
-  throw new databaseError.DataDeleteError('exam');
+  throw new databaseError.DataDeleteError("exam");
 }

@@ -3,12 +3,13 @@ import {
   deleteExamById,
   examList,
   updateExamById,
-} from '#services/exam';
-import { logger } from '#util';
+} from "#services/exam";
+import { logger } from "#util";
 
 async function addExam(req, res) {
-  const { date, startTime, duration, infrastructure, supervisor, course } =
-    req.body;
+  const {
+    date, startTime, duration, infrastructure, supervisor, course,
+  } = req.body;
   try {
     const exam = await createExam(
       date,
@@ -16,13 +17,13 @@ async function addExam(req, res) {
       duration,
       supervisor,
       infrastructure,
-      course
+      course,
     );
     res.json({ res: `added exam ${exam.id}`, id: exam.id });
   } catch (error) {
-    logger.error('Error while inserting', error);
+    logger.error("Error while inserting", error);
     res.status(500);
-    res.json({ err: 'Error while inserting in DB' });
+    res.json({ err: "Error while inserting in DB" });
   }
 }
 
@@ -33,9 +34,9 @@ async function updateExam(req, res) {
     await updateExamById(id, data);
     res.json({ res: `updated exam with id ${id}` });
   } catch (error) {
-    logger.error('Error while updating', error);
+    logger.error("Error while updating", error);
     res.status(500);
-    res.json({ err: 'Error while updaing in DB' });
+    res.json({ err: "Error while updaing in DB" });
   }
 }
 
@@ -51,8 +52,8 @@ async function deleteExam(req, res) {
     await deleteExamById(id);
     res.json({ res: `Deleted exam with ID ${id}` });
   } catch (error) {
-    logger.error('Error while deleting', error);
-    res.status(500).json({ error: 'Error while deleting from DB' });
+    logger.error("Error while deleting", error);
+    res.status(500).json({ error: "Error while deleting from DB" });
   }
 }
 
