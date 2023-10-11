@@ -1411,6 +1411,35 @@
  * @apiSuccess {Number} student.roll no of the student.
  * @apiSuccess {ObjectId} student.coursesOpted by the student(ObjectId).
  */
+
+// ------------------------------------------------------------------------------------------
+// Topic.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /topic/add Add topic
+ * @apiName AddTopic
+ * @apiGroup Topic
+ * @apiDescription Add a new Topic.
+ *
+ * @apiBody {String} Title of the content(topic).
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) DatabaseError Err message if there is an error inserting into the database.
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "Added topic"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
 // ------------------------------------------------------------------------------------------
 // Faculty
 // ------------------------------------------------------------------------------------------
@@ -1453,6 +1482,18 @@
  */
 
 /**
+ * @api {delete} /topic/delete/:topicId Delete Topic
+ * @apiName DeleteTopic
+ * @apiGroup Topic
+ *
+ * @apiParam {String} topicId The ID of the Topic document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
+ */
+
+/**
  * @api {delete} /faculty/delete/:facultyId Delete Faculty
  * @apiName DeleteFaculty
  * @apiGroup Faculty
@@ -1464,6 +1505,17 @@
  * @apiError (Error 500) DatabaseError Error message if there was an error during the deletion.
  */
 
+/**
+ * @api {post} /topic/update/:id Update Topic
+ * @apiName UpdateTopic
+ * @apiGroup Topic
+ * @apiDescription Update existing topic data.
+ *
+ * @apiParam {String} id The topic document to update.
+ *
+ * @apiSuccess {String} res Topic updated.
+ * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
 /**
  * @api {post} /faculty/update/:id Update Faculty
  * @apiName UpdateFaculty
@@ -1490,6 +1542,17 @@
  *
  * @apiSuccess {String} res Faculty member's data updated.
  * @apiError (Error 500) DatabaseError Error in updating the database.
+ */
+
+/**
+ * @api {get} /topic/list Get Topic List
+ * @apiName GetTopicList
+ * @apiGroup Topic
+ *
+ * @apiQuery {String} Title of the content(topic).
+ *
+ * @apiSuccess {Topic[]} res Array of filtered topic documents.
+ * @apiSuccess {String} topic._id ID of the topic document given by the database.
  */
 
 /**
