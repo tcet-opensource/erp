@@ -211,7 +211,7 @@
  *
  * @apiError (Error 500) err Error message if there was an error during the deletion.
  *
- * */
+* */
 
 /**
  * @api {post} /infrastructure/update Update infrastructure details
@@ -273,7 +273,7 @@
  *
  * @apiError (Error 500) err Error message if there was an error during the deletion.
  *
- * */
+* */
 
 /**
  * @api {post} /accreditation/update update accreditation details
@@ -359,7 +359,7 @@
  *
  * @apiError (Error 500) err Error message if there was an error during the deletion.
  *
- * */
+* */
 /**
  * @api {post} /tutorial/update Update tutorial details
  * @apiName UpdateTutorial
@@ -470,7 +470,7 @@
  *
  * @apiError (Error 500) err Error while deleting from DB.
  *
- * */
+* */
 
 /**
  * @api {post} /department/update Update department
