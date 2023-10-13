@@ -25,6 +25,7 @@ import { identifyUser } from "#middleware/identifyUser";
 import departmentRouter from "#routes/department";
 import paperRouter from "#routes/paper";
 import groupRouter from "#routes/group";
+import performarouter from "#routes/performance";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -62,5 +63,6 @@ app.use("/paper", paperRouter);
 app.use("/group", groupRouter);
 app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
+app.use("/performance", performarouter);
 
 export default app;

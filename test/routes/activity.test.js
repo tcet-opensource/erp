@@ -8,14 +8,7 @@ const { agent } = global;
 function cleanUp(callback) {
   activityModel
     .remove({
-      startTime: "2023-06-18T14:11:30Z",
-      duration: 2,
-      course: "64fc3c8bde9fa947ea1f412f",
-      faculty: "64fc3c8bde9fa947ea1f412f",
-      type: "LECTURE",
-      task: ["64fc3c8bde9fa947ea1f412f"],
-      group: "64fc3c8bde9fa947ea1f412f",
-      students: ["64fc3c8bde9fa947ea1f412f"]
+      course: "5f8778b54b553439ac49a03a"
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -55,7 +48,7 @@ describe("Activity API", () => {
         activityBlueprint: "64fc3c8bde9fa947ea1f412f",
         startTime: "2023-06-18T14:11:30Z",
         duration: 2,
-        course: "64fc3c8bde9fa947ea1f412f",
+        course: "5f8778b54b553439ac49a03a",
         faculty: "64fc3c8bde9fa947ea1f412f",
         type: "LECTURE",
         task: ["64fc3c8bde9fa947ea1f412f"],
@@ -70,7 +63,7 @@ describe("Activity API", () => {
         activityBlueprint: "64fc3c8bde9fa947ea1f412f",
         startTime: "2023-06-18T14:11:30Z",
         duration: 2,
-        course: "64fc3c8bde9fa947ea1f412f",
+        course: "5f8778b54b553439ac49a03a",
         faculty: "64fc3c8bde9fa947ea1f412f",
         type: "LECTURE",
         task: ["64fc3c8bde9fa947ea1f412f"],
