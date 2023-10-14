@@ -3,3 +3,11 @@
 
 # npm test
 npx lint-staged
+
+if [ "$(uname)" == "Darwin" ]; then
+    npm run test
+elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+    npm run test   
+elif [ "$(expr substr $(uname -s) 1 5)" == "MINGW" ]; then
+    npm run testWin
+fi
