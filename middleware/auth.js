@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import util from "#util";
 
 async function authenticateToken(req, res, next) {
-  if (process.env.STATE === "Development") {
+  if (process.env.ENVIRONMENT === "local") {
     return next();
   }
   const authHeader = req.headers.authorization || req.headers.Authorization;

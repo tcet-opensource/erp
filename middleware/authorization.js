@@ -1,7 +1,7 @@
 function authorization(access = []) {
   return (req, res, next) => {
     // remove this in production
-    if (process.env.STATE === "Development") {
+    if (process.env.ENVIRONMENT === "local") {
       return next();
     }
     if (!req.user) return res.json({ msg: "kindly login first" });
