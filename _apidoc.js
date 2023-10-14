@@ -672,6 +672,35 @@
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
 
+// ------------------------------------------------------------------------------------------
+// Exam.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /exam/add Add Exam
+ * @apiName AddExam
+ * @apiExam Exam
+ * @apiDescription Add a new exam.
+ *
+ * @apiBody {String} title Exam title.
+ * @apiBody {ObjectId[]} students Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) ExamAddError Error while adding the exam
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added exam Example Exam"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
 /**
  * @api {post} /module/add Add Module
  * @apiName AddModule
@@ -984,6 +1013,18 @@
  */
 
 /**
+ * @api {delete} /exam/delete/:id Delete Exam
+ * @apiName DeleteExam
+ * @apiExam Exam
+ *
+ * @apiParam {ObjectId} id The ObjectID of the exam to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ * @apiError (Error 500) ExamDeleteError Error while deleting the exam
+ *
+ */
+
+/**
  * @api {delete} /assignment/delete/:assignmentId To delete Assignment
  * @apiName DeleteAssignment
  * @apiGroup Assignment
@@ -1031,6 +1072,21 @@
  *
  * @apiSuccess {String} res Assignment updated.
  * @apiError (Error 500) err Error in updating database
+ *
+ */
+
+/**
+ * @api {post} /exam/update/:id Update Exam Details
+ * @apiName UpdateExam
+ * @apiExam Exam
+ * @apiDescription Update existing exam details.
+ *
+ * @apiParam {ObjectId} id The ObjectID of the exam to update.
+ * @apiBody {String} [title] Exam title.
+ * @apiBody {ObjectId[]} [students] Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Exam updated.
+ * @apiError (Error 500) ExamUpdateError Error in updating database
  *
  */
 
@@ -1183,6 +1239,19 @@
  * @apiSuccess {String} res Group updated.
  * @apiError (Error 500) GroupUpdateError Error in updating database
  *
+ */
+
+/**
+ * @api {get} /exam/list Get Exam List
+ * @apiName GetExamList
+ * @apiExam Exam
+ *
+ * @apiQuery {String} [title] Title of the exam.
+ *
+ * @apiSuccess {Exam[]} res Array of filtered exam documents.
+ * @apiSuccess {ObjectId} exam._id ObjectID of the exam document in the database.
+ * @apiSuccess {String} exam.title Title of the exam.
+ * @apiSuccess {ObjectId[]} exam.students Array of student ObjectIDs in the exam.
  */
 
 /**
