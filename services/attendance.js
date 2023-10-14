@@ -10,7 +10,7 @@ export async function addNewAttendance( student, course, monthlyAttended, monthl
     cumulativeAttended,
     cumulativeOccured,
   });
-  if (newAttendance.student === student) {
+  if (String(newAttendance.student) === student) {
     return newAttendance;
   }
   throw new databaseError.DataEntryError("Add Attendance");
