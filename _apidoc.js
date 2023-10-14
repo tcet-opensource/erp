@@ -1593,4 +1593,4 @@
  * @apiSuccess {String[]} faculty.designation Faculty member's designation.
  * @apiSuccess {String} faculty.natureOfAssociation Nature of association with the institution.
  * @apiSuccess {String} faculty.additionalResponsibilities Additional responsibilities of the faculty.
- **/
+ */
