@@ -30,7 +30,7 @@ describe("checking user functions", () => {
         password: "123",
         emailId: "test@gmail.com",
         uid: "S1032190220",
-        userType: "student",
+        userType: "STUDENT",
       });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -46,7 +46,7 @@ describe("checking auth functions", () => {
       password: "123",
       emailId: "test@gmail.com",
       uid: "S1032190220",
-      userType: "student",
+      userType: "STUDENT",
     });
   });
 

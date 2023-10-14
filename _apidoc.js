@@ -672,6 +672,68 @@
  * attainment as per Bloom's Taxanomy (L1-L6).
  */
 
+// ------------------------------------------------------------------------------------------
+// Attendance.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /attendance/add Add Attendance
+ * @apiName AddAttendance
+ * @apiGroup Attendance
+ * @apiDescription Add a new attendance.
+ *
+ * @apiBody {String} student Student name.
+ * @apiBody {String} course Course name.
+ * @apiBody {Number} monthlyAttended Monthly attendance of student.
+ * @apiBody {Number} monthlyOccured Monthly occured.
+ * @apiBody {Number} cumulativeAttended sum of attendance of student.
+ * @apiBody {Number} cumulativeOccured sum of occured.
+ * 
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) UserNotFound The  of the User was not found
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added attendance Example Attendance"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
+// ------------------------------------------------------------------------------------------
+// Exam.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /exam/add Add Exam
+ * @apiName AddExam
+ * @apiExam Exam
+ * @apiDescription Add a new exam.
+ *
+ * @apiBody {String} title Exam title.
+ * @apiBody {ObjectId[]} students Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Response message.
+ * @apiError (Error 500) ExamAddError Error while adding the exam
+ *
+ * @apiSuccessExample Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "res": "added exam Example Exam"
+ *     }
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *       "err": "Error while inserting in DB"
+ *     }
+ */
+
 /**
  * @api {post} /module/add Add Module
  * @apiName AddModule
@@ -854,6 +916,20 @@
  *       "err": "Error while inserting in DB"
  *     }
  */
+
+/**
+ * @api {delete} /attendance/delete/:attendanceId To delete Attendance
+ * @apiName DeleteAttendance
+ * @apiGroup Attendance
+ *
+ * @apiParam {String} attendanceId The ID of the attendance document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+
 // ------------------------------------------------------------------------------------------
 // Practical.
 // ------------------------------------------------------------------------------------------
@@ -984,6 +1060,18 @@
  */
 
 /**
+ * @api {delete} /exam/delete/:id Delete Exam
+ * @apiName DeleteExam
+ * @apiExam Exam
+ *
+ * @apiParam {ObjectId} id The ObjectID of the exam to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ * @apiError (Error 500) ExamDeleteError Error while deleting the exam
+ *
+ */
+
+/**
  * @api {delete} /assignment/delete/:assignmentId To delete Assignment
  * @apiName DeleteAssignment
  * @apiGroup Assignment
@@ -995,6 +1083,24 @@
  * @apiError (Error 500) err Error message if there was an error during the deletion.
  *
 * */
+
+/**
+ * @api {post} /attendance/update update attendance details
+ * @apiName UpdateAttendance
+ * @apiGroup Attendance
+ * @apiDescription update Existing attendance
+ *
+ * @apiBody {String} [student] Student name.
+ * @apiBody {String} [course] Course name.
+ * @apiBody {Number} [monthlyAttended] Monthly attendance of student.
+ * @apiBody {Number} [monthlyOccured] Monthly occured.
+ * @apiBody {Number} [cumulativeAttended] sum of attendance of student.
+ * @apiBody {Number} [cumulativeOccured] sum of occured.
+ *
+ * @apiSuccess {String} res Attendance updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
 
 /**
  * @api {post} /paper/update/:id Update Paper
@@ -1031,6 +1137,42 @@
  *
  * @apiSuccess {String} res Assignment updated.
  * @apiError (Error 500) err Error in updating database
+ *
+ */
+
+/**
+ * @api {get} attendance/list Get Attendance List
+ * @apiName GetAttendance
+ * @apiGroup Attendance
+ *
+ * @apiBody {String} [student] Student name.
+ * @apiBody {String} [course] Course name.
+ * @apiBody {Number} [monthlyAttended] Monthly attendance of student.
+ * @apiBody {Number} [monthlyOccured] Monthly occured.
+ * @apiBody {Number} [cumulativeAttended] sum of attendance of student.
+ * @apiBody {Number} [cumulativeOccured] sum of occured.
+ *
+ * @apiSuccess {attendance[]} res Array of Filtered attendance Doc.
+ * @apiSuccess {String} attendance._id ID of document given by database.
+ * @apiSuccess {String} attendance.student Name of student.
+ * @apiSuccess {String} attendance.course Name of course.
+ * @apiSuccess {Number} attendance.monthlyAttended Monthly attendance of student.
+ * @apiSuccess {Number} attendance.cumulativeAttended sum of attendance of student.
+ * @apiSuccess {Number} attendance.cumulativeOccured sum of occured.
+ */
+
+/**
+ * @api {post} /exam/update/:id Update Exam Details
+ * @apiName UpdateExam
+ * @apiExam Exam
+ * @apiDescription Update existing exam details.
+ *
+ * @apiParam {ObjectId} id The ObjectID of the exam to update.
+ * @apiBody {String} [title] Exam title.
+ * @apiBody {ObjectId[]} [students] Array of student ObjectIDs.
+ *
+ * @apiSuccess {String} res Exam updated.
+ * @apiError (Error 500) ExamUpdateError Error in updating database
  *
  */
 
@@ -1183,6 +1325,19 @@
  * @apiSuccess {String} res Group updated.
  * @apiError (Error 500) GroupUpdateError Error in updating database
  *
+ */
+
+/**
+ * @api {get} /exam/list Get Exam List
+ * @apiName GetExamList
+ * @apiExam Exam
+ *
+ * @apiQuery {String} [title] Title of the exam.
+ *
+ * @apiSuccess {Exam[]} res Array of filtered exam documents.
+ * @apiSuccess {ObjectId} exam._id ObjectID of the exam document in the database.
+ * @apiSuccess {String} exam.title Title of the exam.
+ * @apiSuccess {ObjectId[]} exam.students Array of student ObjectIDs in the exam.
  */
 
 /**
@@ -1516,6 +1671,7 @@
  * @apiSuccess {String} res Topic updated.
  * @apiError (Error 500) DatabaseError Error in updating the database.
  */
+
 /**
  * @api {post} /faculty/update/:id Update Faculty
  * @apiName UpdateFaculty
@@ -1593,4 +1749,4 @@
  * @apiSuccess {String[]} faculty.designation Faculty member's designation.
  * @apiSuccess {String} faculty.natureOfAssociation Nature of association with the institution.
  * @apiSuccess {String} faculty.additionalResponsibilities Additional responsibilities of the faculty.
- **/
+ */
