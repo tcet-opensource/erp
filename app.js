@@ -28,6 +28,7 @@ import examRouter from "#routes/exam";
 import paperRouter from "#routes/paper";
 import groupRouter from "#routes/group";
 import performarouter from "#routes/performance";
+import topicRouter from "#routes/topic";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -68,5 +69,6 @@ app.use("/group", groupRouter);
 app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 app.use("/performance", performarouter);
+app.use("topic",topicRouter);
 
 export default app;
