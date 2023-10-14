@@ -1,4 +1,4 @@
-import { getModule, addNewModule } from "#services/module";
+import { getModule, addNewModule, updateModuleById, deleteModuleById } from "#services/module";
 import { logger } from "#util";
 
 async function showModule(req, res) {
@@ -33,6 +33,33 @@ async function addModule(req, res) {
   }
 }
 
+async function updateModule(req, res) {
+  const { id } = req.params;
+  const {
+    ...data
+  } = req.body;
+  try {
+    await updateModuleById(id, data);
+    res.json({ res: `updated Module with id ${id}` });
+  } catch (error) {
+    logger.error("Error while updating", error);
+    res.status(500);
+    res.json({ err: "Error while updaing in DB" });
+  }
+}
+
+async function deleteModule(req, res) {
+  const { id } = req.params;
+  try {
+    await deleteModuleById(id);
+
+    res.json({ res: `Deleted Module with id ${id}` });
+  } catch (error) {
+    logger.error("Error while deleting", error);
+    res.status(500).json({ error: "Error while deleting from DB" });
+  }
+}
+
 export default {
-  showModule, addModule,
+  showModule, addModule, updateModule, deleteModule,
 };

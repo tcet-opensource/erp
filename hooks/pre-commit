@@ -9,6 +9,9 @@ do
   # Get staged content of the file
   staged_content=$(git show ":$file")
 
+  # Format staged files 
+  npx prettier --write $file
+
   # Run ESLint with the staged content and filename
   # echo "$staged_content" | npm run eslint -- --stdin 
   npx eslint $file
