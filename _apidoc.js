@@ -312,48 +312,48 @@
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
 //------------------------------------------------------------------------------------------
-// Topics.
+// Tutorials.
 // ------------------------------------------------------------------------------------------
 
 /**
- * @api {post} /topic/add Add Topic
- * @apiName AddTopic
- * @apiGroup Topic
+ * @api {post} /tutorial/add Add Tutorial
+ * @apiName AddTutorial
+ * @apiGroup Tutorial
  *
- * @apiBody {Number} no The number of topic.
- * @apiBody {String} title The title of topic.
- * @apiBody {Number} hours The hours required for topic.
- * @apiBody {String} cognitiveLevel The cognitiveLevel of topic.
+ * @apiBody {Number} no The number of tutorial.
+ * @apiBody {String} title The title of tutorial.
+ * @apiBody {Number} hours The hours required for tutorial.
+ * @apiBody {String} cognitiveLevel The cognitiveLevel of tutorial.
  *
- * @apiSuccess {String} res Success message with the ID of the added topic.
+ * @apiSuccess {String} res Success message with the ID of the added tutorial.
  *
  * @apiError (Error 500) DatabaseError Error while inserting in the database.
  *
- * @apiDescription Adds a new topic to the system.
+ * @apiDescription Adds a new tutorial to the system.
  */
 
 /**
- * @api {get} topic/list Get Topic List
- * @apiName GetTopic
- * @apiGroup Topic
+ * @api {get} tutorial/list Get Tutorial List
+ * @apiName GetTutorial
+ * @apiGroup Tutorial
  *
- * @apiQuery {Number} [no] Number of Topic.
- * @apiQuery {String} [title] Title of Topic.
- * @apiQuery {Number} [hours] Hours required for Topic
- * @apiQuery {String} [cognitiveLevel] Level of Topic.
+ * @apiQuery {Number} [no] Number of Tutorial.
+ * @apiQuery {String} [title] Title of Tutorial.
+ * @apiQuery {Number} [hours] Hours required for Tutorial
+ * @apiQuery {String} [cognitiveLevel] Level of Tutorial.
  *
- * @apiSuccess {Topic[]} res Array of Filtered Topic Doc .
- * @apiSuccess {String} topic._id ID of document given by database.
- * @apiSuccess {Number} topic.no Number of Topic.
- * @apiSuccess {String} topic.title Title of Topic.
- * @apiSuccess {String} topic.hours Hours of Topic.
- * @apiSuccess {Number} topic.cognitiveLevel CognitiveLevel of Topic.
+ * @apiSuccess {Tutorial[]} res Array of Filtered Tutorial Doc .
+ * @apiSuccess {String} tutorial._id ID of document given by database.
+ * @apiSuccess {Number} tutorial.no Number of Tutorial.
+ * @apiSuccess {String} tutorial.title Title of Tutorial.
+ * @apiSuccess {String} tutorial.hours Hours of Tutorial.
+ * @apiSuccess {Number} tutorial.cognitiveLevel CognitiveLevel of Tutorial.
  */
 
 /**
- * @api {delete} /topic/delete/:topicId Delete Topic
- * @apiName DeleteTopic,
- * @apiGroup Topic
+ * @api {delete} /tutorial/delete/:tutorialId Delete Tutorial
+ * @apiName DeleteTutorial,
+ * @apiGroup Tutorial
  *
  * @apiParam {String} tutorialId The ID of the tutorial document to delete.
  *
