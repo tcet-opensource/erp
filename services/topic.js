@@ -6,7 +6,7 @@ export async function addNewTopic(title) {
     title,
   });
   if (newTopic.name === name) {
-    return newAopic;
+    return newTopic;
   }
   throw new databaseError.DataEntryError("Add Topic");
 }

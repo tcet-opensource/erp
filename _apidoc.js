@@ -312,48 +312,48 @@
  * @apiSuccess {Date} accreditation.dateofExpiry Date till which accreditation is valid.
  */
 //------------------------------------------------------------------------------------------
-// Tutorials.
+// Topics.
 // ------------------------------------------------------------------------------------------
 
 /**
- * @api {post} /tutorial/add Add Tutorial
- * @apiName AddTutorial
- * @apiGroup Tutorial
+ * @api {post} /topic/add Add Topic
+ * @apiName AddTopic
+ * @apiGroup Topic
  *
- * @apiBody {Number} no The number of tutorial.
- * @apiBody {String} title The title of tutorial.
- * @apiBody {Number} hours The hours required for tutorial.
- * @apiBody {String} cognitiveLevel The cognitiveLevel of tutorial.
+ * @apiBody {Number} no The number of topic.
+ * @apiBody {String} title The title of topic.
+ * @apiBody {Number} hours The hours required for topic.
+ * @apiBody {String} cognitiveLevel The cognitiveLevel of topic.
  *
- * @apiSuccess {String} res Success message with the ID of the added tutorial.
+ * @apiSuccess {String} res Success message with the ID of the added topic.
  *
  * @apiError (Error 500) DatabaseError Error while inserting in the database.
  *
- * @apiDescription Adds a new tutorial to the system.
+ * @apiDescription Adds a new topic to the system.
  */
 
 /**
- * @api {get} tutorial/list Get Tutorial List
- * @apiName GetTutorial
- * @apiGroup Tutorial
+ * @api {get} topic/list Get Topic List
+ * @apiName GetTopic
+ * @apiGroup Topic
  *
- * @apiQuery {Number} [no] Number of Tutorial.
- * @apiQuery {String} [title] Title of Tutorial.
- * @apiQuery {Number} [hours] Hours required for Tutorial
- * @apiQuery {String} [cognitiveLevel] Level of Tutorial.
+ * @apiQuery {Number} [no] Number of Topic.
+ * @apiQuery {String} [title] Title of Topic.
+ * @apiQuery {Number} [hours] Hours required for Topic
+ * @apiQuery {String} [cognitiveLevel] Level of Topic.
  *
- * @apiSuccess {Tutorial[]} res Array of Filtered Tutorial Doc .
- * @apiSuccess {String} tutorial._id ID of document given by database.
- * @apiSuccess {Number} tutorial.no Number of Tutorial.
- * @apiSuccess {String} tutorial.title Title of Tutorial.
- * @apiSuccess {String} tutorial.hours Hours of Tutorial.
- * @apiSuccess {Number} tutorial.cognitiveLevel CognitiveLevel of Tutorial.
+ * @apiSuccess {Topic[]} res Array of Filtered Topic Doc .
+ * @apiSuccess {String} topic._id ID of document given by database.
+ * @apiSuccess {Number} topic.no Number of Topic.
+ * @apiSuccess {String} topic.title Title of Topic.
+ * @apiSuccess {String} topic.hours Hours of Topic.
+ * @apiSuccess {Number} topic.cognitiveLevel CognitiveLevel of Topic.
  */
 
 /**
- * @api {delete} /tutorial/delete/:tutorialId Delete Tutorial
- * @apiName DeleteTutorial,
- * @apiGroup Tutorial
+ * @api {delete} /topic/delete/:topicId Delete Topic
+ * @apiName DeleteTopic,
+ * @apiGroup Topic
  *
  * @apiParam {String} tutorialId The ID of the tutorial document to delete.
  *
@@ -1594,3 +1594,57 @@
  * @apiSuccess {String} faculty.natureOfAssociation Nature of association with the institution.
  * @apiSuccess {String} faculty.additionalResponsibilities Additional responsibilities of the faculty.
  **/
+//------------------------------------------------------------------------------------------
+// Topics.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /topic/add Add Topic
+ * @apiName AddTopic
+ * @apiGroup Topic
+ *
+ * @apiBody {String} title The title of topic..
+ *
+ * @apiSuccess {String} res Success message with the ID of the added topic.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new topic to the system.
+ */
+
+/**
+ * @api {get} topic/list Get Topic List
+ * @apiName GetTopic
+ * @apiGroup Topic
+ *
+ * @apiQuery {String} [title] Title of Topic.
+ *
+
+ */
+
+/**
+ * @api {delete} /topic/delete/:topicId Delete Topic
+ * @apiName DeleteTopic,
+ * @apiGroup Topic
+ *
+ * @apiParam {String} topicId The ID of the topic document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+/**
+ * @api {post} /topic/update/:id Update topic details
+ * @apiName UpdateTopic
+ * @apiGroup Topic
+ * @apiDescription update Existing Topic details
+ *
+ * @apiParam {String} id The topic document to update.
+ * @apiBody {String} id Id of the topic to be updated
+ * @apiBody {String} [title] The title of topic.
+ *
+ * @apiSuccess {String} res topic updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
