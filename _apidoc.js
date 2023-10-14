@@ -1411,3 +1411,73 @@
  * @apiSuccess {Number} student.roll no of the student.
  * @apiSuccess {ObjectId} student.coursesOpted by the student(ObjectId).
  */
+
+// ------------------------------------------------------------------------------------------
+// notification
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /notification/add Add Notification
+ * @apiName AddNotification
+ * @apiGroup Notification
+ * @apiDescription Adds a new notification to the system.
+ *
+ * @apiBody {String} data Notification data.
+ * @apiBody {String} title Notification title.
+ * @apiBody {String} from User ID of the sender (Faculty).
+ * @apiBody {String} type Notification type (Student/Faculty).
+ * @apiBody {String[]} filter Array of targeted User IDs.
+ *
+ * @apiSuccess {String} res Success message with the ID of the added notification.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ */
+
+/**
+ * @api {get} /notification/list Get Notification List
+ * @apiName GetNotification
+ * @apiGroup Notification
+ *
+ * @apiQuery {String} [from] User ID of the sender (Faculty).
+ * @apiQuery {String} [type] Notification type (Student/Faculty).
+ * @apiQuery {String} [title] notification title.
+ * @apiQuery {String} [data] notification data.
+ * @apiQuery {String[]} [filter] array of targeted User IDs.
+ *
+ * @apiSuccess {Notification[]} res Array of filtered Notification documents.
+ * @apiSuccess {String} notification._id ID of the document given by the database.
+ * @apiSuccess {String} notification.data Notification data.
+ * @apiSuccess {String} notification.title Notification title.
+ * @apiSuccess {String} notification.from User ID of the sender (Faculty).
+ * @apiSuccess {String} notification.type Notification type (Student/Faculty).
+ * @apiSuccess {String[]} notification.filter Array of targeted User IDs.
+ */
+
+/**
+ * @api {delete} /notification/delete/:notificationId Delete Notification
+ * @apiName DeleteNotification
+ * @apiGroup Notification
+ *
+ * @apiParam {String} notificationId The ID of the notification document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ */
+
+/**
+ * @api {post} /notification/update Update Notification Details
+ * @apiName UpdateNotification
+ * @apiGroup Notification
+ *
+ * @apiBody {String} id ID of the notification to be updated.
+ * @apiBody {String} [data] Updated notification data.
+ * @apiBody {String} [title] Updated notification title.
+ * @apiBody {String} [from] Updated User ID of the sender (Faculty).
+ * @apiBody {String} [type] Updated notification type (Student/Faculty).
+ * @apiBody {String[]} [filter] Updated array of targeted User IDs.
+ *
+ * @apiSuccess {String} res Notification updated.
+ * @apiError (Error 500) err Error in updating the database.
+ */
