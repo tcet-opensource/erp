@@ -1,7 +1,7 @@
 import Topic from "#models/topic";
 import databaseError from "#error/database";
 
-export async function addNewAopic(title) {
+export async function addNewTopic(title) {
   const newTopic = await Topic.create({
     title,
   });
