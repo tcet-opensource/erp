@@ -19,7 +19,7 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Group.updateManyupdateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Group.updateMany(filter, { $set: updateObject }, options);
   return updateResult.acknowledged;
 }
 async function remove(groupId) {

@@ -1,29 +1,15 @@
-import request from "supertest";
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
-import app from "#app";
 import tutorialModel from "#models/tutorial";
 import connector from "#models/databaseUtil";
 
 jest.mock("#util");
-
-let server;
-let agent;
-beforeAll((done) => {
-  server = app.listen(null, () => {
-    agent = request.agent(server);
-    connector.set("debug", false);
-    done();
-  });
-});
+const { agent } = global;
 
 function cleanUp(callback) {
   tutorialModel.remove({ no: "123" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) console.log("Database dissconnnect error: ", DBerr);
-      server.close((serverErr) => {
-        if (serverErr) console.log(serverErr);
-        callback();
-      });
+      callback();
     });
   });
 }
