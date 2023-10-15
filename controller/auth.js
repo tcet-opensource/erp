@@ -6,7 +6,6 @@ async function login(req, res) {
   const { id, password } = req.body;
   try {
     const userValidated = await authenticateUser(id, password);
-    console.log(userValidated);
     const userDetails = {
       uid: userValidated.uid,
       name: userValidated.name,
@@ -14,7 +13,6 @@ async function login(req, res) {
       type: userValidated.userType,
     };
     const token = util.generateToken(userDetails, req.ip);
-    console.log("generated");
     userDetails.token = token;
     res.json({ res: "welcome", user: userDetails });
   } catch (error) {

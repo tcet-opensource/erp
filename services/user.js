@@ -40,7 +40,6 @@ export async function createUser(name, password, emailId, uid, userType) {
     uid,
     userType,
   });
-  console.log(newUser);
   if (newUser.uid === uid) {
     return newUser;
   }
