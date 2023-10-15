@@ -25,7 +25,10 @@
     "testWin": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest",
     "testWin:watch": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --watch",
     "testWin:openHandles": "SET NODE_OPTIONS=--experimental-vm-modules && npx jest --detectOpenHandles",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "backup": "node ./backup/erpbackup",
+    "restore": "node ./backup/erprestore",
+    "prepare": "husky install"
   },
   "dependencies": {
     "apidoc": "^1.1.0",
@@ -39,6 +42,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.9.0",
     "morgan": "~1.9.1",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "supertest": "^6.3.3",
     "winston": "^3.8.2",
@@ -51,7 +55,9 @@
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.0",
     "jest": "^29.5.0",
+    "lint-staged": "^14.0.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3"
   }

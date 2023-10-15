@@ -3,7 +3,8 @@ import databaseError from "#error/database";
 
 export async function createGroup(title, student) {
   const newGroup = await Group.create({
-    title, student,
+    title,
+    student,
   });
   if (newGroup.title === title) {
     return newGroup;
@@ -19,8 +20,8 @@ export async function updateGroupById(id, data) {
   throw new databaseError.DataEntryError("group");
 }
 
-export async function groupList(filter) {
-  const groups = await Group.read(filter, 0);
+export async function groupList(filter, limit, page) {
+  const groups = await Group.read(filter, limit, page);
   return groups;
 }
 

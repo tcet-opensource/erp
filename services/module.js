@@ -1,17 +1,29 @@
 import Module from "#models/module";
 import databaseError from "#error/database";
 
-export async function getModule(filter) {
-  const modules = await Module.read(filter);
+export async function getModule(filter, limit, page) {
+  const modules = await Module.read(filter, limit, page);
   if (modules) {
     return modules;
   }
   throw new databaseError.DataNotFoundError("Module");
 }
 
-export async function addNewModule(no, name, outcome, contents, hrsPerModule, cognitiveLevels) {
+export async function addNewModule(
+  no,
+  name,
+  outcome,
+  contents,
+  hrsPerModule,
+  cognitiveLevels,
+) {
   const newModule = await Module.create({
-    no, name, outcome, contents, hrsPerModule, cognitiveLevels,
+    no,
+    name,
+    outcome,
+    contents,
+    hrsPerModule,
+    cognitiveLevels,
   });
   if (newModule.name === name) {
     return newModule;
@@ -19,8 +31,8 @@ export async function addNewModule(no, name, outcome, contents, hrsPerModule, co
   throw new databaseError.DataEntryError("Add Module");
 }
 
-export async function updateModuleById(id,data) {
-  const updated = await Module.update({_id: id}, data);
+export async function updateModuleById(id, data) {
+  const updated = await Module.update({ _id: id }, data);
   if (updated) {
     return updated;
   }

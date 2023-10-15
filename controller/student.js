@@ -1,12 +1,14 @@
 import {
-  createStudent, deleteStudentById, studentList, updateStudentById,
+  createStudent,
+  deleteStudentById,
+  studentList,
+  updateStudentById,
 } from "#services/student";
 import { logger } from "#util";
 
 async function addStudent(req, res) {
-  const {
-    ERPID, name, joiningYear, branch, division, rollNo, coursesOpted,
-  } = req.body;
+  const { ERPID, name, joiningYear, branch, division, rollNo, coursesOpted } =
+    req.body;
   try {
     const newStudent = await createStudent(
       ERPID,
@@ -27,9 +29,7 @@ async function addStudent(req, res) {
 
 async function updateStudent(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateStudentById(id, data);
     res.json({ res: `updated Student with id ${id}` });
@@ -41,8 +41,9 @@ async function updateStudent(req, res) {
 }
 
 async function getStudent(req, res) {
-  const filter = req.query;
-  const StudList = await studentList(filter);
+  const filter = req.body;
+  const { limit, page } = req.query;
+  const StudList = await studentList(filter, limit, page);
   res.json({ res: StudList });
 }
 
@@ -58,5 +59,8 @@ async function deleteStudent(req, res) {
   }
 }
 export default {
-  addStudent, deleteStudent, getStudent, updateStudent,
+  addStudent,
+  deleteStudent,
+  getStudent,
+  updateStudent,
 };

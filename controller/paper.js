@@ -1,16 +1,13 @@
 import {
-  createPaper, updatePaperById, listPaper, deletePaperById,
+  createPaper,
+  updatePaperById,
+  listPaper,
+  deletePaperById,
 } from "#services/paper";
 import { logger } from "#util";
 
 async function addPaper(req, res) {
-  const {
-    answerSheetID,
-    exam,
-    student,
-    checkedBy,
-    mark,
-  } = req.body;
+  const { answerSheetID, exam, student, checkedBy, mark } = req.body;
   try {
     const newPaper = await createPaper(
       answerSheetID,
@@ -19,7 +16,10 @@ async function addPaper(req, res) {
       checkedBy,
       mark,
     );
-    res.json({ res: `added paper for: ${newPaper.answerSheetID}`, id: newPaper.id });
+    res.json({
+      res: `added paper for: ${newPaper.answerSheetID}`,
+      id: newPaper.id,
+    });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -29,9 +29,7 @@ async function addPaper(req, res) {
 
 async function updatePaper(req, res) {
   const { id } = req.params;
-  const { 
-    ...data
-   } = req.body;
+  const { ...data } = req.body;
   try {
     await updatePaperById(id, data);
     res.json({ res: "Paper updated" });
@@ -43,9 +41,16 @@ async function updatePaper(req, res) {
 }
 
 async function showPaper(req, res) {
-  const filter = req.query;
-  const paper = await listPaper(filter);
-  res.json({ res: paper });
+  try {
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const paper = await listPaper(filter, limit, page);
+    res.json({ res: paper });
+  } catch (error) {
+    logger.error("Error while fetching", error);
+    res.status(500);
+    res.json({ err: "Error while fetching the data" });
+  }
 }
 
 async function deletePaper(req, res) {
@@ -60,5 +65,8 @@ async function deletePaper(req, res) {
 }
 
 export default {
-  addPaper, updatePaper, showPaper, deletePaper,
+  addPaper,
+  updatePaper,
+  showPaper,
+  deletePaper,
 };

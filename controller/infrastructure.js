@@ -1,15 +1,25 @@
 import {
-  createInfrastructure, deleteInfrastructureById, infrastructureList, updateInfrastructureById,
+  createInfrastructure,
+  deleteInfrastructureById,
+  infrastructureList,
+  updateInfrastructureById,
 } from "#services/infrastructure";
 import { logger } from "#util";
 
 async function addInfrastructure(req, res) {
-  const {
-    name, type, wing, floor, capacity,
-  } = req.body;
+  const { name, type, wing, floor, capacity } = req.body;
   try {
-    const newInfrastructure = await createInfrastructure(name, type, wing, floor, capacity);
-    res.json({ res: `added infrastructure ${newInfrastructure.id}`, id: newInfrastructure.id });
+    const newInfrastructure = await createInfrastructure(
+      name,
+      type,
+      wing,
+      floor,
+      capacity,
+    );
+    res.json({
+      res: `added infrastructure ${newInfrastructure.id}`,
+      id: newInfrastructure.id,
+    });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -19,9 +29,7 @@ async function addInfrastructure(req, res) {
 
 async function updateInfrastructure(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateInfrastructureById(id, data);
     res.json({ res: `updated infrastructure with id ${id}` });
@@ -33,9 +41,16 @@ async function updateInfrastructure(req, res) {
 }
 
 async function getInfrastructure(req, res) {
-  const filter = req.query;
-  const infralist = await infrastructureList(filter);
-  res.json({ res: infralist });
+  try {
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const infralist = await infrastructureList(filter, limit, page);
+    res.json({ res: infralist });
+  } catch (error) {
+    logger.error("Error while fetching", error);
+    res.status(500);
+    res.json({ err: "Error while fetching the data" });
+  }
 }
 
 async function deleteInfrastructure(req, res) {
@@ -50,5 +65,8 @@ async function deleteInfrastructure(req, res) {
   }
 }
 export default {
-  addInfrastructure, deleteInfrastructure, getInfrastructure, updateInfrastructure,
+  addInfrastructure,
+  deleteInfrastructure,
+  getInfrastructure,
+  updateInfrastructure,
 };

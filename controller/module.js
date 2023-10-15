@@ -1,9 +1,16 @@
-import { getModule, addNewModule, updateModuleById, deleteModuleById } from "#services/module";
+import {
+  getModule,
+  addNewModule,
+  updateModuleById,
+  deleteModuleById,
+} from "#services/module";
 import { logger } from "#util";
 
 async function showModule(req, res) {
   try {
-    const modules = await getModule(req.query);
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const modules = await getModule(filter, limit, page);
     return res.json({ res: modules });
   } catch (error) {
     logger.error("Error while fetching", error);
@@ -13,9 +20,8 @@ async function showModule(req, res) {
 }
 
 async function addModule(req, res) {
-  const {
-    no, name, outcome, contents, hrsPerModule, cognitiveLevels,
-  } = req.body;
+  const { no, name, outcome, contents, hrsPerModule, cognitiveLevels } =
+    req.body;
   try {
     const newModule = await addNewModule(
       no,
@@ -35,9 +41,7 @@ async function addModule(req, res) {
 
 async function updateModule(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateModuleById(id, data);
     res.json({ res: `updated Module with id ${id}` });
@@ -61,5 +65,8 @@ async function deleteModule(req, res) {
 }
 
 export default {
-  showModule, addModule, updateModule, deleteModule,
+  showModule,
+  addModule,
+  updateModule,
+  deleteModule,
 };

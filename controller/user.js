@@ -2,9 +2,7 @@ import { allUsers, createUser } from "#services/user";
 import { logger } from "#util";
 
 async function addUser(req, res) {
-  const {
-    name, password, emailId, uid, userType,
-  } = req.body;
+  const { name, password, emailId, uid, userType } = req.body;
   try {
     const newUser = await createUser(name, password, emailId, uid, userType);
     res.json({ res: `added user ${newUser.id}` });
@@ -16,7 +14,8 @@ async function addUser(req, res) {
 }
 
 async function getAllUser(req, res) {
-  const allUser = await allUsers();
+  const { limit, page } = req.query;
+  const allUser = await allUsers(limit, page);
   res.json({ res: allUser });
 }
 

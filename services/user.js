@@ -4,16 +4,19 @@ import { comparePasswords, hashPassword } from "#util";
 
 export async function authenticateUser(uid, password) {
   const user = await User.read({ uid }, 1);
-  const passwordMatched = await comparePasswords(password, user[0]?.password);
+  const passwordMatched = await comparePasswords(
+    password,
+    user.data[0]?.password,
+  );
   if (passwordMatched) {
-    return user[0];
+    return user.data[0];
   }
   throw new databaseError.UserDoesNotExistError();
 }
 
 export async function userExists(uid, email) {
   const user = await User.read({ uid, emailId: email }, 1);
-  if (user[0].uid === uid) return true;
+  if (user.data[0].uid === uid) return true;
   return false;
 }
 
@@ -24,14 +27,18 @@ export async function updatePassword(uid, password) {
   throw new databaseError.UpdateError("User");
 }
 
-export async function allUsers() {
-  const allUser = await User.read({}, 0);
+export async function allUsers(limit, page) {
+  const allUser = await User.read({}, limit, page);
   return allUser;
 }
 
 export async function createUser(name, password, emailId, uid, userType) {
   const newUser = await User.create({
-    name, password, emailId, uid, userType,
+    name,
+    password,
+    emailId,
+    uid,
+    userType,
   });
   if (newUser.uid === uid) {
     return newUser;

@@ -18,13 +18,22 @@ async function create(assignmentData) {
   return assignmentDoc;
 }
 
-async function read(filter, limit = 1) {
-  const assignmentDoc = await Assignment.find(filter).limit(limit);
-  return assignmentDoc;
+async function read(filter, limit = 0, page = 1) {
+  const assignmentDoc = await Assignment.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Assignment.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: assignmentDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Assignment.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Assignment.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 

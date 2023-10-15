@@ -10,6 +10,7 @@ on:
 env: 
   TOKEN_SECRET: ${{ secrets.TOKEN_SECRET }}
   DB_URL: ${{ secrets.DB_URL }}
+  ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
 
 permissions:
     contents: read

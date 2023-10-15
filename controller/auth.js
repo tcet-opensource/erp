@@ -31,7 +31,9 @@ function validateUser(req, res) {
   if (req.user) {
     res.json({ res: req.user, msg: "user validated", err: null });
   } else {
-    res.status(401).json({ res: null, msg: "unauthorised", err: "User not authorised" });
+    res
+      .status(401)
+      .json({ res: null, msg: "unauthorised", err: "User not authorised" });
   }
 }
 
@@ -57,7 +59,8 @@ async function resetPassword(req, res) {
     } catch (error) {
       logger.error("Error while updating", error);
       res.status(500);
-      if (error.name === "UpdateError") res.json({ err: "Something went wrong while updating password" });
+      if (error.name === "UpdateError")
+        res.json({ err: "Something went wrong while updating password" });
       else res.json({ err: "something went wrong" });
     }
   } else {
@@ -66,5 +69,8 @@ async function resetPassword(req, res) {
 }
 
 export default {
-  validateUser, sendOTP, resetPassword, login,
+  validateUser,
+  sendOTP,
+  resetPassword,
+  login,
 };

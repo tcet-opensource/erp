@@ -29,8 +29,8 @@ export async function updatePaperById(id, data) {
   throw new databaseError.DataEntryError("paper");
 }
 
-export async function listPaper(filter) {
-  const paper = await Paper.read(filter, 0);
+export async function listPaper(filter, limit, page) {
+  const paper = await Paper.read(filter, limit, page);
   return paper;
 }
 

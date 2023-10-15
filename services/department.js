@@ -21,8 +21,8 @@ export async function createnewdepartment(
   throw new databaseError.DataEntryError("Add department");
 }
 
-export async function listdepartment(filter) {
-  const listeddepartment = await department.read(filter);
+export async function listdepartment(filter, limit, page) {
+  const listeddepartment = await department.read(filter, limit, page);
   if (listeddepartment) {
     return listeddepartment;
   }
@@ -40,9 +40,12 @@ export async function deletedepartment(departmentId) {
 }
 
 export async function updateDepartmentbyid(id, data) {
-  const updatedDepartment = await department.update({
-    _id: id,
-  }, data);
+  const updatedDepartment = await department.update(
+    {
+      _id: id,
+    },
+    data,
+  );
   if (updatedDepartment) {
     return updatedDepartment;
   }
@@ -50,5 +53,8 @@ export async function updateDepartmentbyid(id, data) {
 }
 
 export default {
-  updateDepartmentbyid, createnewdepartment, listdepartment, deletedepartment,
+  updateDepartmentbyid,
+  createnewdepartment,
+  listdepartment,
+  deletedepartment,
 };

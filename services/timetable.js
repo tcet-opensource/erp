@@ -37,8 +37,8 @@ export async function updateTimetableById(id, data) {
   throw new databaseError.DataEntryError("timetable");
 }
 
-export async function timetableList(filter) {
-  const timetable = await Timetable.read(filter, 0);
+export async function timetableList(filter, limit, page) {
+  const timetable = await Timetable.read(filter, limit, page);
   return timetable;
 }
 

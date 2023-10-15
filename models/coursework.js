@@ -1,12 +1,32 @@
 import connector from "#models/databaseUtil";
 
 const courseworkSchema = {
-  student: { type: connector.Schema.Types.ObjectId, ref: "Student", required: true },
+  student: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Student",
+    required: true,
+  },
   type: { type: String, enum: ["onCampus", "offCampus"], required: true },
-  course: { type: connector.Schema.Types.ObjectId, ref: "Course", required: true },
-  task: { type: connector.Schema.Types.ObjectId, refPath: "objectID", required: true },
-  objectID: { type: String, enum: ["Practical", "Tutorial", "Assignment"], required: true },
-  activity: { type: connector.Schema.Types.ObjectId, ref: "Activity", required: true },
+  course: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Course",
+    required: true,
+  },
+  task: {
+    type: connector.Schema.Types.ObjectId,
+    refPath: "objectID",
+    required: true,
+  },
+  objectID: {
+    type: String,
+    enum: ["Practical", "Tutorial", "Assignment"],
+    required: true,
+  },
+  activity: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Activity",
+    required: true,
+  },
   marks: { type: Number, required: true },
 };
 
@@ -18,9 +38,8 @@ async function remove(filter) {
 }
 
 async function create(courseworkData) {
-  const {
-    student, type, course, task, objectID, activity, marks,
-  } = courseworkData;
+  const { student, type, course, task, objectID, activity, marks } =
+    courseworkData;
   const coursework = new Coursework({
     student,
     type,
@@ -34,13 +53,22 @@ async function create(courseworkData) {
   return courseworkDoc;
 }
 
-async function read(filter, limit = 1) {
-  const courseworkDoc = await Coursework.find(filter).limit(limit);
-  return courseworkDoc;
+async function read(filter, limit = 0, page = 1) {
+  const courseworkDoc = await Coursework.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Coursework.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: courseworkDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Coursework.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Coursework.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 

@@ -1,12 +1,14 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import util from "#util";
 import userModel from "#models/user";
+import otpModel from "#models/otpStore";
 import connector from "#models/databaseUtil";
 
 jest.mock("#util");
 const { agent } = global;
 
 function cleanUp(callback) {
+  otpModel.remove({ uid: "S1032190220" });
   userModel.remove({ uid: "S1032190220" }).then(() => {
     connector.disconnect((DBerr) => {
       if (DBerr) console.log("Database dissconnnect error: ", DBerr);
@@ -28,7 +30,7 @@ describe("checking user functions", () => {
         password: "123",
         emailId: "test@gmail.com",
         uid: "S1032190220",
-        userType: "student",
+        userType: "STUDENT",
       });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -44,7 +46,7 @@ describe("checking auth functions", () => {
       password: "123",
       emailId: "test@gmail.com",
       uid: "S1032190220",
-      userType: "student",
+      userType: "STUDENT",
     });
   });
 

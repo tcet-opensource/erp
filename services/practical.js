@@ -4,11 +4,19 @@ import databaseError from "#error/database";
 
 // Service function to create a new Practical entity
 export async function createPractical({
-  no, title, type, hours, cognitiveLevels,
+  no,
+  title,
+  type,
+  hours,
+  cognitiveLevels,
 }) {
   try {
     const newPractical = await Practical.create({
-      no, title, type, hours, cognitiveLevels,
+      no,
+      title,
+      type,
+      hours,
+      cognitiveLevels,
     });
     return newPractical;
   } catch (error) {
@@ -30,9 +38,9 @@ export async function updatePracticalById(id, data) {
 }
 
 // Service function to retrieve a list of Practical entities based on filters
-export async function listPractical(filter) {
+export async function listPractical(filter, limit, page) {
   try {
-    const practicalList = await Practical.read(filter);
+    const practicalList = await Practical.read(filter, limit, page);
     return practicalList;
   } catch (error) {
     throw new databaseError.DataEntryError("practical");

@@ -1,17 +1,15 @@
 import {
-  updateDepartmentbyid, createnewdepartment, listdepartment, deletedepartment,
+  updateDepartmentbyid,
+  createnewdepartment,
+  listdepartment,
+  deletedepartment,
 } from "#services/department";
 
 import { logger } from "#util";
 
 async function addDepartment(req, res) {
-  const {
-    name,
-    acronym,
-    yearOfStarting,
-    accreditations,
-    infrastructures,
-  } = req.body;
+  const { name, acronym, yearOfStarting, accreditations, infrastructures } =
+    req.body;
   try {
     const department = await createnewdepartment(
       name,
@@ -47,7 +45,9 @@ async function removedepartmentbyid(req, res) {
 
 async function showdepartments(req, res) {
   try {
-    const departments = await listdepartment(req.query);
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const departments = await listdepartment(filter, limit, page);
     return res.json({
       res: departments,
     });
@@ -60,9 +60,7 @@ async function showdepartments(req, res) {
 
 async function updatedDepartment(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateDepartmentbyid(id, data);
     res.json({
@@ -76,5 +74,8 @@ async function updatedDepartment(req, res) {
 }
 
 export default {
-  updatedDepartment, showdepartments, removedepartmentbyid, addDepartment,
+  updatedDepartment,
+  showdepartments,
+  removedepartmentbyid,
+  addDepartment,
 };

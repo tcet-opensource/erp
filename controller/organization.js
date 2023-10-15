@@ -1,15 +1,24 @@
 import {
-  addNewOrganization, deleteOrganizationById, updateOrganizationById, getOrganizations,
+  addNewOrganization,
+  deleteOrganizationById,
+  updateOrganizationById,
+  getOrganizations,
 } from "#services/organization";
 import { logger } from "#util";
 
 async function addOrganization(req, res) {
-  const {
-    parent, startDate, name, accreditation,
-  } = req.body;
+  const { parent, startDate, name, accreditation } = req.body;
   try {
-    const organization = await addNewOrganization(parent, startDate, name, accreditation);
-    res.json({ res: `added organization${organization.name}`, id: organization.id });
+    const organization = await addNewOrganization(
+      parent,
+      startDate,
+      name,
+      accreditation,
+    );
+    res.json({
+      res: `added organization${organization.name}`,
+      id: organization.id,
+    });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -30,9 +39,7 @@ async function deleteOrganization(req, res) {
 
 async function updateOrganization(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
 
   try {
     await updateOrganizationById(id, data);
@@ -46,7 +53,9 @@ async function updateOrganization(req, res) {
 
 async function showOrganization(req, res) {
   try {
-    const organization = await getOrganizations(req.query);
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const organization = await getOrganizations(filter, limit, page);
     return res.json({ res: organization });
   } catch (error) {
     logger.error("Error while fetching", error);
@@ -56,5 +65,8 @@ async function showOrganization(req, res) {
 }
 
 export default {
-  addOrganization, updateOrganization, deleteOrganization, showOrganization,
+  addOrganization,
+  updateOrganization,
+  deleteOrganization,
+  showOrganization,
 };

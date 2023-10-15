@@ -55,11 +55,50 @@ const employeePersonalSchema = {
   maidenFirstName: { type: String },
   maidenMiddleName: { type: String },
   maidenLastName: { type: String },
-  isNameChangedBefrore: { type: Boolean, required: true },
+  isNameChangedBefore: { type: Boolean, required: true },
   previousFirstName: { type: String },
   previousMiddleName: { type: String },
   previousLastName: { type: String },
 };
+const EmployeePersonal = connector.model(
+  "EmplyeePersonalData",
+  employeePersonalSchema,
+);
+/// CRUD operations ///
 
-// eslint-disable-next-line  no-unused-vars
-const empPersonal = connector.model("Employee personal", employeePersonalSchema);
+async function create(employeePersonalData) {
+  const employeePersonal = new EmployeePersonal(employeePersonalData);
+  const employeePersonalDoc = await employeePersonal.save();
+  return employeePersonalDoc;
+}
+
+async function read(filter, limit = 0, page = 1) {
+  const employeePersonalDoc = await EmployeePersonal.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await EmployeePersonal.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: employeePersonalDoc };
+}
+
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await EmployeePersonal.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
+  return updateResult.acknowledged;
+}
+
+async function remove(filter) {
+  const deleteResult = await EmployeePersonal.deleteMany(filter).exec();
+  return deleteResult.acknowledged;
+}
+
+export default {
+  create,
+  read,
+  update,
+  remove,
+};

@@ -1,5 +1,8 @@
 import {
-  createFaculty, facultyList, deleteFacultyById, updateFacultyById,
+  createFaculty,
+  facultyList,
+  deleteFacultyById,
+  updateFacultyById,
 } from "#services/faculty";
 import { logger } from "#util";
 
@@ -48,9 +51,16 @@ async function addFaculty(req, res) {
 }
 
 async function getFaculty(req, res) {
-  const filter = req.query;
-  const facultylist = await facultyList(filter);
-  res.json({ res: facultylist });
+  try {
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const facultylist = await facultyList(filter, limit, page);
+    res.json({ res: facultylist });
+  } catch (error) {
+    logger.error("Error while fetching", error);
+    res.status(500);
+    res.json({ err: "Error while fetching the data" });
+  }
 }
 
 async function deleteFaculty(req, res) {
@@ -66,9 +76,7 @@ async function deleteFaculty(req, res) {
 }
 
 async function updateFaculty(req, res) {
-  const {
-    id, ...data
-  } = req.body;
+  const { id, ...data } = req.body;
   try {
     await updateFacultyById(id, data);
     res.json({ res: `updated faculty with id ${id}` });
@@ -80,5 +88,8 @@ async function updateFaculty(req, res) {
 }
 
 export default {
-  addFaculty, getFaculty, deleteFaculty, updateFaculty,
+  addFaculty,
+  getFaculty,
+  deleteFaculty,
+  updateFaculty,
 };

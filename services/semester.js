@@ -1,9 +1,19 @@
 import Semester from "#models/semester";
 import databaseError from "#error/database";
 
-export async function createSemester(number, academicYear, type, startDate, endDate) {
+export async function createSemester(
+  number,
+  academicYear,
+  type,
+  startDate,
+  endDate,
+) {
   const newSemester = await Semester.create({
-    number, academicYear, type, startDate, endDate,
+    number,
+    academicYear,
+    type,
+    startDate,
+    endDate,
   });
   if (newSemester.number === number) {
     return newSemester;
@@ -20,8 +30,8 @@ export async function updateSemesterById(id, data) {
   throw new databaseError.DataEntryError("semester");
 }
 
-export async function semesterList(filter) {
-  const semlist = await Semester.read(filter, 0);
+export async function semesterList(filter, limit, page) {
+  const semlist = await Semester.read(filter, limit, page);
   return semlist;
 }
 
