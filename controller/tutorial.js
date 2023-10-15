@@ -1,12 +1,13 @@
 import {
-  addNewTutorial, deleteTutorialById, updateTutorialById, getTutorials,
+  addNewTutorial,
+  deleteTutorialById,
+  updateTutorialById,
+  getTutorials,
 } from "#services/tutorial";
 import { logger } from "#util";
 
 async function addTutorial(req, res) {
-  const {
-    no, title, hours, cognitiveLevel,
-  } = req.body;
+  const { no, title, hours, cognitiveLevel } = req.body;
   try {
     // eslint-disable-next-line max-len
     const tutorial = await addNewTutorial(no, title, hours, cognitiveLevel);
@@ -31,9 +32,7 @@ async function deleteTutorial(req, res) {
 
 async function updateTutorial(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
 
   try {
     await updateTutorialById(id, data);
@@ -47,7 +46,9 @@ async function updateTutorial(req, res) {
 
 async function showTutorial(req, res) {
   try {
-    const tutorial = await getTutorials(req.query);
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const tutorial = await getTutorials(filter, limit, page);
     return res.json({ res: tutorial });
   } catch (error) {
     logger.error("Error while fetching", error);
@@ -57,5 +58,8 @@ async function showTutorial(req, res) {
 }
 
 export default {
-  addTutorial, updateTutorial, deleteTutorial, showTutorial,
+  addTutorial,
+  updateTutorial,
+  deleteTutorial,
+  showTutorial,
 };

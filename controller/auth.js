@@ -6,6 +6,7 @@ async function login(req, res) {
   const { id, password } = req.body;
   try {
     const userValidated = await authenticateUser(id, password);
+    console.log(userValidated);
     const userDetails = {
       uid: userValidated.uid,
       name: userValidated.name,
@@ -13,6 +14,7 @@ async function login(req, res) {
       type: userValidated.userType,
     };
     const token = util.generateToken(userDetails, req.ip);
+    console.log("generated");
     userDetails.token = token;
     res.json({ res: "welcome", user: userDetails });
   } catch (error) {
@@ -31,7 +33,9 @@ function validateUser(req, res) {
   if (req.user) {
     res.json({ res: req.user, msg: "user validated", err: null });
   } else {
-    res.status(401).json({ res: null, msg: "unauthorised", err: "User not authorised" });
+    res
+      .status(401)
+      .json({ res: null, msg: "unauthorised", err: "User not authorised" });
   }
 }
 
@@ -57,7 +61,8 @@ async function resetPassword(req, res) {
     } catch (error) {
       logger.error("Error while updating", error);
       res.status(500);
-      if (error.name === "UpdateError") res.json({ err: "Something went wrong while updating password" });
+      if (error.name === "UpdateError")
+        res.json({ err: "Something went wrong while updating password" });
       else res.json({ err: "something went wrong" });
     }
   } else {
@@ -66,5 +71,8 @@ async function resetPassword(req, res) {
 }
 
 export default {
-  validateUser, sendOTP, resetPassword, login,
+  validateUser,
+  sendOTP,
+  resetPassword,
+  login,
 };

@@ -30,9 +30,10 @@ const employeeEducationHistorySchema = {
 };
 
 // eslint-disable-next-line  no-unused-vars
-const EmployeeEducationHistory = 
-connector.model("Employee education history", 
-employeeEducationHistorySchema);
+const EmployeeEducationHistory = connector.model(
+  "Employee education history",
+  employeeEducationHistorySchema,
+);
 
 // CRUD Operations
 
@@ -91,31 +92,37 @@ async function create(employeeEducationHistoryData) {
     pdoc,
   });
 
-  const empEduHistoryDoc =  await empEduHistory.save();
+  const empEduHistoryDoc = await empEduHistory.save();
   return empEduHistoryDoc;
 }
 
-
-async function read(filter, limit=1) {
-  const empEduHistoryDoc = employeeEducationHistorySchema.find(filter).limit(limit);
-  return empEduHistoryDoc;
+async function read(filter, limit = 0, page = 1) {
+  const empEduHistoryDoc = await EmployeeEducationHistory.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await EmployeeEducationHistory.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: empEduHistoryDoc };
 }
 
-
-async function update(filter, updateObject, options={ multi: true }) {
-  const updateResult = await employeeEducationHistorySchema.updateMany(
+async function update(filter, updateObject, options = { multi: true }) {
+  const updateResult = await EmployeeEducationHistory.updateMany(
     filter,
-    {$set: updateObject},
+    { $set: updateObject },
     options,
   );
   return updateResult.acknowledged;
 }
 
 async function remove(filter) {
-  const deleteResult= await employeeEducationHistorySchema.deleteMany(filter).exec();
+  const deleteResult = await EmployeeEducationHistory.deleteMany(filter).exec();
   return deleteResult.acknowledged;
 }
 
-export default{
-  create, read, update, remove,
+export default {
+  create,
+  read,
+  update,
+  remove,
 };

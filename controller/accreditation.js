@@ -1,16 +1,25 @@
 import {
-  addNewAccreditation, deleteAccreditationById, updateAccreditationById, getAccreditations,
+  addNewAccreditation,
+  deleteAccreditationById,
+  updateAccreditationById,
+  getAccreditations,
 } from "#services/accreditation";
 import { logger } from "#util";
 
 async function addAccreditation(req, res) {
-  const {
-    name, agencyName, dateofAccreditation, dateofExpiry,
-  } = req.body;
+  const { name, agencyName, dateofAccreditation, dateofExpiry } = req.body;
   try {
     // eslint-disable-next-line max-len
-    const accreditation = await addNewAccreditation(name, agencyName, dateofAccreditation, dateofExpiry);
-    res.json({ res: `added accreditation ${accreditation.name}`, id: accreditation.id });
+    const accreditation = await addNewAccreditation(
+      name,
+      agencyName,
+      dateofAccreditation,
+      dateofExpiry,
+    );
+    res.json({
+      res: `added accreditation ${accreditation.name}`,
+      id: accreditation.id,
+    });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -31,9 +40,7 @@ async function deleteAccreditation(req, res) {
 
 async function updateAccreditation(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
 
   try {
     await updateAccreditationById(id, data);
@@ -47,7 +54,9 @@ async function updateAccreditation(req, res) {
 
 async function showAccreditation(req, res) {
   try {
-    const accreditation = await getAccreditations(req.query);
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const accreditation = await getAccreditations(filter, limit, page);
     return res.json({ res: accreditation });
   } catch (error) {
     logger.error("Error while fetching", error);
@@ -57,5 +66,8 @@ async function showAccreditation(req, res) {
 }
 
 export default {
-  addAccreditation, updateAccreditation, deleteAccreditation, showAccreditation,
+  addAccreditation,
+  updateAccreditation,
+  deleteAccreditation,
+  showAccreditation,
 };

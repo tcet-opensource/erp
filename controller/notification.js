@@ -41,8 +41,9 @@ async function updateNotification(req, res) {
 }
 
 async function getNotifications(req, res) {
-  const filter = req.query;
-  const notificationList = await listNotifications(filter);
+  const filter = req.body;
+  const { limit, page } = req.query;
+  const notificationList = await listNotifications(filter, limit, page);
   res.json({ res: notificationList });
 }
 

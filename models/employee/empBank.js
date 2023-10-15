@@ -51,7 +51,7 @@ async function create(employeeBankData) {
     bankBranch,
     bankIfsc,
     bankMicr,
-    appointmentApproveSgDte,    
+    appointmentApproveSgDte,
   } = employeeBankData;
 
   const empBank = new EmployeeBank({
@@ -61,20 +61,25 @@ async function create(employeeBankData) {
     bankBranch,
     bankIfsc,
     bankMicr,
-    appointmentApproveSgDte,    
+    appointmentApproveSgDte,
   });
 
   const empBankDoc = await empBank.save();
   return empBankDoc;
 }
 
-async function read(filter, limit = 1) {
-  const empBankDoc = employeeBankSchema.find(filter).limit(limit);
-  return empBankDoc;
+async function read(filter, limit = 0, page = 1) {
+  const empBankDoc = await EmployeeBank.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await EmployeeBank.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: empBankDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await employeeBankSchema.updateMany(
+  const updateResult = await EmployeeBank.updateMany(
     filter,
     { $set: updateObject },
     options,
@@ -83,7 +88,7 @@ async function update(filter, updateObject, options = { multi: true }) {
 }
 
 async function remove(empBankId) {
-  const deleteResult = await employeeBankSchema.deleteMany(empBankId);
+  const deleteResult = await EmployeeBank.deleteMany(empBankId);
   return deleteResult.acknowledged;
 }
 

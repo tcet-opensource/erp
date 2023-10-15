@@ -1,9 +1,17 @@
 import Organization from "#models/organization";
 import databaseError from "#error/database";
 
-export async function addNewOrganization(parent, startDate, name, accreditation) {
+export async function addNewOrganization(
+  parent,
+  startDate,
+  name,
+  accreditation,
+) {
   const newOrganization = await Organization.create({
-    parent, startDate, name, accreditation,
+    parent,
+    startDate,
+    name,
+    accreditation,
   });
   if (newOrganization.name === name) {
     return newOrganization;
@@ -11,8 +19,8 @@ export async function addNewOrganization(parent, startDate, name, accreditation)
   throw new databaseError.DataEntryError("Add Organization");
 }
 
-export async function getOrganizations(filter) {
-  const organization = await Organization.read(filter);
+export async function getOrganizations(filter, limit, page) {
+  const organization = await Organization.read(filter, limit, page);
   if (organization) {
     return organization;
   }
@@ -36,5 +44,8 @@ export async function updateOrganizationById(id, data) {
 }
 
 export default {
-  deleteOrganizationById, addNewOrganization, updateOrganizationById, getOrganizations,
+  deleteOrganizationById,
+  addNewOrganization,
+  updateOrganizationById,
+  getOrganizations,
 };

@@ -11,7 +11,13 @@ export async function createStudent(
   coursesOpted,
 ) {
   const newStudent = await Student.create({
-    ERPID, name, joiningYear, branch, division, rollNo, coursesOpted,
+    ERPID,
+    name,
+    joiningYear,
+    branch,
+    division,
+    rollNo,
+    coursesOpted,
   });
   if (newStudent.name === name) {
     return newStudent;
@@ -27,8 +33,8 @@ export async function updateStudentById(id, data) {
   throw new databaseError.DataEntryError("student");
 }
 
-export async function studentList(filter) {
-  const studlist = await Student.read(filter, 0);
+export async function studentList(filter, limit, page) {
+  const studlist = await Student.read(filter, limit, page);
   return studlist;
 }
 

@@ -31,8 +31,8 @@ export async function updateExamById(id, data) {
   throw new databaseError.DataEntryError("exam");
 }
 
-export async function examList(filter) {
-  const exams = await Exam.read(filter, 0);
+export async function examList(filter, limit, page) {
+  const exams = await Exam.read(filter, limit, page);
   return exams;
 }
 

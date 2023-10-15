@@ -37,14 +37,8 @@ const studentBankSchema = {
 const StudentBank = connector.model("Student bank", studentBankSchema);
 
 async function create(studentBankData) {
-  const {
-    uid,
-    bankName,
-    bankAccount,
-    bankBranch,
-    bankIfsc,
-    bankMicr,
-  } = studentBankData;
+  const { uid, bankName, bankAccount, bankBranch, bankIfsc, bankMicr } =
+    studentBankData;
 
   const stdBank = new StudentBank({
     uid,
@@ -59,13 +53,18 @@ async function create(studentBankData) {
   return stdBankDoc;
 }
 
-async function read(filter, limit = 1) {
-  const stdBankDoc = studentBankSchema.find(filter).limit(limit);
-  return stdBankDoc;
+async function read(filter, limit = 0, page = 1) {
+  const stdBankDoc = await StudentBank.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await StudentBank.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: stdBankDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await studentBankSchema.updateMany(
+  const updateResult = await StudentBank.updateMany(
     filter,
     { $set: updateObject },
     options,
@@ -74,7 +73,7 @@ async function update(filter, updateObject, options = { multi: true }) {
 }
 
 async function remove(stdBankId) {
-  const deleteResult = await studentBankSchema.deleteMany(stdBankId);
+  const deleteResult = await StudentBank.deleteMany(stdBankId);
   return deleteResult.acknowledged;
 }
 

@@ -47,8 +47,8 @@ export async function updateStudentCollegeById(id, data) {
   throw new databaseError.DataEntryError("student college");
 }
 
-export async function studentCollegeList(filter) {
-  const studentColleges = await StudentCollege.read(filter, 0);
+export async function studentCollegeList(filter, limit, page) {
+  const studentColleges = await StudentCollege.read(filter, limit, page);
   return studentColleges;
 }
 

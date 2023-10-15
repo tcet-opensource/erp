@@ -3,7 +3,10 @@ import databaseError from "#error/database";
 
 export async function createAssignment(no, title, type, marks) {
   const newAssignment = await Assignment.create({
-    no, title, type, marks,
+    no,
+    title,
+    type,
+    marks,
   });
   if (newAssignment.title === title) {
     return newAssignment;
@@ -19,8 +22,8 @@ export async function updateAssignmentById(id, data) {
   throw new databaseError.DataEntryError("assignment");
 }
 
-export async function assignmentList(filter) {
-  const assignmentlist = await Assignment.read(filter, 0);
+export async function assignmentList(filter, limit, page) {
+  const assignmentlist = await Assignment.read(filter, limit, page);
   return assignmentlist;
 }
 

@@ -1,5 +1,8 @@
 import {
-  createTimetable, deleteTimetableById, timetableList, updateTimetableById,
+  createTimetable,
+  deleteTimetableById,
+  timetableList,
+  updateTimetableById,
 } from "#services/timetable";
 import { logger } from "#util";
 
@@ -27,7 +30,10 @@ async function addTimetable(req, res) {
       teabreakStartTime,
       teabreakDuration,
     );
-    res.json({ res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}`, id: newTimetable.id });
+    res.json({
+      res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}`,
+      id: newTimetable.id,
+    });
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
@@ -37,9 +43,7 @@ async function addTimetable(req, res) {
 
 async function updateTimetable(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateTimetableById(id, data);
     res.json({ res: "timetable updated" });
@@ -51,8 +55,9 @@ async function updateTimetable(req, res) {
 }
 
 async function getTimetable(req, res) {
-  const filter = req.query;
-  const timetable = await timetableList(filter);
+  const filter = req.body;
+  const { limit, page } = req.query;
+  const timetable = await timetableList(filter, limit, page);
   res.json({ res: timetable });
 }
 
@@ -68,5 +73,8 @@ async function deleteTimetable(req, res) {
 }
 
 export default {
-  addTimetable, deleteTimetable, getTimetable, updateTimetable,
+  addTimetable,
+  deleteTimetable,
+  getTimetable,
+  updateTimetable,
 };

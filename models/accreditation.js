@@ -15,9 +15,8 @@ async function remove(filter) {
 }
 
 async function create(accreditationData) {
-  const {
-    name, agencyName, dateofAccreditation, dateofExpiry,
-  } = accreditationData;
+  const { name, agencyName, dateofAccreditation, dateofExpiry } =
+    accreditationData;
   const accreditation = new Accreditation({
     name,
     agencyName,
@@ -28,16 +27,28 @@ async function create(accreditationData) {
   return accreditationDoc;
 }
 
-async function read(filter, limit = 1) {
-  const accreditationDoc = await Accreditation.find(filter).limit(limit);
-  return accreditationDoc;
+async function read(filter, limit = 0, page = 1) {
+  const accreditationDoc = await Accreditation.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Accreditation.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: accreditationDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const deleteResult = await Accreditation.updateMany(filter, { $set: updateObject }, options);
+  const deleteResult = await Accreditation.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return deleteResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };

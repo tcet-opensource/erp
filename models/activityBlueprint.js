@@ -7,7 +7,8 @@ const activityBluePrintSchema = {
     required: true,
     validate: {
       validator: (value) => /^20\d{2}$/.test(value), // changed the valid year format starting from "20" !!
-      message: (props) => `${props.value} is not a valid year format starting with "2"!`,
+      message: (props) =>
+        `${props.value} is not a valid year format starting with "2"!`,
     },
   },
   type: { enum: ["ODD", "EVEN"], required: true },
@@ -16,7 +17,10 @@ const activityBluePrintSchema = {
 };
 
 // eslint-disable-next-line  no-unused-vars
-const ActivityBlueprint = connector.model("ActivityBlueprint", activityBluePrintSchema);
+const ActivityBlueprint = connector.model(
+  "ActivityBlueprint",
+  activityBluePrintSchema,
+);
 
 async function remove(filter) {
   const deleteResult = await ActivityBlueprint.deleteMany(filter);
@@ -24,9 +28,8 @@ async function remove(filter) {
 }
 
 async function create(activityBlueprintData) {
-  const {
-    number, academicYear, type, startDate, endDate,
-  } = activityBlueprintData;
+  const { number, academicYear, type, startDate, endDate } =
+    activityBlueprintData;
   const activityblueprint = new ActivityBlueprint({
     number,
     academicYear,
@@ -38,16 +41,28 @@ async function create(activityBlueprintData) {
   return activityblueprintDoc;
 }
 
-async function read(filter, limit = 1) {
-  const activityblueprintDoc = await ActivityBlueprint.find(filter).limit(limit);
-  return activityblueprintDoc;
+async function read(filter, limit = 0, page = 1) {
+  const activityblueprintDoc = await ActivityBlueprint.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await ActivityBlueprint.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: activityblueprintDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await ActivityBlueprint.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await ActivityBlueprint.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };

@@ -2,12 +2,12 @@ import StudentBank from "#models/student/stdBank";
 import databaseError from "#error/database";
 
 export async function createStudentBank(
-    uid,
-    bankName,
-    bankAccount,
-    bankBranch,
-    bankIfsc,
-    bankMicr,
+  uid,
+  bankName,
+  bankAccount,
+  bankBranch,
+  bankIfsc,
+  bankMicr,
 ) {
   const newStudentBank = await StudentBank.create({
     uid,
@@ -31,8 +31,8 @@ export async function updateStudentBankById(id, data) {
   throw new databaseError.DataEntryError("student bank");
 }
 
-export async function studentBankList(filter) {
-  const studentBank = await StudentBank.read(filter, 0);
+export async function studentBankList(filter, limit, page) {
+  const studentBank = await StudentBank.read(filter, limit, page);
   return studentBank;
 }
 

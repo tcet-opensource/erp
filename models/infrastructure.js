@@ -16,9 +16,7 @@ async function remove(filter) {
 }
 
 async function create(infrastructureData) {
-  const {
-    name, type, wing, floor, capacity,
-  } = infrastructureData;
+  const { name, type, wing, floor, capacity } = infrastructureData;
   const infrastructure = new Infrastructure({
     name,
     type,
@@ -30,16 +28,28 @@ async function create(infrastructureData) {
   return infrastructureDoc;
 }
 
-async function read(filter, limit = 1) {
-  const infrastructureDoc = await Infrastructure.find(filter).limit(limit);
-  return infrastructureDoc;
+async function read(filter, limit = 0, page = 1) {
+  const infrastructureDoc = await Infrastructure.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Infrastructure.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: infrastructureDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Infrastructure.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Infrastructure.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };

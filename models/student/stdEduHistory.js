@@ -55,7 +55,10 @@ const studentEducationSchema = {
   },
 };
 
-const StudentEducation = connector.model("Student education", studentEducationSchema);
+const StudentEducation = connector.model(
+  "Student education",
+  studentEducationSchema,
+);
 
 async function create(studentEducationData) {
   const {
@@ -165,14 +168,18 @@ async function create(studentEducationData) {
       lastSchoolCollegeAttended,
     },
   });
-    const stdEducationDoc = await stdEducation.save();
-    return stdEducationDoc;
-  
+  const stdEducationDoc = await stdEducation.save();
+  return stdEducationDoc;
 }
 
-async function read(filter, limit = 1) {
-  const stdEducationDoc = studentEducationSchema.find(filter).limit(limit);
-  return stdEducationDoc;
+async function read(filter, limit = 0, page = 1) {
+  const stdEducationDoc = await StudentEducation.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await StudentEducation.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: stdEducationDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {

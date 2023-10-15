@@ -37,9 +37,14 @@ async function create(userData) {
   return userDoc;
 }
 
-async function read(filter, limit = 1) {
-  const userDoc = await User.find(filter).limit(limit);
-  return userDoc;
+async function read(filter, limit = 0, page = 1) {
+  const userDoc = await User.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await User.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: userDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
