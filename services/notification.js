@@ -3,12 +3,14 @@ import Notification from "#models/notification";
 import databaseError from "#error/database";
 
 // Service function to create a new Notification entity
-export async function createNotification({
-    data, title, type, from, filter,
-}) {
+export async function createNotification({ data, title, type, from, filter }) {
   try {
     const newNotification = await Notification.create({
-        data, title, type, from, filter,
+      data,
+      title,
+      type,
+      from,
+      filter,
     });
     return newNotification;
   } catch (error) {
@@ -19,7 +21,7 @@ export async function createNotification({
 // Service function to update a Notification entity by ID
 export async function updateNotificationById(id, data) {
   try {
-    const updated = await Notification.findByIdAndUpdate({_id : id} , data);
+    const updated = await Notification.update({ _id: id }, data);
     if (updated) {
       return updated;
     }
