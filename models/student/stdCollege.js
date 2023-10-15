@@ -97,13 +97,18 @@ async function create(studentCollegeData) {
   return stdCollegeDoc;
 }
 
-async function read(filter, limit = 1) {
-  const stdCollegeDoc = studentCollegeSchema.find(filter).limit(limit);
-  return stdCollegeDoc;
+async function read(filter, limit = 0, page = 1) {
+  const stdCollegeDoc = await StudentCollege.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await StudentCollege.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: stdCollegeDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await studentCollegeSchema.updateMany(
+  const updateResult = await StudentCollege.updateMany(
     filter,
     { $set: updateObject },
     options,
@@ -112,7 +117,7 @@ async function update(filter, updateObject, options = { multi: true }) {
 }
 
 async function remove(stdCollegeId) {
-  const deleteResult = await studentCollegeSchema.deleteMany(stdCollegeId);
+  const deleteResult = await StudentCollege.deleteMany(stdCollegeId);
   return deleteResult.acknowledged;
 }
 

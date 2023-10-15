@@ -32,9 +32,9 @@ export async function updateNotificationById(id, data) {
 }
 
 // Service function to retrieve a list of Notification entities based on filters
-export async function listNotifications(filter) {
+export async function listNotifications(filter, limit, page) {
   try {
-    const notificationList = await Notification.read(filter);
+    const notificationList = await Notification.read(filter, limit, page);
     return notificationList;
   } catch (error) {
     throw new databaseError.DataEntryError("notification");

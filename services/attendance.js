@@ -1,7 +1,14 @@
 import Attendance from "#models/attendance";
 import databaseError from "#error/database";
 
-export async function addNewAttendance( student, course, monthlyAttended, monthlyOccured, cumulativeAttended, cumulativeOccured) {
+export async function addNewAttendance(
+  student,
+  course,
+  monthlyAttended,
+  monthlyOccured,
+  cumulativeAttended,
+  cumulativeOccured,
+) {
   const newAttendance = await Attendance.create({
     student,
     course,
@@ -16,8 +23,8 @@ export async function addNewAttendance( student, course, monthlyAttended, monthl
   throw new databaseError.DataEntryError("Add Attendance");
 }
 
-export async function getAttendances(filter) {
-  const attendances = await Attendance.read(filter);
+export async function getAttendances(filter, limit, page) {
+  const attendances = await Attendance.read(filter, limit, page);
   if (attendances) {
     return attendances;
   }

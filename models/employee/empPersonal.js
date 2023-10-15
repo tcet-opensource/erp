@@ -72,9 +72,14 @@ async function create(employeePersonalData) {
   return employeePersonalDoc;
 }
 
-async function read(filter, limit = 1) {
-  const employeePersonalDoc = await EmployeePersonal.find(filter).limit(limit);
-  return employeePersonalDoc;
+async function read(filter, limit = 0, page = 1) {
+  const employeePersonalDoc = await EmployeePersonal.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await EmployeePersonal.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: employeePersonalDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {

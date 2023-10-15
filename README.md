@@ -37,9 +37,9 @@ node -e "console.log(require('crypto').randomBytes(256).toString('base64'));
 You don't need to assign values to these parameters in double or single quotes, just write directly, .env automatically converts it into quoted string.   
 
 Once you are done with this, install the packages through `npm ci` which stands for clean install.
-Also, you need to run 'setup.js' file. You can do that by running following command in your terminal
+Also you need to run the following command to check for you eslint and jest testcases:
 ```
-node setup.js
+npm run prepare
 ```
 And finally, run the server with `npm run serverstart` or `npm run serverstartWin` depending on your operating system.
 

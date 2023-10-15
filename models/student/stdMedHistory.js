@@ -45,9 +45,14 @@ async function create(studentMedicalData) {
   return medicalHistoryDoc;
 }
 
-async function read(filter, limit = 1) {
-  const medicalHistoryDoc = await MedicalHistory.find(filter).limit(limit);
-  return medicalHistoryDoc;
+async function read(filter, limit = 0, page = 1) {
+  const medicalHistoryDoc = await MedicalHistory.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await MedicalHistory.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: medicalHistoryDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {

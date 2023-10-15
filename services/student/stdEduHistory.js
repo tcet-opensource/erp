@@ -2,10 +2,10 @@ import StudentEducation from "#models/student/stdEduHistory";
 import databaseError from "#error/database";
 
 export async function createStudentEducation(
-    uid,
-    tenth,
-    cetHscDetails,
-    graduationDetails,
+  uid,
+  tenth,
+  cetHscDetails,
+  graduationDetails,
 ) {
   const newStudentEducation = await StudentEducation.create({
     uid,
@@ -74,8 +74,12 @@ export async function updateStudentEducationById(id, data) {
   throw new databaseError.DataEntryError("student education");
 }
 
-export async function studentEducationList(filter) {
-  const studentEducationDetails = await StudentEducation.read(filter, 0);
+export async function studentEducationList(filter, limit, page) {
+  const studentEducationDetails = await StudentEducation.read(
+    filter,
+    limit,
+    page,
+  );
   return studentEducationDetails;
 }
 

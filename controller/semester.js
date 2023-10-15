@@ -1,15 +1,22 @@
 import {
-  createSemester, updateSemesterById, semesterList, deleteSemesterById,
+  createSemester,
+  updateSemesterById,
+  semesterList,
+  deleteSemesterById,
 } from "#services/semester";
 import { logger } from "#util";
 
 async function addSemester(req, res) {
-  const {
-    number, academicYear, type, startDate, endDate,
-  } = req.body;
+  const { number, academicYear, type, startDate, endDate } = req.body;
 
   try {
-    const newSemester = await createSemester(number, academicYear, type, startDate, endDate);
+    const newSemester = await createSemester(
+      number,
+      academicYear,
+      type,
+      startDate,
+      endDate,
+    );
     res.json({ res: `added semester ${newSemester.id} `, id: newSemester.id });
   } catch (error) {
     logger.error("Error while inserting", error);
@@ -20,9 +27,7 @@ async function addSemester(req, res) {
 
 async function updateSemester(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateSemesterById(id, data);
     res.json({ res: `Updated Semester with id  ${id}` });
@@ -34,8 +39,9 @@ async function updateSemester(req, res) {
 }
 
 async function getSemester(req, res) {
-  const filter = req.query;
-  const semlist = await semesterList(filter);
+  const filter = req.body;
+  const { limit, page } = req.query;
+  const semlist = await semesterList(filter, limit, page);
   res.json({ res: semlist });
 }
 
@@ -50,5 +56,8 @@ async function deleteSemester(req, res) {
   }
 }
 export default {
-  addSemester, deleteSemester, getSemester, updateSemester,
+  addSemester,
+  deleteSemester,
+  getSemester,
+  updateSemester,
 };

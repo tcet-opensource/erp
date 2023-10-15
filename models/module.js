@@ -6,11 +6,13 @@ const moduleSchema = {
   outcome: { type: String, required: true },
   contents: [{ type: String, required: true }],
   hrsPerModule: { type: Number, required: true },
-  cognitiveLevels: [{
-    type: String,
-    required: true,
-    enum: ["L1", "L2", "L3", "L4", "L5", "L6"],
-  }],
+  cognitiveLevels: [
+    {
+      type: String,
+      required: true,
+      enum: ["L1", "L2", "L3", "L4", "L5", "L6"],
+    },
+  ],
 };
 
 const Module = connector.model("Module", moduleSchema);
@@ -21,9 +23,8 @@ async function remove(filter) {
 }
 
 async function create(moduleData) {
-  const {
-    no, name, outcome, contents, hrsPerModule, cognitiveLevels,
-  } = moduleData;
+  const { no, name, outcome, contents, hrsPerModule, cognitiveLevels } =
+    moduleData;
   const module = new Module({
     no,
     name,
@@ -36,13 +37,22 @@ async function create(moduleData) {
   return moduleDoc;
 }
 
-async function read(filter, limit = 1) {
-  const moduleDoc = await Module.find(filter).limit(limit);
-  return moduleDoc;
+async function read(filter, limit = 0, page = 1) {
+  const moduleDoc = await Module.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Module.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: moduleDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Module.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Module.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 

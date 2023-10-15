@@ -253,14 +253,23 @@ async function create(studentData) {
 }
 
 // Retrieve student personal details  based on a given  filter and limit
-async function read(filter, limit = 1) {
-  const studentDoc = await StdPersonal.find(filter).limit(limit);
-  return studentDoc;
+async function read(filter, limit = 0, page = 1) {
+  const studentDoc = await StdPersonal.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await StdPersonal.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: studentDoc };
 }
 
-// update student personal details based on a given filter 
+// update student personal details based on a given filter
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateStudent = await StdPersonal.updateMany(filter, { $set: updateObject }, options);
+  const updateStudent = await StdPersonal.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateStudent.acknowledged;
 }
 
@@ -273,8 +282,8 @@ async function remove(filter) {
 // export crud functions
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };
-
-
-

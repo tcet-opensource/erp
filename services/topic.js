@@ -11,8 +11,8 @@ export async function addNewTopic(title) {
   throw new databaseError.DataEntryError("Add Topic");
 }
 
-export async function getTopics(filter) {
-  const topics = await Topic.read(filter);
+export async function getTopics(filter, limit, page) {
+  const topics = await Topic.read(filter, limit, page);
   if (topics) {
     return topics;
   }

@@ -10,14 +10,21 @@ import { logger } from "#util"; // Import the logger utility
 
 // Controller function to add a new Coursework entity
 async function addCoursework(req, res) {
-  const {
-    student, type, course, task, objectID, activity, marks,
-  } = req.body;
+  const { student, type, course, task, objectID, activity, marks } = req.body;
   try {
     const newCoursework = await createCoursework({
-      student, type, course, task, objectID, activity, marks,
+      student,
+      type,
+      course,
+      task,
+      objectID,
+      activity,
+      marks,
     });
-    res.json({ res: `Added Coursework with ID ${newCoursework.id}`, id: newCoursework.id });
+    res.json({
+      res: `Added Coursework with ID ${newCoursework.id}`,
+      id: newCoursework.id,
+    });
   } catch (error) {
     logger.error("Error while inserting Coursework", error);
     res.status(500);
@@ -28,9 +35,7 @@ async function addCoursework(req, res) {
 // Controller function to update a Coursework entity
 async function updateCoursework(req, res) {
   const { id } = req.params;
-  const {
-    ...data
-  } = req.body;
+  const { ...data } = req.body;
   try {
     await updateCourseworkById(id, data);
     res.json({ res: "/Updated Coursework/" });
@@ -43,9 +48,16 @@ async function updateCoursework(req, res) {
 
 // Controller function to get a list of Coursework entities
 async function getCoursework(req, res) {
-  const filter = req.query;
-  const courseworkList = await listCoursework(filter);
-  res.json({ res: courseworkList });
+  try {
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const courseworkList = await listCoursework(filter, limit, page);
+    res.json({ res: courseworkList });
+  } catch (error) {
+    logger.error("Error while fetching", error);
+    res.status(500);
+    res.json({ err: "Error while fetching the data" });
+  }
 }
 
 // Controller function to delete a Coursework entity

@@ -35,8 +35,8 @@ export async function updateMedicalHistoryById(id, data) {
   throw new databaseError.DataEntryError("medicalHistory");
 }
 
-export async function medicalHistoryList(filter) {
-  const medHistoryList = await MedicalHistory.read(filter, 0);
+export async function medicalHistoryList(filter, limit, page) {
+  const medHistoryList = await MedicalHistory.read(filter, limit, page);
   return medHistoryList;
 }
 

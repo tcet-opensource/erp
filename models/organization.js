@@ -1,10 +1,20 @@
 import connector from "#models/databaseUtil";
 
 const organizationSchema = {
-  parent: { type: connector.Schema.Types.ObjectId, ref: "Organization", required: "true" },
+  parent: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Organization",
+    required: "true",
+  },
   startDate: { type: Date, required: true },
   name: { type: String, required: true },
-  accreditations: [{ type: connector.Schema.Types.ObjectId, ref: "Accrediation", required: "true" }],
+  accreditations: [
+    {
+      type: connector.Schema.Types.ObjectId,
+      ref: "Accrediation",
+      required: "true",
+    },
+  ],
 };
 
 const Organization = connector.model("Organization", organizationSchema);
@@ -15,9 +25,7 @@ async function remove(filter) {
 }
 
 async function create(organizationData) {
-  const {
-    parent, startDate, name, accreditation,
-  } = organizationData;
+  const { parent, startDate, name, accreditation } = organizationData;
   const organization = new Organization({
     parent,
     startDate,
@@ -28,16 +36,28 @@ async function create(organizationData) {
   return organizationDoc;
 }
 
-async function read(filter, limit = 1) {
-  const organizationDoc = await Organization.find(filter).limit(limit);
-  return organizationDoc;
+async function read(filter, limit = 0, page = 1) {
+  const organizationDoc = await Organization.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Organization.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: organizationDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Organization.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Organization.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };

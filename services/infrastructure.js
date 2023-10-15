@@ -3,7 +3,11 @@ import databaseError from "#error/database";
 
 export async function createInfrastructure(name, type, wing, floor, capacity) {
   const newInfrastructure = await Infrastructure.create({
-    name, type, wing, floor, capacity,
+    name,
+    type,
+    wing,
+    floor,
+    capacity,
   });
   if (newInfrastructure.name === name) {
     return newInfrastructure;
@@ -19,8 +23,8 @@ export async function updateInfrastructureById(id, data) {
   throw new databaseError.DataEntryError("Infrastructure");
 }
 
-export async function infrastructureList(filter) {
-  const infralist = await Infrastructure.read(filter, 0);
+export async function infrastructureList(filter, limit, page) {
+  const infralist = await Infrastructure.read(filter, limit, page);
   return infralist;
 }
 

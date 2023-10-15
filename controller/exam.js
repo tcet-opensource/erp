@@ -7,9 +7,8 @@ import {
 import { logger } from "#util";
 
 async function addExam(req, res) {
-  const {
-    date, startTime, duration, infrastructure, supervisor, course,
-  } = req.body;
+  const { date, startTime, duration, infrastructure, supervisor, course } =
+    req.body;
   try {
     const exam = await createExam(
       date,
@@ -41,9 +40,16 @@ async function updateExam(req, res) {
 }
 
 async function getExam(req, res) {
-  const filter = req.query;
-  const exam = await examList(filter);
-  res.json({ res: exam });
+  try {
+    const filter = req.body;
+    const { limit, page } = req.query;
+    const exam = await examList(filter, limit, page);
+    res.json({ res: exam });
+  } catch (error) {
+    logger.error("Error while fetching", error);
+    res.status(500);
+    res.json({ err: "Error while fetching the data" });
+  }
 }
 
 async function deleteExam(req, res) {

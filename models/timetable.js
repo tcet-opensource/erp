@@ -58,13 +58,22 @@ async function create(timetableData) {
   return timetableDoc;
 }
 
-async function read(filter, limit = 1) {
-  const timetableDoc = await Timetable.find(filter).limit(limit);
-  return timetableDoc;
+async function read(filter, limit = 0, page = 1) {
+  const timetableDoc = await Timetable.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Timetable.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: timetableDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Timetable.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Timetable.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 

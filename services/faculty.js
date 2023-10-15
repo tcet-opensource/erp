@@ -41,8 +41,8 @@ export async function createFaculty(
   throw new databaseError.DataEntryError("Faculty");
 }
 
-export async function facultyList(filter) {
-  const facList = await Faculty.read(filter);
+export async function facultyList(filter, limit, page) {
+  const facList = await Faculty.read(filter, limit, page);
   if (facList) {
     return facList;
   }
@@ -66,5 +66,8 @@ export async function updateFacultyById(id, data) {
 }
 
 export default {
-  createFaculty, facultyList, deleteFacultyById, updateFacultyById,
+  createFaculty,
+  facultyList,
+  deleteFacultyById,
+  updateFacultyById,
 };

@@ -8,7 +8,7 @@ export async function createEmployeeBank(
   bankBranch,
   bankIfsc,
   bankMicr,
-  appointmentApproveSgDte,    
+  appointmentApproveSgDte,
 ) {
   const newEmployeeBank = await EmployeeBank.create({
     uid,
@@ -17,7 +17,7 @@ export async function createEmployeeBank(
     bankBranch,
     bankIfsc,
     bankMicr,
-    appointmentApproveSgDte,    
+    appointmentApproveSgDte,
   });
   if (newEmployeeBank.uid === uid) {
     return newEmployeeBank;
@@ -33,8 +33,8 @@ export async function updateEmployeeBankById(id, data) {
   throw new databaseError.DataEntryError("employee bank");
 }
 
-export async function employeeBankList(filter) {
-  const employeeBank = await EmployeeBank.read(filter, 0);
+export async function employeeBankList(filter, limit, page) {
+  const employeeBank = await EmployeeBank.read(filter, limit, page);
   return employeeBank;
 }
 
