@@ -71,5 +71,6 @@ app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 app.use("/performance", performarouter);
 app.use("/notification", notificationRouter);
-app.use("topic",topicRouter);
+app.use("/topic",topicRouter);
+
 export default app;
