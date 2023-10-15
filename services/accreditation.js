@@ -1,7 +1,12 @@
 import Accreditation from "#models/accreditation";
 import databaseError from "#error/database";
 
-export async function addNewAccreditation(name, agencyName, dateofAccreditation, dateofExpiry) {
+export async function addNewAccreditation(
+  name,
+  agencyName,
+  dateofAccreditation,
+  dateofExpiry,
+) {
   const newAccreditation = await Accreditation.create({
     name,
     agencyName,
@@ -15,7 +20,11 @@ export async function addNewAccreditation(name, agencyName, dateofAccreditation,
 }
 
 export async function getAccreditations(filter) {
-  const accreditations = await Accreditation.read(filter);
+  const accreditations = await Accreditation.read(
+    filter.filter,
+    filter.limit,
+    filter.page,
+  );
   if (accreditations) {
     return accreditations;
   }

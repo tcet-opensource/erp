@@ -29,9 +29,14 @@ async function create(examData) {
   return examDoc;
 }
 
-async function read(filter, limit = 1) {
-  const examDoc = await Exam.find(filter).limit(limit);
-  return examDoc;
+async function read(filter, limit = 0, page = 1) {
+  const examDoc = await Exam.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Exam.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: examDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {

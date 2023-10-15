@@ -39,13 +39,17 @@ const courseSchema = {
 };
 
 // virtual for total hours
-courseSchema.virtual("totalHours").get(() => this.theoryHours + this.tutorialHours + this.practicalHours);
+courseSchema
+  .virtual("totalHours")
+  .get(() => this.theoryHours + this.tutorialHours + this.practicalHours);
 
 // virtual for theory marks
 courseSchema.virtual("theoryMarks").get(() => this.ISAMarks + this.ESEMarks);
 
 // virtual for total marks
-courseSchema.virtual("totalMarks").get(() => this.theoryMarks + this.tutorialMarks + this.practicalMarks);
+courseSchema
+  .virtual("totalMarks")
+  .get(() => this.theoryMarks + this.tutorialMarks + this.practicalMarks);
 
 const Course = connector.model("Course", courseSchema);
 
@@ -57,13 +61,22 @@ async function create(courseData) {
   return courseDoc;
 }
 
-async function read(filter, limit = 1) {
-  const courseDoc = await Course.find(filter).limit(limit);
-  return courseDoc;
+async function read(filter, limit = 0, page = 1) {
+  const courseDoc = await Course.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Course.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: courseDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Course.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Course.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 

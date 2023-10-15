@@ -4,10 +4,16 @@ const studentSchema = {
   ERPID: { type: String, required: true },
   name: { type: String, required: true },
   joiningYear: { type: Number, required: true },
-  branch: { type: connector.Schema.Types.ObjectId, ref: "Department", required: true },
+  branch: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Department",
+    required: true,
+  },
   division: { type: String, enum: ["A", "B", "C"], default: "A" },
   rollNo: { type: Number, required: true },
-  coursesOpted: [{ type: connector.Schema.Types.ObjectId, ref: "Course", required: true }],
+  coursesOpted: [
+    { type: connector.Schema.Types.ObjectId, ref: "Course", required: true },
+  ],
 };
 
 // eslint-disable-next-line  no-unused-vars
@@ -22,9 +28,8 @@ async function remove(filter) {
 }
 
 async function create(studentData) {
-  const {
-    ERPID, name, joiningYear, branch, division, rollNo, coursesOpted,
-  } = studentData;
+  const { ERPID, name, joiningYear, branch, division, rollNo, coursesOpted } =
+    studentData;
   const student = new Student({
     ERPID,
     name,
@@ -38,16 +43,28 @@ async function create(studentData) {
   return studentDoc;
 }
 
-async function read(filter, limit = 1) {
-  const studentDoc = await Student.find(filter).limit(limit);
-  return studentDoc;
+async function read(filter, limit = 0, page = 1) {
+  const studentDoc = await Student.find(filter)
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .exec();
+  const count = await Student.count();
+  const totalPages = Math.ceil(count / limit);
+  return { totalPages, data: studentDoc };
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Student.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Student.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };

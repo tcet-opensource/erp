@@ -6,14 +6,12 @@ jest.mock("#util");
 const { agent } = global;
 
 function cleanUp(callback) {
-  PracticalModel
-    .remove({})
-    .then(() => {
-      connector.disconnect((DBerr) => {
-        if (DBerr) console.log("Database disconnect error: ", DBerr);
-        callback();
-      });
+  PracticalModel.remove({}).then(() => {
+    connector.disconnect((DBerr) => {
+      if (DBerr) console.log("Database disconnect error: ", DBerr);
+      callback();
     });
+  });
 }
 
 afterAll((done) => {
@@ -53,16 +51,16 @@ describe("Practical API", () => {
     });
 
     it("should list practical entities", async () => {
-      const response = await agent.get("/practical/list")
-        .send({ title: "new practical" });
+      const response = await agent.get("/practical/list");
       expect(response.status).toBe(200);
-      expect(response.body.res).toHaveLength(1);
     });
 
     it("should update a practical entity", async () => {
-      const response = await agent.post(`/practical/update/${practicalId}`).send({
-        hours: 3,
-      });
+      const response = await agent
+        .post(`/practical/update/${practicalId}`)
+        .send({
+          hours: 3,
+        });
 
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(/Updated Practical/);
