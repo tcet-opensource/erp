@@ -4,9 +4,21 @@ const examSchema = {
   date: { type: Date, required: true },
   startTime: { type: Date, required: true },
   duration: { type: Number, required: true },
-  supervisor: { type: connector.Schema.Types.ObjectId, ref: "Faculty", required: "true" },
-  infrastructure: { type: connector.Schema.Types.ObjectId, ref: "Infrastructure", required: "true" },
-  course: { type: connector.Schema.Types.ObjectId, ref: "Course", required: "true" },
+  supervisor: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Faculty",
+    required: "true",
+  },
+  infrastructure: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Infrastructure",
+    required: "true",
+  },
+  course: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Course",
+    required: "true",
+  },
 };
 
 const Exam = connector.model("Exam", examSchema);
@@ -23,12 +35,16 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await Exam.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await Exam.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 async function remove(filter) {
-  const deleteResult = await Exam.deleteMany(filter).exec();
+  const deleteResult = await Exam.deleteMany(filter);
   return deleteResult.acknowledged;
 }
 

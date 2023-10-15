@@ -7,7 +7,13 @@ const userSchema = {
   emailId: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   uid: { type: String, unique: true, required: true },
-  userType: { type: String, required: true },
+  userType: {
+    type: String,
+    required: true,
+    enum: ["ADMIN", "FACULTY", "EMPLOYEE", "STUDENT"],
+    default: "ADMIN",
+    // for now we are keeping the default usertype as ADMIN
+  },
 };
 
 const User = connector.model("User", userSchema);
@@ -18,9 +24,7 @@ async function remove(filter) {
 }
 
 async function create(userData) {
-  const {
-    name, password, emailId, uid, userType,
-  } = userData;
+  const { name, password, emailId, uid, userType } = userData;
   const hashedPassword = await hashPassword(password);
   const user = new User({
     name,
@@ -39,10 +43,17 @@ async function read(filter, limit = 1) {
 }
 
 async function update(filter, updateObject, options = { multi: true }) {
-  const updateResult = await User.updateMany(filter, { $set: updateObject }, options);
+  const updateResult = await User.updateMany(
+    filter,
+    { $set: updateObject },
+    options,
+  );
   return updateResult.acknowledged;
 }
 
 export default {
-  create, read, update, remove,
+  create,
+  read,
+  update,
+  remove,
 };
