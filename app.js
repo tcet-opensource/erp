@@ -28,6 +28,7 @@ import examRouter from "#routes/exam";
 import paperRouter from "#routes/paper";
 import groupRouter from "#routes/group";
 import performarouter from "#routes/performance";
+import notificationRouter from "#routes/notification";
 import topicRouter from "#routes/topic";
 
 const app = express();
@@ -69,6 +70,7 @@ app.use("/group", groupRouter);
 app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 app.use("/performance", performarouter);
+app.use("/notification", notificationRouter);
 app.use("/topic",topicRouter);
 
 export default app;
