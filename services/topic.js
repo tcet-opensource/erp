@@ -5,8 +5,8 @@ export async function addNewTopic(title) {
   const newTopic = await Topic.create({
     title,
   });
-  if (newTopic.name === name) {
-    return newAopic;
+  if (newTopic.title === title) {
+    return newTopic;
   }
   throw new databaseError.DataEntryError("Add Topic");
 }

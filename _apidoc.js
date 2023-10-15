@@ -1750,3 +1750,59 @@
  * @apiSuccess {String} faculty.natureOfAssociation Nature of association with the institution.
  * @apiSuccess {String} faculty.additionalResponsibilities Additional responsibilities of the faculty.
  */
+
+//------------------------------------------------------------------------------------------
+// Topics.
+// ------------------------------------------------------------------------------------------
+
+/**
+ * @api {post} /topic/add Add Topic
+ * @apiName AddTopic
+ * @apiGroup Topic
+ *
+ * @apiBody {String} title The title of topic.
+ *
+ * @apiSuccess {String} res Success message with the ID of the added topic.
+ *
+ * @apiError (Error 500) DatabaseError Error while inserting in the database.
+ *
+ * @apiDescription Adds a new topic to the system.
+ */
+
+/**
+ * @api {get} topic/list Get Topic List
+ * @apiName GetTopic
+ * @apiGroup Topic
+ *
+ * @apiQuery {String} [title] Title of Topic.
+ *
+ * @apiSuccess {String} topic.title Title of Topic.
+ */
+
+/**
+ * @api {delete} /topic/delete/:topicId Delete Topic
+ * @apiName DeleteTopic,
+ * @apiGroup Topic
+ *
+ * @apiParam {String} topicId The ID of the topic document to delete.
+ *
+ * @apiSuccess {String} res Success message indicating the deletion.
+ *
+ * @apiError (Error 500) err Error message if there was an error during the deletion.
+ *
+* */
+/**
+ * @api {post} /topic/update/:id Update topic details
+ * @apiName UpdateTopic
+ * @apiGroup Topic
+ * @apiDescription update Existing Topic details
+ *
+ * @apiParam {String} id The topic document to update.
+ * @apiBody {String} id Id of the topic to be updated
+ * @apiBody {String} [title] The title of topic.
+
+ *
+ * @apiSuccess {String} res topic updated.
+ * @apiError (Error 500) err Error in updating database
+ *
+ */
