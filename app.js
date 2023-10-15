@@ -65,6 +65,6 @@ app.use("/group", groupRouter);
 app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 app.use("/performance", performarouter);
-app.use("topic",topicRouter);
+app.use("/topic",topicRouter);
 
 export default app;

@@ -10,7 +10,7 @@ import {
     try {
       // eslint-disable-next-line max-len
       const topic = await addNewTopic(title);
-      res.json({ res: `added accreditation ${topic.name}`, id: topic.id });
+      res.json({ res: `added topic ${topic.name}`, id: topic.id });
     } catch (error) {
       logger.error("Error while inserting", error);
       res.status(500);
