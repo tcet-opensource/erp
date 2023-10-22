@@ -1,6 +1,6 @@
 # TCET ERP System
 
-TCET ERP System is a project that aims to simplify and automate daily operation in TCET.
+TCET ERP System is a project that aims to simplify and automate daily operations in TCET.
 
 This ERP system will be used to manage various aspects of the operations of colleges, including admissions, registration, student records, financial aid, course scheduling, and fees. The ERP system would typically consist of multiple integrated modules that support these functions.
 
@@ -32,7 +32,7 @@ node -e "console.log(require('crypto').randomBytes(256).toString('base64'));
  Set this on 'local'    
 
 `DB_URL` 
- For this parameter you will need to open your account on MongoDB Atlas, don't forget to note down you account password, then create new cluster and through that you will get your connection string which will be your DB_URL in .env, make sure instead of "password" in connection string, you enter your own account password.
+ For this parameter, you will need to open your account on MongoDB Atlas, don't forget to note down your account password, then create new cluster and through that you will get your connection string which will be your DB_URL in .env, make sure instead of "password" in connection string, you enter your own account password.
 
 `EMAIL_HOST`,
 `EMAIL_PORT`,
