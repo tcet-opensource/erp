@@ -1,6 +1,6 @@
 # TCET ERP System
 
-TCET ERP System is a project that aims to simplify and automate daily operation in TCET.
+TCET ERP System is a project that aims to simplify and automate daily operations in TCET.
 
 This ERP system will be used to manage various aspects of the operations of colleges, including admissions, registration, student records, financial aid, course scheduling, and fees. The ERP system would typically consist of multiple integrated modules that support these functions.
 
@@ -32,7 +32,7 @@ node -e "console.log(require('crypto').randomBytes(256).toString('base64'));
  Set this on 'local'    
 
 `DB_URL` 
- For this parameter you will need to open your account on MongoDB Atlas, don't forget to note down you account password, then create new cluster and through that you will get your connection string which will be your DB_URL in .env, make sure instead of "password" in connection string, you enter your own account password.
+ For this parameter, you will need to open your account on MongoDB Atlas, don't forget to note down your account password, then create new cluster and through that you will get your connection string which will be your DB_URL in .env, make sure instead of "password" in connection string, you enter your own account password.
 
 `EMAIL_HOST`,
 `EMAIL_PORT`,
@@ -72,3 +72,14 @@ And finally, run the server with `npm run serverstart` or `npm run serverstartWi
 
 > It's also worth noting that you should communicate with the project maintainers and other contributors to ensure that your changes align with the project's goals and direction.
 
+
+<div align="center">
+<h3> Connect with us<a href="https://gifyu.com/image/Zy2f"><img src="https://github.com/milaan9/milaan9/blob/main/Handshake.gif" width="50px"></a>
+</h3> 
+<p align="center">
+    <a href="https://twitter.com/tcetopensource" target="_blank"><img alt="Twitter" width="40px" src="https://www.iconpacks.net/icons/2/free-twitter-logo-icon-2429-thumb.png"></a> &nbsp&nbsp&nbsp
+    <a href="https://www.instagram.com/tcetopensource/" target="_blank"><img alt="Instagram" width="40px" src="https://cdn-icons-png.flaticon.com/512/1384/1384063.png"></a> &nbsp&nbsp&nbsp
+    <a href="https://discord.gg/r7ZhAREg2M" target="_blank"><img alt="Discord" width="40px" src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png"></a> &nbsp&nbsp&nbsp
+    <a href="mailto:opensource@tcetmumbai.in" target="_blank"><img alt="Gmail" width="40px" src="https://cdn-icons-png.flaticon.com/512/5968/5968534.png"></a> &nbsp&nbsp&nbsp 
+    <a href="https://www.linkedin.com/company/tcet-opensource/" target="_blank"><img alt="LinkedIn" width="40px" src="https://cdn-icons-png.flaticon.com/512/3536/3536505.png"></a> &nbsp&nbsp&nbsp
+</p> 
