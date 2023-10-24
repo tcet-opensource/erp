@@ -20,7 +20,7 @@ beforeAll((done) => {
 function cleanUp(callback) {
   examModel
     .remove({
-      supervisor: "60a0e7e9a09c3f001c834e07",
+      supervisor: "5f8778b54b553439ac49a03a",
     })
     .then(() => {
       connector.disconnect((DBerr) => {

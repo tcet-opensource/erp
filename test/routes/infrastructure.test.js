@@ -13,6 +13,7 @@ function cleanUp(callback) {
       wing: "East",
       floor: 3,
       capacity: 100,
+      organization: "5f8778b54b553439ac49a03a",
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -34,6 +35,7 @@ describe("Infrastructure API", () => {
       wing: "East",
       floor: 3,
       capacity: 100,
+      organization: "5f8778b54b553439ac49a03a",
     });
 
     expect(response.status).toBe(200);
@@ -49,6 +51,7 @@ describe("Infrastructure API", () => {
         wing: "East",
         floor: 3,
         capacity: 100,
+        organization: "5f8778b54b553439ac49a03a",
       });
       id = JSON.parse(id.res.text).id;
     });
@@ -60,6 +63,7 @@ describe("Infrastructure API", () => {
         wing: "East",
         floor: 3,
         capacity: 100,
+        organization: "5f8778b54b553439ac49a03a",
       });
     });
 

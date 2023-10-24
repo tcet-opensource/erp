@@ -1,13 +1,21 @@
 import Infrastructure from "#models/infrastructure";
 import databaseError from "#error/database";
 
-export async function createInfrastructure(name, type, wing, floor, capacity) {
+export async function createInfrastructure(
+  name,
+  type,
+  wing,
+  floor,
+  capacity,
+  organization,
+) {
   const newInfrastructure = await Infrastructure.create({
     name,
     type,
     wing,
     floor,
     capacity,
+    organization,
   });
   if (newInfrastructure.name === name) {
     return newInfrastructure;

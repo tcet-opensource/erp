@@ -4,14 +4,13 @@ const organizationSchema = {
   parent: {
     type: connector.Schema.Types.ObjectId,
     ref: "Organization",
-    required: "true",
   },
   startDate: { type: Date, required: true },
   name: { type: String, required: true },
   accreditations: [
     {
       type: connector.Schema.Types.ObjectId,
-      ref: "Accrediation",
+      ref: "Accreditation",
       required: "true",
     },
   ],
@@ -25,15 +24,30 @@ async function remove(filter) {
 }
 
 async function create(organizationData) {
-  const { parent, startDate, name, accreditation } = organizationData;
+  const { parent, startDate, name, accreditations } = organizationData;
   const organization = new Organization({
     parent,
     startDate,
     name,
-    accreditation,
+    accreditations,
   });
   const organizationDoc = await organization.save();
   return organizationDoc;
+}
+
+async function createMultiple(organizationDataArray) {
+  const organizations = organizationDataArray.map(
+    ({ parent, startDate, name, accreditations }) =>
+      Organization({
+        parent,
+        startDate,
+        name,
+        accreditations,
+      }),
+  );
+
+  const organizationDocs = await Organization.insertMany(organizations);
+  return organizationDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -60,4 +74,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

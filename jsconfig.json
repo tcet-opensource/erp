@@ -4,14 +4,16 @@
         "baseUrl": "./",
         "paths": {
             "#app": ["./app.js"],
-            "#util": ["./util.js"],
-            "#constant": ["./constant.js"],
+            "#util": ["./misc/util.js"],
+            "#constant": ["./misc/constant.js"],
             "#routes/*": ["./routes/*.js"],
             "#models/*": ["./models/*.js"],
             "#middleware/*": ["./middleware/*.js"],
             "#controller/*": ["./controller/*.js"],
             "#services/*": ["./services/*.js"],
-            "#error/*": ["./error/*.js"]
+            "#error/*": ["./error/*.js"],
+            "#misc/*": ["./misc/*.js"],
+            "#mockDB/*": ["./misc/mockDB/*.js"]
         }
     }
 }

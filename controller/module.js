@@ -20,13 +20,11 @@ async function showModule(req, res) {
 }
 
 async function addModule(req, res) {
-  const { no, name, outcome, contents, hrsPerModule, cognitiveLevels } =
-    req.body;
+  const { no, name, contents, hrsPerModule, cognitiveLevels } = req.body;
   try {
     const newModule = await addNewModule(
       no,
       name,
-      outcome,
       contents,
       hrsPerModule,
       cognitiveLevels,

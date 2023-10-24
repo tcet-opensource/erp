@@ -16,6 +16,16 @@ async function create(topicData) {
   return topicDoc;
 }
 
+async function createMultiple(topicDataArray) {
+  const topics = topicDataArray.map((title) =>
+    Topic({
+      title,
+    }),
+  );
+  const topicDocs = await Topic.insertMany(topics);
+  return topicDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const topicDoc = await Topic.find(filter)
     .limit(limit)
@@ -44,4 +54,5 @@ export default {
   remove,
   update,
   read,
+  createMultiple,
 };

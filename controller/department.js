@@ -8,8 +8,14 @@ import {
 import { logger } from "#util";
 
 async function addDepartment(req, res) {
-  const { name, acronym, yearOfStarting, accreditations, infrastructures } =
-    req.body;
+  const {
+    name,
+    acronym,
+    yearOfStarting,
+    accreditations,
+    infrastructures,
+    organization,
+  } = req.body;
   try {
     const department = await createnewdepartment(
       name,
@@ -17,6 +23,7 @@ async function addDepartment(req, res) {
       yearOfStarting,
       accreditations,
       infrastructures,
+      organization,
     );
     res.json({
       res: `added Department successfully ${department.name}`,

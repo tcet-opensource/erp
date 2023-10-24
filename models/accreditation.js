@@ -14,6 +14,21 @@ async function remove(filter) {
   return deleteResult.acknowledged;
 }
 
+async function createMultiple(accreditationDataArray) {
+  const accreditations = accreditationDataArray.map(
+    ({ name, agencyName, dateofAccreditation, dateofExpiry }) =>
+      Accreditation({
+        name,
+        agencyName,
+        dateofAccreditation,
+        dateofExpiry,
+      }),
+  );
+
+  const accreditationDocs = await Accreditation.insertMany(accreditations);
+  return accreditationDocs;
+}
+
 async function create(accreditationData) {
   const { name, agencyName, dateofAccreditation, dateofExpiry } =
     accreditationData;
@@ -51,4 +66,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

@@ -22,14 +22,16 @@ module.exports = {
       "alias": {
         "map": [
           ["#app", "./app.js"],
-          ["#util", "./util.js"],
-          ["#constant", "./constant.js"],
+          ["#util", "./misc/util.js"],
+          ["#constant", "./misc/constant.js"],
           ["#routes", "./routes"],
           ["#models", "./models"],
           ["#middleware", "./middleware"],
           ["#controller", "./controller"],
           ["#services", "./services"],
-          ["#error", "./error"]
+          ["#error", "./error"],
+          ["#misc", "./misc"],          
+          ["#mockDB", "./misc/mockDB"]
         ],
         "extensions": [".js"]
       }
