@@ -1,47 +1,48 @@
 version: '3'
 services:
-  backend:
-    build: ./
-    container_name: backend
+  myapp:
+    build:
+      context: ./
+      dockerfile: Dockerfile
     ports:
-      - "4000:4000"
-    env_file:
-      - .env
+      - "4000:3500"  # Replace with your app's port configuration
     depends_on:
-      - primary
-      - secondary1
-      - secondary2
-      - arbiter
-
-  primary:
-    image: mongo
-    container_name: mongodb-primary
-    ports:
-      - "27017:27017"
+      - mongodb-primary
+  mongodb-primary:
+    image: 'bitnami/mongodb:latest'
     environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
+      - MONGODB_REPLICA_SET_MODE=primary
+      - MONGODB_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
-  secondary1:
-    image: mongo
-    container_name: mongodb-secondary1
-    ports:
-      - "27018:27017"
-    environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+    volumes:
+      - 'mongodb_master_data:/bitnami'
 
-  secondary2:
-    image: mongo
-    container_name: mongodb-secondary2
-    ports:
-      - "27019:27017"
+  mongodb-secondary:
+    image: 'bitnami/mongodb:latest'
+    depends_on:
+      - mongodb-primary
     environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-secondary
+      - MONGODB_REPLICA_SET_MODE=secondary
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
 
-  arbiter:
-    image: mongo
-    container_name: mongodb-arbiter
-    ports:
-      - "27020:27017"
+  mongodb-arbiter:
+    image: 'bitnami/mongodb:latest'
+    depends_on:
+      - mongodb-primary
     environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
-      MONGO_INITDB_ARBITER: "yes"
+      - MONGODB_ADVERTISED_HOSTNAME=mongodb-arbiter
+      - MONGODB_REPLICA_SET_MODE=arbiter
+      - MONGODB_INITIAL_PRIMARY_HOST=mongodb-primary
+      - MONGODB_INITIAL_PRIMARY_PORT_NUMBER=27017
+      - MONGODB_INITIAL_PRIMARY_ROOT_PASSWORD=password123
+      - MONGODB_REPLICA_SET_KEY=replicasetkey123
+
+volumes:
+  mongodb_master_data:
+    driver: local
