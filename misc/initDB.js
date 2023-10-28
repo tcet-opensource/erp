@@ -79,11 +79,11 @@ const SEMS = generateSemesters();
 const createdSems = await Semester.createMultiple(SEMS);
 
 const COURSES = generateCourses(
-  createdSems,
-  createdModules,
-  createdPracs,
-  createdTuts,
-  createdDepts,
+  createdSems.map((createdSem) => createdSem._id),
+  createdModules.map((createdModule) => createdModule._id),
+  createdPracs.map((createdPrac) => createdPrac._id),
+  createdTuts.map((createdTut) => createdTut._id),
+  createdDepts.map((createdDept) => createdDept._id),
 );
 
 const createdCourses = await Course.createMultiple(COURSES); // eslint-disable-line no-unused-vars
