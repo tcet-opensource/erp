@@ -5,12 +5,20 @@ import Organization from "#models/organization";
 import Department from "#models/department";
 import Topics from "#models/topic";
 import Module from "#models/module";
+import Tutorial from "#models/tutorial";
+import Practical from "#models/practical";
+import Semester from "#models/semester";
+import Course from "#models/course";
 import generateOrganizations from "#mockDB/orgMock";
 import ACCREDS from "#mockDB/accredMock";
 import TOPICS from "#mockDB/topicMock";
 import generateDepartments from "#mockDB/deptMock";
 import generateModules from "#mockDB/moduleMock";
 import generateInfrastructures from "#mockDB/infraMock";
+import generatePracticals from "#mockDB/pracMock";
+import generateTutorials from "#mockDB/tutMock";
+import generateSemesters from "#mockDB/semMock";
+import generateCourses from "#mockDB/courseMock";
 /* eslint-disable no-underscore-dangle */
 const createdAccreds = await Accreditation.createMultiple(ACCREDS);
 
@@ -48,7 +56,7 @@ const DEPTS = generateDepartments(
   filteredInfrastructures.map((createdInfra) => createdInfra._id),
 );
 
-const createdDepts = await Department.createMultiple(DEPTS); // eslint-disable-line no-unused-vars
+const createdDepts = await Department.createMultiple(DEPTS);
 
 const createdTopics = await Topics.createMultiple(TOPICS);
 
@@ -56,6 +64,28 @@ const MODULES = await generateModules(
   createdTopics.map((createdTopic) => createdTopic._id),
 );
 
-const createdModules = await Module.createMultiple(MODULES); // eslint-disable-line no-unused-vars
+const createdModules = await Module.createMultiple(MODULES);
+
+const PRACS = generatePracticals();
+
+const createdPracs = await Practical.createMultiple(PRACS);
+
+const TUTS = generateTutorials();
+
+const createdTuts = await Tutorial.createMultiple(TUTS);
+
+const SEMS = generateSemesters();
+
+const createdSems = await Semester.createMultiple(SEMS);
+
+const COURSES = generateCourses(
+  createdSems,
+  createdModules,
+  createdPracs,
+  createdTuts,
+  createdDepts,
+);
+
+const createdCourses = await Course.createMultiple(COURSES); // eslint-disable-line no-unused-vars
 
 process.exit(0);

@@ -19,7 +19,7 @@ const createRandomModules = (i, topics) => ({
 
 const generateModules = (topics) => {
   const modules = [];
-  for (let i = 1; i < topics.length / 5; i += 1) {
+  for (let i = 1; i < topics.length / 5 + 1; i += 1) {
     const moduleTopics = topics.slice(i, i + 5);
     modules.push(createRandomModules(i, moduleTopics));
   }

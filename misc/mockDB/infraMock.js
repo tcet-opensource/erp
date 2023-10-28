@@ -19,10 +19,10 @@ const createRandomInfrastructure = (i, tcetObjectId) => ({
 
 const generateInfrastructures = (tcetObjectId) => {
   const infrastructures = [];
-  for (let j = 1, i = 0; j < 7; i += 1) {
+  for (let j = 1, i = 0; j <= 6; i += 1) {
     infrastructures.push(createRandomInfrastructure(j * 100 + i, tcetObjectId));
     if (i === 25) {
-      i = 1;
+      i = 0;
       j += 1;
     }
   }

@@ -1,20 +1,23 @@
-const { connector } = require("#models/databaseUtil");
+import connector from "#models/databaseUtil";
 
 const courseSchema = {
   name: { type: String, required: true },
   code: { type: String, required: true },
-  theoryHours: { type: Number, required: true },
-  tutorialHours: { type: Number, required: true },
-  practicalHours: { type: Number, required: true },
-  totalCredit: { type: Number, required: true },
-  ISAMarks: { type: Number, required: true },
-  ESEMarks: { type: Number, required: true },
-  tutorialMarks: { type: Number, required: true },
-  practicalMarks: { type: Number, required: true },
+  theoryHours: { type: Number },
+  tutorialHours: { type: Number },
+  practicalHours: { type: Number },
+  ISAMarks: { type: Number },
+  ESEMarks: { type: Number },
+  tutorialMarks: { type: Number },
+  practicalMarks: { type: Number },
   semester: {
     type: connector.Schema.Types.ObjectId,
     ref: "Semester",
     required: true,
+  },
+  department: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Department",
   },
   subType: {
     type: String,
@@ -35,21 +38,7 @@ const courseSchema = {
   assignments: [{ type: connector.Schema.Types.ObjectId, ref: "Assignment" }],
   reccTextbooks: { type: [String], required: true },
   refBooks: { type: [String], required: true },
-  evalScheme: { type: [Number], required: true },
 };
-
-// virtual for total hours
-courseSchema
-  .virtual("totalHours")
-  .get(() => this.theoryHours + this.tutorialHours + this.practicalHours);
-
-// virtual for theory marks
-courseSchema.virtual("theoryMarks").get(() => this.ISAMarks + this.ESEMarks);
-
-// virtual for total marks
-courseSchema
-  .virtual("totalMarks")
-  .get(() => this.theoryMarks + this.tutorialMarks + this.practicalMarks);
 
 const Course = connector.model("Course", courseSchema);
 
@@ -59,6 +48,60 @@ async function create(courseData) {
   const course = new Course(courseData);
   const courseDoc = await course.save();
   return courseDoc;
+}
+
+async function createMultiple(courseDataArray) {
+  const courses = courseDataArray.map(
+    ({
+      name,
+      code,
+      theoryHours,
+      department,
+      tutorialHours,
+      practicalHours,
+      ISAMarks,
+      ESEMarks,
+      tutorialMarks,
+      practicalMarks,
+      semester,
+      subType,
+      prerequisites,
+      objective,
+      outcomes,
+      modules,
+      practicals,
+      tutorials,
+      assignments,
+      reccTextbooks,
+      refBooks,
+    }) =>
+      Course({
+        name,
+        code,
+        theoryHours,
+        department,
+        tutorialHours,
+        practicalHours,
+        ISAMarks,
+        ESEMarks,
+        tutorialMarks,
+        practicalMarks,
+        semester,
+        subType,
+        prerequisites,
+        objective,
+        outcomes,
+        modules,
+        practicals,
+        tutorials,
+        assignments,
+        reccTextbooks,
+        refBooks,
+      }),
+  );
+
+  const courseDocs = await Course.insertMany(courses);
+  return courseDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -90,4 +133,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
