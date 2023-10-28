@@ -7,7 +7,7 @@ import {
 import { logger } from "#util";
 
 async function addInfrastructure(req, res) {
-  const { name, type, wing, floor, capacity } = req.body;
+  const { name, type, wing, floor, capacity, organization } = req.body;
   try {
     const newInfrastructure = await createInfrastructure(
       name,
@@ -15,6 +15,7 @@ async function addInfrastructure(req, res) {
       wing,
       floor,
       capacity,
+      organization,
     );
     res.json({
       res: `added infrastructure ${newInfrastructure.id}`,

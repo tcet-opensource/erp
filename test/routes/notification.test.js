@@ -8,11 +8,7 @@ const { agent } = global;
 function cleanUp(callback) {
   notificationModel
     .remove({
-      data: "Sample Notification",
-      title: "Test Title",
-      from: "64fc3c8bde9fa947ea1f412f",
-      type: "Student",
-      filter: ["64fc3c8bde9fa947ea1f412f"],
+      title: "Updated Title",
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -29,11 +25,11 @@ afterAll((done) => {
 describe("Notification API", () => {
   it("should create a new notification", async () => {
     const response = await agent.post("/notification/add").send({
-      data: "Sample Notification",
-      title: "Test Title",
-      from: "64fc3c8bde9fa947ea1f412f", // Use a valid Faculty ID
-      type: "Student",
-      filter: ["64fc3c8bde9fa947ea1f412f"], // Use a valid User ID
+      data: "Updated Notification Data",
+      title: "Updated Title",
+      from: "64fc3c8bde9fa947ea1f412f",
+      type: "Faculty",
+      filter: ["64fc3c8bde9fa947ea1f412f"],
     });
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/Added notification/);

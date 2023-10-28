@@ -7,9 +7,7 @@ import dotenv from "dotenv";
 import bcrypt from "bcrypt";
 import { logLevel } from "#constant";
 
-const {
-  combine, timestamp, align, printf, colorize, json,
-} = winston.format;
+const { combine, timestamp, align, printf, colorize, json } = winston.format;
 
 dotenv.config();
 
@@ -85,9 +83,10 @@ export const comparePasswords = async (userPassword, storedPassword) => {
  *
  * async ()=>{let res = await asyncPlaceholder("hello", 1000); console.log(res)}
  */
-const asyncPlaceholders = (data, time) => new Promise((resolve) => {
-  setTimeout(() => resolve(data), time);
-});
+const asyncPlaceholders = (data, time) =>
+  new Promise((resolve) => {
+    setTimeout(() => resolve(data), time);
+  });
 
 /**
  * corn job

@@ -12,7 +12,6 @@ export async function getModule(filter, limit, page) {
 export async function addNewModule(
   no,
   name,
-  outcome,
   contents,
   hrsPerModule,
   cognitiveLevels,
@@ -20,7 +19,6 @@ export async function addNewModule(
   const newModule = await Module.create({
     no,
     name,
-    outcome,
     contents,
     hrsPerModule,
     cognitiveLevels,

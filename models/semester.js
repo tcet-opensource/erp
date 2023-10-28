@@ -34,6 +34,22 @@ async function create(semesterData) {
   return semesterDoc;
 }
 
+async function createMultiple(semesterDataArray) {
+  const semesters = semesterDataArray.map(
+    ({ number, academicYear, type, startDate, endDate }) =>
+      Semester({
+        number,
+        academicYear,
+        type,
+        startDate,
+        endDate,
+      }),
+  );
+
+  const semesterDocs = await Semester.insertMany(semesters);
+  return semesterDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const semesterDoc = await Semester.find(filter)
     .limit(limit)
@@ -62,4 +78,5 @@ export default {
   remove,
   update,
   read,
+  createMultiple,
 };

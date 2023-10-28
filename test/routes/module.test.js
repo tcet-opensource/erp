@@ -22,16 +22,17 @@ afterAll((done) => {
 
 describe("checking module functions", () => {
   it("create module", async () => {
-    const response = await agent
-      .post("/module/add")
-      .send({
-        no: 1,
-        name: "Module 1",
-        outcome: "I am good at debugging",
-        contents: ["i", "ii", "iii", "iv", "v", "vi"],
-        hrsPerModule: 3,
-        cognitiveLevels: "L1",
-      });
+    const response = await agent.post("/module/add").send({
+      no: 1,
+      name: "Module 1",
+      contents: [
+        "64fc3c8bde9fa947ea1f412f",
+        "64fc3c8bde9fa947ea1f412f",
+        "64fc3c8bde9fa947ea1f412f",
+      ],
+      hrsPerModule: 3,
+      cognitiveLevels: "L1",
+    });
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added module/);
   });
@@ -40,8 +41,11 @@ describe("checking module functions", () => {
     await agent.post("/module/add").send({
       no: 1,
       name: "Module 1",
-      outcome: "I am good at debugging",
-      contents: ["i", "ii", "iii", "iv", "v", "vi"],
+      contents: [
+        "64fc3c8bde9fa947ea1f412f",
+        "64fc3c8bde9fa947ea1f412f",
+        "64fc3c8bde9fa947ea1f412f",
+      ],
       hrsPerModule: 3,
       cognitiveLevels: "L1",
     });
@@ -52,9 +56,7 @@ describe("checking module functions", () => {
   });
 
   it("read module", async () => {
-    const response = await agent
-      .get("/module/list")
-      .send({ name: "xyz" });
+    const response = await agent.get("/module/list").send({ name: "xyz" });
     expect(response.status).toBe(200);
     expect(response.body.res).toBeDefined();
   });

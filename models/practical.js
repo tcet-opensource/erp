@@ -2,7 +2,11 @@ import connector from "#models/databaseUtil";
 
 const practicalSchema = {
   no: { type: Number, required: true },
-  type: { type: String, required: true },
+  type: {
+    type: String,
+    required: true,
+    enum: ["BASIC", "DESIGN", "PROJECT"],
+  },
   title: { type: String, required: true },
   hours: { type: Number, required: true },
   cognitiveLevels: [
@@ -36,6 +40,22 @@ async function create(practicalData) {
   return practicalDoc;
 }
 
+async function createMultiple(practicalDataArray) {
+  const practicals = practicalDataArray.map(
+    ({ no, type, title, hours, cognitiveLevels }) =>
+      Practical({
+        no,
+        type,
+        title,
+        hours,
+        cognitiveLevels,
+      }),
+  );
+
+  const practicalDocs = await Practical.insertMany(practicals);
+  return practicalDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const practicalDoc = await Practical.find(filter)
     .limit(limit)
@@ -63,4 +83,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
