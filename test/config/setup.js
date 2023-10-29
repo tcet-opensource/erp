@@ -9,22 +9,11 @@ const server = app.listen(null, () => {
 const agent = request.agent(server);
 
 const child = spawn("node", ["./misc/initDB"]);
-child.stdout.on("data", (data) => {
-  console.log(`stdout: ${data}`);
-});
-child.stderr.on("data", (data) => {
-  console.log(`stderr: ${data}`);
-});
-child.stdout.on("error", (error) => {
-  console.log(`error: ${error.message}`);
-});
-child.on("exit", (code, signal) => {
-  if (code) console.log(`Process exit with code: ${code}`);
-  if (signal) console.log(`Process killed with signal: ${signal}`);
-});
 global.server = server;
 global.agent = agent;
+global.child = child;
 export default async () => {
   global.server = server;
   global.agent = agent;
+  global.child = child;
 };
