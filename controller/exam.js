@@ -22,24 +22,25 @@ async function addExam(req, res) {
   const isSupervisorValid = await isEntityIdValid(supervisor, Faculty);
   const isCourseValid = await isEntityIdValid(course, Course);
 
-  if (!isInfrastructureValid || !isSupervisorValid || !isCourseValid) {
-    res.status(400).json({ error: "Invalid ID(s)" });
-  }
-
   try {
-    const exam = await createExam(
-      date,
-      startTime,
-      duration,
-      supervisor,
-      infrastructure,
-      course,
-    );
-    res.json({ res: `added exam ${exam.id}`, id: exam.id });
+    if (!isInfrastructureValid || !isSupervisorValid || !isCourseValid) {
+      res.status(400).json({
+        error: `Invalid ID(s): Infra:${isInfrastructureValid} Supervisor:${isSupervisorValid} Course:${isCourseValid} `,
+      });
+    } else {
+      const exam = await createExam(
+        date,
+        startTime,
+        duration,
+        supervisor,
+        infrastructure,
+        course,
+      );
+      res.json({ res: `added exam ${exam.id}`, id: exam.id });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
-    res.status(500);
-    res.json({ err: "Error while inserting in DB" });
+    res.status(500).json({ err: "Error while inserting in DB" });
   }
 }
 
