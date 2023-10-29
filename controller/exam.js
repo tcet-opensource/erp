@@ -5,10 +5,27 @@ import {
   updateExamById,
 } from "#services/exam";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Infrastructure from "#models/infrastructure";
+import Course from "#models/course";
+import Faculty from "#models/faculty";
 
 async function addExam(req, res) {
   const { date, startTime, duration, infrastructure, supervisor, course } =
     req.body;
+
+  // Checking if the provided IDs exist in the database
+  const isInfrastructureValid = await isEntityIdValid(
+    infrastructure,
+    Infrastructure,
+  );
+  const isSupervisorValid = await isEntityIdValid(supervisor, Faculty);
+  const isCourseValid = await isEntityIdValid(course, Course);
+
+  if (!isInfrastructureValid || !isSupervisorValid || !isCourseValid) {
+    res.status(400).json({ error: "Invalid ID(s)" });
+  }
+
   try {
     const exam = await createExam(
       date,
