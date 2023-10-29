@@ -1,21 +1,9 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
-import request from "supertest";
-import app from "#app";
 import connector from "#models/databaseUtil";
 import examModel from "#models/exam";
 
 jest.mock("#util");
-
-let server;
-let agent;
-
-beforeAll((done) => {
-  server = app.listen(null, () => {
-    agent = request.agent(server);
-    connector.set("debug", false);
-    done();
-  });
-});
+const { agent } = global;
 
 function cleanUp(callback) {
   examModel
@@ -25,10 +13,7 @@ function cleanUp(callback) {
     .then(() => {
       connector.disconnect((DBerr) => {
         if (DBerr) console.log("Database disconnect error: ", DBerr);
-        server.close((serverErr) => {
-          if (serverErr) console.log(serverErr);
-          callback();
-        });
+        callback();
       });
     });
 }
@@ -43,9 +28,9 @@ describe("exam API", () => {
       date: "2023-06-18T14:11:30Z",
       startTime: "2023-06-18T14:11:30Z",
       duration: 5,
-      supervisor: ["5f8778b54b553439ac49a03a"],
-      infrastructure: ["5f8778b54b553439ac49a03a"],
-      course: ["5f8778b54b553439ac49a03a"],
+      supervisor: "5f8778b54b553439ac49a03a",
+      infrastructure: "5f8778b54b553439ac49a03a",
+      course: "5f8778b54b553439ac49a03a",
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
