@@ -1,4 +1,11 @@
+const teardownProcess = () => {
+  global.child.kill();
+};
+
 global.server.close();
 global.agent.app.close();
-export default async () => {
-};
+global.child.stdin.end();
+global.child.stdout.destroy();
+global.child.stderr.destroy();
+setTimeout(teardownProcess, 500);
+export default async () => {};
