@@ -11,7 +11,7 @@ const activityBluePrintSchema = {
         `${props.value} is not a valid year format starting with "2"!`,
     },
   },
-  type: { enum: ["ODD", "EVEN"], required: true },
+  type: { type: String, enum: ["ODD", "EVEN"], required: true },
   startDate: { type: Date, required: true },
   endDate: { type: Date, required: true },
 };
