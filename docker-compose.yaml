@@ -1,34 +1,48 @@
 version: '3'
 services:
-  primary:
-    image: mongo
-    container_name: mongodb-primary
+  mongo1:
+    image: mongo:5
+    command: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo1"]
     ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+      - 27017:27017
+    networks:
+      - mongoCluster
 
-  secondary1:
-    image: mongo
-    container_name: mongodb-secondary1
+  mongo2:
+    image: mongo:5
+    command: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo2"]
     ports:
-      - "27018:27017"
-    environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+      - 27018:27017
+    networks:
+      - mongoCluster
 
-  secondary2:
-    image: mongo
-    container_name: mongodb-secondary2
+  mongo3:
+    image: mongo:5
+    command: ["mongod", "--replSet", "myReplicaSet", "--bind_ip", "localhost,mongo3"]
     ports:
-      - "27019:27017"
-    environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
+      - 27019:27017
+    networks:
+      - mongoCluster
 
-  arbiter:
-    image: mongo
-    container_name: mongodb-arbiter
-    ports:
-      - "27020:27017"
-    environment:
-      MONGO_INITDB_REPLICA_SET: ReplicaSet
-      MONGO_INITDB_ARBITER: "yes"
+  init-replica:
+    image: mongo:5
+    depends_on:
+      - mongo1
+      - mongo2
+      - mongo3
+    command: 
+      - mongosh
+      - --eval
+      - >
+        rs.initiate({
+          _id: 'myReplicaSet',
+          members: [
+            {_id: 0, host: 'mongo1'},
+            {_id: 1, host: 'mongo2'},
+            {_id: 2, host: 'mongo3'}
+          ]
+        })
+
+networks:
+  mongoCluster:
+    driver: bridge
