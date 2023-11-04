@@ -23,7 +23,7 @@ async function showModule(req, res) {
 
 async function addModule(req, res) {
   const { no, name, contents, hrsPerModule, cognitiveLevels } = req.body;
-  const isTopicValid = await isEntityIdValid(Topic, Topic);
+  const isTopicValid = await isEntityIdValid(contents, Topic);
   try {
     if (isTopicValid) {
       const newModule = await addNewModule(
@@ -33,11 +33,9 @@ async function addModule(req, res) {
         hrsPerModule,
         cognitiveLevels,
       );
-      res.json({ res: `added module ${newModule.name}` });
-      res.json({ res: `added module ${newModule.id}` });
+      res.json({ res: `added module ${newModule.name} ${newModule.id}` });
     } else {
-      res.status(400).json({ err: "Invalid name" });
-      res.status(400).json({ err: "Invalid id" });
+      res.status(400).json({ err: "Invalid name" , err: "Invalid id"});
     }
   } catch (error) {
     logger.error("Error while inserting", error);
