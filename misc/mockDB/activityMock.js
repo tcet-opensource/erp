@@ -33,6 +33,7 @@ const generateRandomActivity = (
     course: randomCourse, // Assuming `randomCourse` is an object with an _id property
     faculty: randomFaculty, // Assuming `randomFaculty` is an object with an _id property
     task: taskIds, // Assuming `task` is an object with an _id property (from tutorialList, practicalList, or topicList)
+    type: activityType, // Assuming `task` is an object with an _id property (from tutorialList, practicalList, or topicList)
     group: randomGroup, // Assuming `randomGroup` is an object with an _id property
     students: studentsIds, // Assuming each student object in `studentList` has an _id property
   };
