@@ -9,6 +9,11 @@ import Tutorial from "#models/tutorial";
 import Practical from "#models/practical";
 import Semester from "#models/semester";
 import Course from "#models/course";
+import Faculty from "#models/faculty";
+import Student from "#models/student";
+import Attendance from "#models/attendance";
+import Notification from "#models/notification";
+import User from "#models/user";
 import generateOrganizations from "#mockDB/orgMock";
 import ACCREDS from "#mockDB/accredMock";
 import TOPICS from "#mockDB/topicMock";
@@ -19,6 +24,11 @@ import generatePracticals from "#mockDB/pracMock";
 import generateTutorials from "#mockDB/tutMock";
 import generateSemesters from "#mockDB/semMock";
 import generateCourses from "#mockDB/courseMock";
+import generateFaculty from "#mockDB/facultyMock";
+import generateStudents from "#mockDB/studentMock";
+import generateAttendance from "#mockDB/attendanceMock";
+import generateNotifications from "#mockDB/notificationMock";
+import generateUsers from "#mockDB/userMock"; // eslint-disable-line no-unused-vars
 /* eslint-disable no-underscore-dangle */
 const createdAccreds = await Accreditation.createMultiple(ACCREDS);
 
@@ -86,6 +96,59 @@ const COURSES = generateCourses(
   createdDepts.map((createdDept) => createdDept._id),
 );
 
-const createdCourses = await Course.createMultiple(COURSES); // eslint-disable-line no-unused-vars
+const createdCourses = await Course.createMultiple(COURSES);
+
+const FACULTY = generateFaculty(
+  createdDepts.map((createdDept) => createdDept._id),
+  createdCourses.map((createdCourse) => createdCourse._id),
+);
+
+const createdFaculty = await Faculty.createMultiple(FACULTY);
+
+const STUDENTS = generateStudents(
+  createdDepts.map((createdDept) => createdDept._id),
+  createdCourses.map((createdCourse) => createdCourse._id),
+);
+
+const createdStudents = await Student.createMultiple(STUDENTS);
+
+const studentCourseList = createdStudents.map((student) => {
+  const studentId = student._id.toString();
+  const coursesOpted = student.coursesOpted.map((courseId) =>
+    courseId.toString(),
+  );
+  return { studentId, coursesOpted };
+});
+
+const ATTENDANCE = generateAttendance(studentCourseList);
+
+const createdAttendance = await Attendance.createMultiple(ATTENDANCE);
+
+// const USERS = generateUsers(                                         // TODO this takes forever bruhh
+//   createdStudents.map((createdStudent) => createdStudent.ERPID),
+//   createdFaculty.map((createdFaculty) => createdFaculty.ERPID),
+// )
+
+// const createdUsers = await User.createMultiple(USERS)
+
+const createdUsers = await User.read(); // use this after you initialized Users at least once, or wait for years every time
+
+const NOTIFS = generateNotifications(
+  createdUsers.data
+    .filter((user) => user.userType === "STUDENT")
+    .map((student) => student._id),
+  createdUsers.data
+    .filter((user) => user.userType === "FACULTY")
+    .map((faculty) => faculty._id),
+  createdUsers.data
+    .filter((user) => user.userType === "ADMIN")
+    .map((admin) => admin._id),
+);
+
+const createdNotifications = await Notification.createMultiple(NOTIFS);
+
+console.log(createdNotifications);
+console.log(createdAttendance);
+console.log(createdFaculty);
 
 process.exit(0);
