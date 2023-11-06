@@ -26,6 +26,10 @@ const facultySchema = {
       "Assistant Professor",
       "Associate Professor",
       "Activity Head",
+      "Professor",
+      "Director",
+      "T&P Officer",
+      "R&D Activity Head",
     ],
     required: true,
   },
@@ -52,11 +56,52 @@ async function create(facultyData) {
   return facultyDoc;
 }
 
+async function createMultiple(facultyDataArray) {
+  const facultys = facultyDataArray.map(
+    ({
+      ERPID,
+      dateOfJoining,
+      dateOfLeaving,
+      profileLink,
+      qualifications,
+      totalExperience,
+      achievements,
+      areaOfSpecialization,
+      papersPublishedPG,
+      papersPublishedUG,
+      department,
+      preferredSubjects,
+      designation,
+      natureOfAssociation,
+      additionalResponsibilities,
+    }) =>
+      Faculty({
+        ERPID,
+        dateOfJoining,
+        dateOfLeaving,
+        profileLink,
+        qualifications,
+        totalExperience,
+        achievements,
+        areaOfSpecialization,
+        papersPublishedPG,
+        papersPublishedUG,
+        department,
+        preferredSubjects,
+        designation,
+        natureOfAssociation,
+        additionalResponsibilities,
+      }),
+  );
+
+  const facultyDocs = await Faculty.insertMany(facultys);
+  return facultyDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const facultyDoc = await Faculty.find(filter)
     .limit(limit)
-    .skip((page - 1) * limit)
-    .exec();
+    .skip((page - 1) * limit);
   const count = await Faculty.count();
   const totalPages = Math.ceil(count / limit);
   return { totalPages, data: facultyDoc };
@@ -76,4 +121,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

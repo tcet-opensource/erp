@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";  // eslint-disable-line import/no-extraneous-dependencies
+import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import connector from "#models/databaseUtil"; // Update this import
 import activityModel from "#models/activity"; // Update this import
 
@@ -8,7 +8,7 @@ const { agent } = global;
 function cleanUp(callback) {
   activityModel
     .remove({
-      course: "5f8778b54b553439ac49a03a"
+      course: "5f8778b54b553439ac49a03a",
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -17,7 +17,6 @@ function cleanUp(callback) {
       });
     });
 }
-
 
 afterAll((done) => {
   cleanUp(done);
@@ -28,15 +27,14 @@ describe("Activity API", () => {
     const response = await agent.post("/activity/add").send({
       activityBlueprint: "5f8778b54b553439ac49a03a",
       startTime: "2023-06-18T14:11:30Z",
-      duration: 2,
       course: "5f8778b54b553439ac49a03a",
       faculty: "5f8778b54b553439ac49a03a",
       type: "LECTURE",
       task: ["5f8778b54b553439ac49a03a"],
       group: "5f8778b54b553439ac49a03a",
-      students: ["5f8778b54b553439ac49a03a"]
+      students: ["5f8778b54b553439ac49a03a"],
     });
-    
+
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added activity/);
   });
@@ -45,15 +43,14 @@ describe("Activity API", () => {
     let id;
     beforeEach(async () => {
       id = await agent.post("/activity/add").send({
-        activityBlueprint: "64fc3c8bde9fa947ea1f412f",
+        activityBlueprint: "5f8778b54b553439ac49a03a",
         startTime: "2023-06-18T14:11:30Z",
-        duration: 2,
         course: "5f8778b54b553439ac49a03a",
-        faculty: "64fc3c8bde9fa947ea1f412f",
+        faculty: "5f8778b54b553439ac49a03a",
         type: "LECTURE",
-        task: ["64fc3c8bde9fa947ea1f412f"],
-        group: "64fc3c8bde9fa947ea1f412f",
-        students: ["64fc3c8bde9fa947ea1f412f"]
+        task: ["5f8778b54b553439ac49a03a"],
+        group: "5f8778b54b553439ac49a03a",
+        students: ["5f8778b54b553439ac49a03a"],
       });
       id = JSON.parse(id.res.text).id;
     });
@@ -61,14 +58,6 @@ describe("Activity API", () => {
     afterEach(async () => {
       await activityModel.remove({
         activityBlueprint: "64fc3c8bde9fa947ea1f412f",
-        startTime: "2023-06-18T14:11:30Z",
-        duration: 2,
-        course: "5f8778b54b553439ac49a03a",
-        faculty: "64fc3c8bde9fa947ea1f412f",
-        type: "LECTURE",
-        task: ["64fc3c8bde9fa947ea1f412f"],
-        group: "64fc3c8bde9fa947ea1f412f",
-        students: ["64fc3c8bde9fa947ea1f412f"]
       });
     });
 
@@ -81,12 +70,9 @@ describe("Activity API", () => {
     });
 
     it("should update activity", async () => {
-      const response = await agent
-        .post(`/activity/update/${id}`)
-        .send({
-          duration: 5,
-        });
-
+      const response = await agent.post(`/activity/update/${id}`).send({
+        type: "TUTORIAL",
+      });
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(/updated activity/);
     });

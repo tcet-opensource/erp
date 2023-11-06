@@ -2,15 +2,17 @@ import connector from "#models/databaseUtil";
 
 const paperSchema = {
   answerSheetID: { type: String, required: true },
-  exam: [
-    { type: connector.Schema.Types.ObjectId, ref: "Exam", required: true },
-  ],
-  student: [
-    { type: connector.Schema.Types.ObjectId, ref: "Student", required: true },
-  ],
-  checkedBy: [
-    { type: connector.Schema.Types.ObjectId, ref: "Faculty", required: true },
-  ],
+  exam: { type: connector.Schema.Types.ObjectId, ref: "Exam", required: true },
+  student: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Student",
+    required: true,
+  },
+  checkedBy: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Faculty",
+    required: true,
+  },
   mark: { type: Number, required: true },
 };
 
@@ -34,6 +36,22 @@ async function create(paperData) {
   });
   const paperDoc = await paper.save();
   return paperDoc;
+}
+
+async function createMultiple(paperDataArray) {
+  const papers = paperDataArray.map(
+    ({ answerSheetID, exam, student, checkedBy, mark }) =>
+      Paper({
+        answerSheetID,
+        exam,
+        student,
+        checkedBy,
+        mark,
+      }),
+  );
+
+  const paperDocs = await Paper.insertMany(papers);
+  return paperDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -60,4 +78,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
