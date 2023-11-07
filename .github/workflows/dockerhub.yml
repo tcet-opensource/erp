@@ -1,10 +1,9 @@
-name: Deploy
+name: Dockerhub
 
 on:
   push:
     branches:
       - main
-      - development
   workflow_dispatch:
 
 permissions:
@@ -12,12 +11,12 @@ permissions:
         
 jobs:
   test:
-    name: Testing files
+    name: Uploading Img
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Building Docker Image
         run: docker build -t ${{ secrets.username }}/erp-backend:prod .
       - name: DockerHub Login
