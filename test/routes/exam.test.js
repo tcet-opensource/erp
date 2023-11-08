@@ -1,14 +1,20 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import connector from "#models/databaseUtil";
 import examModel from "#models/exam";
+import facultyModel from "#models/faculty";
+import courseModel from "#models/course";
+import infraModel from "#models/infrastructure";
 
+/* eslint-disable no-underscore-dangle */
 jest.mock("#util");
 const { agent } = global;
-
+let supervisorId;
+let infraId;
+let courseId;
 function cleanUp(callback) {
   examModel
     .remove({
-      supervisor: "5f8778b54b553439ac49a03a",
+      supervisor: supervisorId,
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -18,8 +24,22 @@ function cleanUp(callback) {
     });
 }
 
+async function getIds(callback) {
+  supervisorId = await facultyModel.read({}, 1);
+  supervisorId = supervisorId.data[0]._id;
+  infraId = await infraModel.read({}, 1);
+  infraId = infraId.data[0]._id;
+  courseId = await courseModel.read({}, 1);
+  courseId = courseId.data[0]._id;
+  callback();
+}
+
 afterAll((done) => {
   cleanUp(done);
+});
+
+beforeAll((done) => {
+  getIds(done);
 });
 
 describe("exam API", () => {
@@ -28,9 +48,9 @@ describe("exam API", () => {
       date: "2023-06-18T14:11:30Z",
       startTime: "2023-06-18T14:11:30Z",
       duration: 5,
-      supervisor: "5f8778b54b553439ac49a03a",
-      infrastructure: "5f8778b54b553439ac49a03a",
-      course: "5f8778b54b553439ac49a03a",
+      supervisor: supervisorId,
+      infrastructure: infraId,
+      course: courseId,
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -44,21 +64,21 @@ describe("exam API", () => {
         date: "2023-06-18T14:11:30Z",
         startTime: "2023-06-18T14:11:30Z",
         duration: 5,
-        supervisor: "64453a62c8f2146f2f34c73a",
-        infrastructure: "64453a62c8f2146f2f34c73a",
-        course: "64453a62c8f2146f2f34c73a",
+        supervisor: supervisorId,
+        infrastructure: infraId,
+        course: courseId,
       });
       id = JSON.parse(id.res.text).id;
     });
 
     afterEach(async () => {
-      await examModel.remove({ supervisor: "64453a62c8f2146f2f34c73a" });
+      await examModel.remove({ supervisor: supervisorId });
     });
 
     it("should read exam", async () => {
       const response = await agent
         .get("/exam/list")
-        .send({ supervisor: "64453a62c8f2146f2f34c73a" });
+        .send({ supervisor: supervisorId });
       expect(response.status).toBe(200);
       expect(response.body.res).toBeDefined();
     });

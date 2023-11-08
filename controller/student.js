@@ -5,21 +5,33 @@ import {
   updateStudentById,
 } from "#services/student";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Department from "#models/department";
+import Course from "#models/course";
 
 async function addStudent(req, res) {
   const { ERPID, name, joiningYear, branch, division, rollNo, coursesOpted } =
     req.body;
   try {
-    const newStudent = await createStudent(
-      ERPID,
-      name,
-      joiningYear,
-      branch,
-      division,
-      rollNo,
-      coursesOpted,
-    );
-    res.json({ res: `added user ${newStudent.id}`, id: newStudent.id });
+    const isBranchValid = await isEntityIdValid(branch, Department);
+    const isCourseValid = await isEntityIdValid(coursesOpted, Course);
+    if (isBranchValid && isCourseValid) {
+      const newStudent = await createStudent(
+        ERPID,
+        name,
+        joiningYear,
+        branch,
+        division,
+        rollNo,
+        coursesOpted,
+      );
+      res.json({ res: `added user ${newStudent.id}`, id: newStudent.id });
+    } else {
+      var error = "";
+      if (!isBranchValid) error.concat('Invalid branch');
+      if (!isCourseValid) error.concat(' Invalid course opted');
+      res.status(400).json({ err: error });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

@@ -5,6 +5,13 @@ import {
   updateCourseById,
 } from "#services/course";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Semester from "#models/semester";
+import Department from "#models/department";
+import Module from "#models/module";
+import Practical from "#models/practical";
+import Tutorial from "#models/tutorial";
+import Assignment from "#models/assignment";
 
 async function addCourse(req, res) {
   const {
@@ -30,31 +37,52 @@ async function addCourse(req, res) {
     reccTextbooks,
     refBooks,
   } = req.body;
+
+  const isSemesterValid = await isEntityIdValid(semester, Semester);
+  const isDepartmentValid = await isEntityIdValid(department, Department);
+  const isModuleValid = await isEntityIdValid(modules, Module);
+  const isPracticalValid = await isEntityIdValid(practicals, Practical);
+  const isTutorialValid = await isEntityIdValid(tutorials, Tutorial);
+  const isAssignmentValid = await isEntityIdValid(assignments, Assignment);
+
   try {
-    const newCourse = await createCourse(
-      name,
-      code,
-      theoryHours,
-      department,
-      tutorialHours,
-      practicalHours,
-      ISAMarks,
-      ESEMarks,
-      tutorialMarks,
-      practicalMarks,
-      semester,
-      subType,
-      prerequisites,
-      objective,
-      outcomes,
-      modules,
-      practicals,
-      tutorials,
-      assignments,
-      reccTextbooks,
-      refBooks,
-    );
-    res.json({ res: `added course ${newCourse.ERPID}` });
+    if (
+      !isSemesterValid ||
+      !isDepartmentValid ||
+      !isModuleValid ||
+      !isPracticalValid ||
+      !isTutorialValid ||
+      !isAssignmentValid
+    ) {
+      res.status(400).json({
+        error: "Invalid ID(s)",
+      });
+    } else {
+      const newCourse = await createCourse(
+        name,
+        code,
+        theoryHours,
+        department,
+        tutorialHours,
+        practicalHours,
+        ISAMarks,
+        ESEMarks,
+        tutorialMarks,
+        practicalMarks,
+        semester,
+        subType,
+        prerequisites,
+        objective,
+        outcomes,
+        modules,
+        practicals,
+        tutorials,
+        assignments,
+        reccTextbooks,
+        refBooks,
+      );
+      res.json({ res: `added course ${newCourse.ERPID}` });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

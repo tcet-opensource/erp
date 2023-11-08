@@ -5,6 +5,8 @@ import {
   deleteModuleById,
 } from "#services/module";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Topic from "#models/topic";
 
 async function showModule(req, res) {
   try {
@@ -21,15 +23,20 @@ async function showModule(req, res) {
 
 async function addModule(req, res) {
   const { no, name, contents, hrsPerModule, cognitiveLevels } = req.body;
+  const isTopicValid = await isEntityIdValid(contents, Topic);
   try {
-    const newModule = await addNewModule(
-      no,
-      name,
-      contents,
-      hrsPerModule,
-      cognitiveLevels,
-    );
-    res.json({ res: `added module ${newModule.name}` });
+    if (isTopicValid) {
+      const newModule = await addNewModule(
+        no,
+        name,
+        contents,
+        hrsPerModule,
+        cognitiveLevels,
+      );
+      res.json({ res: `added module ${newModule.name} ${newModule.id}` });
+    } else {
+      res.status(400).json({ err: "Invalid name" , err: "Invalid id"});
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
