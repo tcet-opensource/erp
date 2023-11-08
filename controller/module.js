@@ -35,7 +35,7 @@ async function addModule(req, res) {
       );
       res.json({ res: `added module ${newModule.name} ${newModule.id}` });
     } else {
-      res.status(400).json({ err: "Invalid name" , err: "Invalid id"});
+      res.status(400).json({ cause: "Invalid name", err: "Invalid id" });
     }
   } catch (error) {
     logger.error("Error while inserting", error);

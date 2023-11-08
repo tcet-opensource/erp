@@ -6,18 +6,17 @@ import {
 } from "#services/group";
 import { logger } from "#util";
 import { isEntityIdValid } from "#middleware/entityIdValidation";
-import Student from '#models/student';
+import Student from "#models/student";
 
 async function addGroup(req, res) {
-  const { title, student } = req.body;
-  const isStudentValid = await isEntityIdValid(student, Student);
+  const { title, students } = req.body;
+  const isStudentValid = await isEntityIdValid(students, Student);
   try {
-    if(isStudentValid){
-    const group = await createGroup(title, student);
-    res.json({ res: `added group ${group.id}`, id: group.id });
-    }
-    else{
-      res.status(400).json({err: "Invalid Id"});
+    if (isStudentValid) {
+      const group = await createGroup(title, students);
+      res.json({ res: `added group ${group.id}`, id: group.id });
+    } else {
+      res.status(400).json({ err: "Invalid Id" });
     }
   } catch (error) {
     logger.error("Error while inserting", error);

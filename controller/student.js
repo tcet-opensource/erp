@@ -27,13 +27,13 @@ async function addStudent(req, res) {
       );
       res.json({ res: `added user ${newStudent.id}`, id: newStudent.id });
     } else {
-      var error = "";
-      if (!isBranchValid) error.concat('Invalid branch');
-      if (!isCourseValid) error.concat(' Invalid course opted');
+      let error = ""; // eslint-disable-line prefer-const
+      if (!isBranchValid) error.concat("Invalid branch");
+      if (!isCourseValid) error.concat(" Invalid course opted");
       res.status(400).json({ err: error });
     }
-  } catch (error) {
-    logger.error("Error while inserting", error);
+  } catch (caughtError) {
+    logger.error("Error while inserting", caughtError);
     res.status(500);
     res.json({ err: "Error while inserting in DB" });
   }

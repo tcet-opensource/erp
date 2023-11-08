@@ -11,7 +11,6 @@ import Department from "#models/department";
 import Module from "#models/module";
 import Practical from "#models/practical";
 import Tutorial from "#models/tutorial";
-import Assignment from "#models/assignment";
 
 async function addCourse(req, res) {
   const {
@@ -43,16 +42,13 @@ async function addCourse(req, res) {
   const isModuleValid = await isEntityIdValid(modules, Module);
   const isPracticalValid = await isEntityIdValid(practicals, Practical);
   const isTutorialValid = await isEntityIdValid(tutorials, Tutorial);
-  const isAssignmentValid = await isEntityIdValid(assignments, Assignment);
-
   try {
     if (
       !isSemesterValid ||
       !isDepartmentValid ||
       !isModuleValid ||
       !isPracticalValid ||
-      !isTutorialValid ||
-      !isAssignmentValid
+      !isTutorialValid
     ) {
       res.status(400).json({
         error: "Invalid ID(s)",
@@ -81,7 +77,7 @@ async function addCourse(req, res) {
         reccTextbooks,
         refBooks,
       );
-      res.json({ res: `added course ${newCourse.ERPID}` });
+      res.json({ res: `added course ${newCourse.ERPID}`, id: newCourse.id });
     }
   } catch (error) {
     logger.error("Error while inserting", error);

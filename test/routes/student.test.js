@@ -1,20 +1,18 @@
-import { jest } from "@jest/globals";  // eslint-disable-line import/no-extraneous-dependencies
-import connector from "#models/databaseUtil"; 
-import studentModel from "#models/student"; 
+import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
+import connector from "#models/databaseUtil";
+import studentModel from "#models/student";
+import courseModel from "#models/course"; // Update this import
+import departmentModel from "#models/department";
 
 jest.mock("#util");
 const { agent } = global;
 
+let courseIds;
+let branchId;
 function cleanUp(callback) {
   studentModel
     .remove({
-      ERPID: "S1032220999",
-      name: "Arya",
-      joiningYear: 2020,
-      branch: "64fc3c8bde9fa947ea1f412f",
-      division: "A",
-      rollNo: 12,
-      coursesOpted: "64fc3c8bde9fa947ea1f412f",
+      branch: branchId,
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -24,6 +22,18 @@ function cleanUp(callback) {
     });
 }
 
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  branchId = await departmentModel.read({});
+  branchId = branchId.data[0]._id;
+  courseIds = await courseModel.read({}, 3);
+  courseIds = courseIds.data.flatMap((obj) => obj._id);
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
 
 afterAll((done) => {
   cleanUp(done);
@@ -35,12 +45,12 @@ describe("Student API", () => {
       ERPID: "S1032220999",
       name: "Arya",
       joiningYear: 2020,
-      branch: "64fc3c8bde9fa947ea1f412f",
+      branch: branchId,
       division: "A",
       rollNo: 12,
-      coursesOpted: "64fc3c8bde9fa947ea1f412f",
+      coursesOpted: courseIds,
     });
-    
+
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added user/);
   });
@@ -52,10 +62,10 @@ describe("Student API", () => {
         ERPID: "S1032220999",
         name: "Arya",
         joiningYear: 2020,
-        branch: "64fc3c8bde9fa947ea1f412f",
+        branch: branchId,
         division: "A",
         rollNo: 12,
-        coursesOpted: "64fc3c8bde9fa947ea1f412f",
+        coursesOpted: courseIds,
       });
       id = JSON.parse(id.res.text).id;
     });
@@ -65,17 +75,15 @@ describe("Student API", () => {
         ERPID: "S1032220999",
         name: "Arya",
         joiningYear: 2020,
-        branch: "64fc3c8bde9fa947ea1f412f",
+        branch: branchId,
         division: "A",
         rollNo: 12,
-        coursesOpted: "64fc3c8bde9fa947ea1f412f",
+        coursesOpted: courseIds,
       });
     });
 
     it("should read student", async () => {
-      const response = await agent
-        .get("/student/list")
-        .send({ name: "Arya" });
+      const response = await agent.get("/student/list").send({ name: "Arya" });
       expect(response.status).toBe(200);
       expect(response.body.res).toBeDefined();
     });
@@ -83,7 +91,7 @@ describe("Student API", () => {
     it("should update student", async () => {
       const response = await agent
         .post(`/student/update/${id}`)
-        .send({ERPID: "S1032220999"},{ joiningYear: 2021 });
+        .send({ ERPID: "S1032220999" }, { joiningYear: 2021 });
 
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(`updated Student with id ${id}`);
