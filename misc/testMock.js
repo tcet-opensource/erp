@@ -134,35 +134,38 @@ const studentCourseList = createdStudents.map((student) => {
   return { studentId, coursesOpted };
 });
 
-const ATTENDANCE = generateAttendance(studentCourseList);
+const ATTENDANCE = generateAttendance(studentCourseList, 100);
 
 const createdAttendance = await Attendance.createMultiple(ATTENDANCE); // eslint-disable-line no-unused-vars
 
-// const USERS = generateUsers(                                         // TODO this takes forever bruhh
-//   createdStudents.map((createdStudent) => createdStudent.ERPID),
-//   createdFaculty.map((createdFaculty) => createdFaculty.ERPID),
-// )
+const USERS = generateUsers(
+  // TODO this takes forever bruhh
+  createdStudents.map((createdStudent) => createdStudent.ERPID),
+  createdFaculty.map((createdFac) => createdFac.ERPID),
+  10,
+);
 
-// const createdUsers = await User.createMultiple(USERS)
+const createdUsers = await User.createMultiple(USERS);
 
-const createdUsers = await User.read(); // use this after you initialized Users at least once, or wait for years every time
+// const createdUsers = await User.read(); // use this after you initialized Users at least once, or wait for years every time
 
 const NOTIFS = generateNotifications(
-  createdUsers.data // remove data from each of these if you are initializing users for the first time
+  createdUsers // remove data from each of these if you are initializing users for the first time
     .filter((user) => user.userType === "STUDENT")
     .map((student) => student._id),
-  createdUsers.data
+  createdUsers
     .filter((user) => user.userType === "FACULTY")
     .map((faculty) => faculty._id),
-  createdUsers.data
+  createdUsers
     .filter((user) => user.userType === "ADMIN")
     .map((admin) => admin._id),
+  10,
 );
 
 const createdNotifications = await Notification.createMultiple(NOTIFS); // eslint-disable-line no-unused-vars
 
 const GROUPS = generateGroups(
-  createdUsers.data
+  createdUsers
     .filter((user) => user.userType === "STUDENT")
     .map((student) => student._id),
 );
@@ -187,6 +190,7 @@ const ACTIVITY = generateActivity(
   createdPracs.map((createdPrac) => createdPrac._id),
   createdTopics.map((createdTopic) => createdTopic._id),
   createdStudents.map((createdStudent) => createdStudent._id),
+  1000,
 );
 
 const createdActivity = await Activity.createMultiple(ACTIVITY);

@@ -11,7 +11,7 @@ const notificationSchema = {
   },
   from: {
     type: connector.Schema.Types.ObjectId,
-    ref: "Faculty", // Reference to the Faculty model
+    ref: "User", // Reference to the Faculty model
     required: true,
   },
   type: {
@@ -44,6 +44,22 @@ async function create(notificationData) {
   return notificationDOC;
 }
 
+async function createMultiple(notificationDataArray) {
+  const notifications = notificationDataArray.map(
+    ({ data, title, from, type, filter }) =>
+      Notification({
+        data,
+        title,
+        from,
+        type,
+        filter,
+      }),
+  );
+
+  const notificationDocs = await Notification.insertMany(notifications);
+  return notificationDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const notificationDoc = await Notification.find(filter)
     .limit(limit)
@@ -73,4 +89,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

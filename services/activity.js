@@ -4,7 +4,6 @@ import databaseError from "#error/database";
 export async function createActivity(
   activityBlueprint,
   startTime,
-  duration,
   course,
   faculty,
   type,
@@ -15,7 +14,6 @@ export async function createActivity(
   const newActivity = await Activity.create({
     activityBlueprint,
     startTime,
-    duration,
     course,
     faculty,
     task,

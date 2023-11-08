@@ -1,36 +1,40 @@
 import {
-  createActivity,
-  deleteActivityById,
-  activityList,
-  updateActivityById,
-} from "#services/activity";
+  createActivityBP,
+  updateActivityBlueprintById,
+  deleteActivityBlueprintById,
+  activityBlueprintList,
+} from "#services/activityBlueprint";
 import { logger } from "#util";
 
-async function addActivity(req, res) {
+async function addActivityBP(req, res) {
   const {
-    activityBlueprint,
+    number,
+    academicYear,
+    day,
     startTime,
+    duration,
+    infra,
     course,
     faculty,
     type,
-    task,
     group,
-    students,
   } = req.body;
   try {
-    const newActivity = await createActivity(
-      activityBlueprint,
+    const newActivityBP = await createActivityBP(
+      number,
+      academicYear,
+      day,
       startTime,
+      duration,
+      infra,
       course,
       faculty,
       type,
-      task,
       group,
-      students,
     );
     return res.json({
-      res: `added activity ${newActivity.id}`,
-      id: newActivity.id,
+      res: `added activity ${newActivityBP.id}`,
+      id: newActivityBP.id,
     });
   } catch (error) {
     logger.error("Error while inserting", error);
@@ -39,11 +43,11 @@ async function addActivity(req, res) {
   }
 }
 
-async function updateActivity(req, res) {
+async function updateActivityBP(req, res) {
   const { id } = req.params;
   const { ...data } = req.body;
   try {
-    await updateActivityById(id, data);
+    await updateActivityBlueprintById(id, data);
     return res.json({ res: `updated activity with id ${id}` });
   } catch (error) {
     logger.error("Error while updating", error);
@@ -52,11 +56,11 @@ async function updateActivity(req, res) {
   }
 }
 
-async function getActivity(req, res) {
+async function getActivityBP(req, res) {
   try {
     const filter = req.body;
     const { limit, page } = req.query;
-    const activitylist = await activityList(filter, limit, page);
+    const activitylist = await activityBlueprintList(filter, limit, page);
     return res.json({ res: activitylist });
   } catch (error) {
     logger.error("Error while fetching", error);
@@ -65,10 +69,10 @@ async function getActivity(req, res) {
   }
 }
 
-async function deleteActivity(res, req) {
+async function deleteActivityBP(res, req) {
   const { id } = req.params;
   try {
-    await deleteActivityById(id);
+    await deleteActivityBlueprintById(id);
     return res.json({ res: `Deleted activity with ID ${id}` });
   } catch (error) {
     logger.error("Error while deleting", error);
@@ -77,8 +81,8 @@ async function deleteActivity(res, req) {
 }
 
 export default {
-  addActivity,
-  deleteActivity,
-  getActivity,
-  updateActivity,
+  addActivityBP,
+  deleteActivityBP,
+  getActivityBP,
+  updateActivityBP,
 };

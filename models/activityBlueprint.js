@@ -1,19 +1,46 @@
 import connector from "#models/databaseUtil";
 
 const activityBluePrintSchema = {
-  number: { type: Number, required: true },
-  academicYear: {
+  day: {
     type: String,
+    enum: [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
     required: true,
-    validate: {
-      validator: (value) => /^20\d{2}$/.test(value), // changed the valid year format starting from "20" !!
-      message: (props) =>
-        `${props.value} is not a valid year format starting with "2"!`,
-    },
   },
-  type: { enum: ["ODD", "EVEN"], required: true },
-  startDate: { type: Date, required: true },
-  endDate: { type: Date, required: true },
+  startTime: { type: String, required: true },
+  duration: { type: Number, required: true },
+  infra: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Infrastructure",
+    required: true,
+  },
+  course: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Course",
+    required: true,
+  },
+  faculty: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Faculty",
+    required: true,
+  },
+  type: {
+    type: String,
+    enum: ["lecture", "practical", "tutorial"],
+    required: true,
+  },
+  group: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Group",
+    required: true,
+  },
 };
 
 // eslint-disable-next-line  no-unused-vars
@@ -28,17 +55,65 @@ async function remove(filter) {
 }
 
 async function create(activityBlueprintData) {
-  const { number, academicYear, type, startDate, endDate } =
-    activityBlueprintData;
-  const activityblueprint = new ActivityBlueprint({
+  const {
     number,
     academicYear,
+    day,
+    startTime,
+    duration,
+    infra,
+    course,
+    faculty,
     type,
-    startDate,
-    endDate,
+    group,
+  } = activityBlueprintData;
+  const activityBlueprint = new ActivityBlueprint({
+    number,
+    academicYear,
+    day,
+    startTime,
+    duration,
+    infra,
+    course,
+    faculty,
+    type,
+    group,
   });
-  const activityblueprintDoc = await activityblueprint.save();
-  return activityblueprintDoc;
+  const activityBlueprintDoc = await activityBlueprint.save();
+  return activityBlueprintDoc;
+}
+
+async function createMultiple(activityBlueprintDataArray) {
+  const activityBlueprints = activityBlueprintDataArray.map(
+    ({
+      number,
+      academicYear,
+      day,
+      startTime,
+      duration,
+      infra,
+      course,
+      faculty,
+      type,
+      group,
+    }) =>
+      ActivityBlueprint({
+        number,
+        academicYear,
+        day,
+        startTime,
+        duration,
+        infra,
+        course,
+        faculty,
+        type,
+        group,
+      }),
+  );
+
+  const activityBlueprintDocs =
+    await ActivityBlueprint.insertMany(activityBlueprints);
+  return activityBlueprintDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -65,4 +140,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

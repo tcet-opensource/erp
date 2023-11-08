@@ -31,6 +31,7 @@ import performarouter from "#routes/performance";
 import notificationRouter from "#routes/notification";
 import topicRouter from "#routes/topic";
 import courseRouter from "#routes/course";
+import activityBlueprintRouter from "#routes/activityBlueprint";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -76,5 +77,6 @@ app.use("/performance", performarouter);
 app.use("/notification", notificationRouter);
 app.use("/topic", topicRouter);
 app.use("/course", courseRouter);
+app.use("/activityBlueprint", activityBlueprintRouter);
 
 export default app;

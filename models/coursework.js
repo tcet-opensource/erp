@@ -14,12 +14,6 @@ const courseworkSchema = {
   },
   task: {
     type: connector.Schema.Types.ObjectId,
-    refPath: "objectID",
-    required: true,
-  },
-  objectID: {
-    type: String,
-    enum: ["Practical", "Tutorial", "Assignment"],
     required: true,
   },
   activity: {
@@ -53,6 +47,24 @@ async function create(courseworkData) {
   return courseworkDoc;
 }
 
+async function createMultiple(courseworkDataArray) {
+  const courseworks = courseworkDataArray.map(
+    ({ student, type, course, task, objectID, activity, marks }) =>
+      Coursework({
+        student,
+        type,
+        course,
+        task,
+        objectID,
+        activity,
+        marks,
+      }),
+  );
+
+  const courseworkDocs = await Coursework.insertMany(courseworks);
+  return courseworkDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const courseworkDoc = await Coursework.find(filter)
     .limit(limit)
@@ -77,4 +89,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
