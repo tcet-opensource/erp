@@ -1,0 +1,25 @@
+name: Dockerhub
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+    contents: read
+        
+jobs:
+  test:
+    name: Uploading Img
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Building Docker Image
+        run: docker build -t ${{ secrets.username }}/erp-backend:prod .
+      - name: DockerHub Login
+        run: docker login -u ${{ secrets.username }} -p ${{ secrets.pass }}
+      - name: Uploading Image to DockerHub
+        run: docker push ${{ secrets.username }}/erp-backend:prod
