@@ -1,9 +1,12 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import moduleModel from "#models/module";
 import connector from "#models/databaseUtil";
+import topicModel from "#models/topic";
 
 jest.mock("#util");
 const { agent } = global;
+
+let topicIds;
 
 function cleanUp(callback) {
   moduleModel.remove({ startDate: "2023-06-18T14:11:30Z" }).then(() => {
@@ -16,6 +19,17 @@ function cleanUp(callback) {
   });
 }
 
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  topicIds = await topicModel.read({}, 3);
+  topicIds = topicIds.data.flatMap((obj) => obj._id);
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
+
 afterAll((done) => {
   cleanUp(done);
 });
@@ -25,13 +39,9 @@ describe("checking module functions", () => {
     const response = await agent.post("/module/add").send({
       no: 1,
       name: "Module 1",
-      contents: [
-        "64fc3c8bde9fa947ea1f412f",
-        "64fc3c8bde9fa947ea1f412f",
-        "64fc3c8bde9fa947ea1f412f",
-      ],
+      contents: topicIds,
       hrsPerModule: 3,
-      cognitiveLevels: "L1",
+      cognitiveLevels: ["L1", "L2"],
     });
     expect(response.status).toBe(200);
     expect(response.body.res).toMatch(/added module/);
@@ -40,14 +50,10 @@ describe("checking module functions", () => {
   beforeEach(async () => {
     await agent.post("/module/add").send({
       no: 1,
-      name: "Module 1",
-      contents: [
-        "64fc3c8bde9fa947ea1f412f",
-        "64fc3c8bde9fa947ea1f412f",
-        "64fc3c8bde9fa947ea1f412f",
-      ],
+      name: "Module 2",
+      contents: topicIds,
       hrsPerModule: 3,
-      cognitiveLevels: "L1",
+      cognitiveLevels: ["L1", "L2"],
     });
   });
 
