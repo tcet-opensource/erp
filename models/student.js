@@ -43,6 +43,24 @@ async function create(studentData) {
   return studentDoc;
 }
 
+async function createMultiple(studentDataArray) {
+  const students = studentDataArray.map(
+    ({ ERPID, name, joiningYear, branch, division, rollNo, coursesOpted }) =>
+      Student({
+        ERPID,
+        name,
+        joiningYear,
+        branch,
+        division,
+        rollNo,
+        coursesOpted,
+      }),
+  );
+
+  const studentDocs = await Student.insertMany(students);
+  return studentDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const studentDoc = await Student.find(filter)
     .limit(limit)
@@ -67,4 +85,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

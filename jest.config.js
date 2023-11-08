@@ -1,8 +1,10 @@
 const config = {
-  transform: {
-  },
+  transform: {},
   testTimeout: 15000,
-  setupFiles: [
+  globalSetup: "./test/config/globalSetup.js",
+  globalTeardown: "./test/config/globalTeardown.js",
+  setupFilesAfterEnv: [
+    // "<rootDir>/test/setupFile.ts",
     "./test/config/setup.js",
     "./test/config/teardown.js",
   ],

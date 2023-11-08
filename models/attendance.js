@@ -1,7 +1,5 @@
 import connector from "#models/databaseUtil";
 
-connector.set("debug", true);
-
 const attendanceSchema = {
   student: {
     type: connector.Schema.Types.ObjectId,
@@ -42,6 +40,30 @@ async function create(attendanceData) {
   return attendanceDoc;
 }
 
+async function createMultiple(attendanceDataArray) {
+  const attendances = attendanceDataArray.map(
+    ({
+      student,
+      course,
+      monthlyAttended,
+      monthlyOccured,
+      cumulativeAttended,
+      cumulativeOccured,
+    }) =>
+      Attendance({
+        student,
+        course,
+        monthlyAttended,
+        monthlyOccured,
+        cumulativeAttended,
+        cumulativeOccured,
+      }),
+  );
+
+  const attendanceDocs = await Attendance.insertMany(attendances);
+  return attendanceDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const attendanceDoc = await Attendance.find(filter)
     .limit(limit)
@@ -70,4 +92,5 @@ export default {
   remove,
   update,
   read,
+  createMultiple,
 };

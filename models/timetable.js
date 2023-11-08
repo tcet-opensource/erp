@@ -58,6 +58,36 @@ async function create(timetableData) {
   return timetableDoc;
 }
 
+async function createMultiple(timetableDataArray) {
+  const timetables = timetableDataArray.map(
+    ({
+      startDate,
+      endDate,
+      classIncharge,
+      group,
+      activityBlueprints,
+      lunchbreakStartTime,
+      lunchbreakDuration,
+      teabreakStartTime,
+      teabreakDuration,
+    }) =>
+      Timetable({
+        startDate,
+        endDate,
+        classIncharge,
+        group,
+        activityBlueprints,
+        lunchbreakStartTime,
+        lunchbreakDuration,
+        teabreakStartTime,
+        teabreakDuration,
+      }),
+  );
+
+  const timetableDocs = await Timetable.insertMany(timetables);
+  return timetableDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const timetableDoc = await Timetable.find(filter)
     .limit(limit)
@@ -82,4 +112,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

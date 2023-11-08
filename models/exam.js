@@ -24,9 +24,35 @@ const examSchema = {
 const Exam = connector.model("Exam", examSchema);
 
 async function create(examData) {
-  const exam = new Exam(examData);
+  const { date, startTime, duration, supervisor, infrastructure, course } =
+    examData;
+  const exam = new Exam({
+    date,
+    startTime,
+    duration,
+    supervisor,
+    infrastructure,
+    course,
+  });
   const examDoc = await exam.save();
   return examDoc;
+}
+
+async function createMultiple(examDataArray) {
+  const exams = examDataArray.map(
+    ({ date, startTime, duration, supervisor, infrastructure, course }) =>
+      Exam({
+        date,
+        startTime,
+        duration,
+        supervisor,
+        infrastructure,
+        course,
+      }),
+  );
+
+  const examDocs = await Exam.insertMany(exams);
+  return examDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -58,4 +84,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
