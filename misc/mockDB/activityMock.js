@@ -39,6 +39,12 @@ const generateRandomActivity = (
   };
 };
 
+const checkIteration = (initial, testLength) => {
+  if (testLength) {
+    return testLength;
+  }
+  return initial;
+};
 const generateActivity = (
   activityBlueprintList,
   courseList,
@@ -48,9 +54,11 @@ const generateActivity = (
   practicalList,
   topicList,
   studentList,
+  testLength,
 ) => {
+  const iterationLength = checkIteration(100000, testLength);
   const activities = [];
-  for (let i = 0; i < 100000; i += 1) {
+  for (let i = 0; i < iterationLength; i += 1) {
     const randomBlueprint = faker.helpers.arrayElement(activityBlueprintList);
     const randomCourse = faker.helpers.arrayElement(courseList);
     const randomFaculty = faker.helpers.arrayElement(facultyList);

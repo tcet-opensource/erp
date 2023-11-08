@@ -31,7 +31,8 @@
     "backup": "node ./misc/erpbackup",
     "restore": "node ./misc/erprestore",
     "prepare": "husky install",
-    "initialize": "node ./misc/initDB"
+    "initialize": "node ./misc/initDB",
+    "testInit": "node ./misc/testMock"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -50,6 +51,8 @@
     "winston-daily-rotate-file": "^4.7.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.2.0",
+    "apidoc": "^1.2.0",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^9.0.0",
@@ -59,10 +62,9 @@
     "husky": "^8.0.0",
     "jest": "^29.5.0",
     "lint-staged": "^14.0.1",
+    "mongodb-memory-server": "^9.0.1",
     "nodemon": "^3.0.1",
     "prettier": "^3.0.3",
-    "supertest": "^6.3.3",
-    "apidoc": "^1.2.0",
-    "@faker-js/faker": "^8.2.0"
+    "supertest": "^6.3.3"
   }
 }

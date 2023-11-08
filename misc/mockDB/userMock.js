@@ -48,15 +48,24 @@ const createRandomUser = (ID, type) => {
 
 const generatedIDs = [];
 
-const generateUsers = (studentIds, facultyIds) => {
+const checkIteration = (initial, testLength) => {
+  if (testLength) {
+    return testLength;
+  }
+  return initial;
+};
+
+const generateUsers = (studentIds, facultyIds, testLength) => {
   const users = [];
-  for (let i = 0; i < studentIds.length; i += 1) {
+  let iterationLength = checkIteration(studentIds.length, testLength);
+  for (let i = 0; i < iterationLength; i += 1) {
     users.push(createRandomUser(studentIds[i], "STUDENT"));
   }
-  for (let i = 0; i < facultyIds.length; i += 1) {
+  iterationLength = checkIteration(facultyIds.length, testLength);
+  for (let i = 0; i < iterationLength; i += 1) {
     users.push(createRandomUser(facultyIds[i], "FACULTY"));
   }
-  for (let i = 0; i < 300; i += 1) {
+  for (let i = 0; i < iterationLength; i += 1) {
     let id;
     do {
       id = `E${getRandomLetter()}${getRandomLetter()}${getRandomNumber()}`;

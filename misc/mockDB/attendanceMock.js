@@ -14,9 +14,17 @@ const createRandomAttendance = (studentId, courseId) => {
   };
 };
 
-const generateAttendance = (studentCourseList) => {
+const checkIteration = (initial, testLength) => {
+  if (testLength) {
+    return testLength;
+  }
+  return initial;
+};
+
+const generateAttendance = (studentCourseList, testLength) => {
   const attendance = [];
-  for (let i = 0, j = 0; i < studentCourseList.length; j += 1) {
+  const iterationLength = checkIteration(studentCourseList.length, testLength);
+  for (let i = 0, j = 0; i < iterationLength; j += 1) {
     attendance.push(
       createRandomAttendance(
         studentCourseList[i].studentId,
