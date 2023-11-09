@@ -1,7 +1,6 @@
 import connector from "#models/databaseUtil";
 import { hashPassword } from "#util";
 
-connector.set("debug", true);
 const userSchema = {
   name: { type: String, required: true },
   emailId: { type: String, unique: true, required: true },
@@ -10,7 +9,7 @@ const userSchema = {
   userType: {
     type: String,
     required: true,
-    enum: ["ADMIN", "FACULTY", "EMPLOYEE", "STUDENT"],
+    enum: ["ADMIN", "FACULTY", "EMPLOYEE", "STUDENT", "PARENT", "DEV"],
     default: "ADMIN",
     // for now we are keeping the default usertype as ADMIN
   },
@@ -37,6 +36,23 @@ async function create(userData) {
   return userDoc;
 }
 
+async function createMultiple(userDataArray) {
+  const hashPromises = userDataArray.map(async (userData) => {
+    const { name, emailId, password, uid, userType } = userData;
+    const hashedPassword = await hashPassword(password);
+    return User({
+      name,
+      password: hashedPassword,
+      emailId,
+      uid,
+      userType,
+    });
+  });
+  const users = await Promise.all(hashPromises);
+  const userDocs = await User.insertMany(users);
+  return userDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const userDoc = await User.find(filter)
     .limit(limit)
@@ -61,4 +77,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

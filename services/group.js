@@ -1,10 +1,10 @@
 import Group from "#models/group";
 import databaseError from "#error/database";
 
-export async function createGroup(title, student) {
+export async function createGroup(title, students) {
   const newGroup = await Group.create({
     title,
-    student,
+    students,
   });
   if (newGroup.title === title) {
     return newGroup;

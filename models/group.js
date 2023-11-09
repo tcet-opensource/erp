@@ -15,6 +15,18 @@ async function create(groupData) {
   return groupDoc;
 }
 
+async function createMultiple(groupDataArray) {
+  const groups = groupDataArray.map(({ title, students }) =>
+    Group({
+      title,
+      students,
+    }),
+  );
+
+  const groupDocs = await Group.insertMany(groups);
+  return groupDocs;
+}
+
 async function read(filter, limit = 0, page = 1) {
   const groupDoc = await Group.find(filter)
     .limit(limit)
@@ -43,4 +55,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

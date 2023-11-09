@@ -7,6 +7,7 @@ export async function createnewdepartment(
   yearOfStarting,
   accreditations,
   infrastructures,
+  organization,
 ) {
   const newdepartment = await department.create({
     name,
@@ -14,6 +15,7 @@ export async function createnewdepartment(
     yearOfStarting,
     accreditations,
     infrastructures,
+    organization,
   });
   if (newdepartment.name === name) {
     return newdepartment;

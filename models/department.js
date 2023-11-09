@@ -18,23 +18,59 @@ const departmentSchema = {
       required: true,
     },
   ],
+  organization: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Organization",
+    required: true,
+  },
 };
 
 const Department = connector.model("Department", departmentSchema);
 
 // for creating
 async function create(departmentData) {
-  const { name, acronym, yearOfStarting, accreditations, infrastructures } =
-    departmentData;
+  const {
+    name,
+    acronym,
+    yearOfStarting,
+    accreditations,
+    infrastructures,
+    organization,
+  } = departmentData;
   const department = new Department({
     name,
     acronym,
     yearOfStarting,
     accreditations,
     infrastructures,
+    organization,
   });
   const departmentDoc = await department.save();
   return departmentDoc;
+}
+
+async function createMultiple(departmentDataArray) {
+  const departments = departmentDataArray.map(
+    ({
+      name,
+      acronym,
+      yearOfStarting,
+      accreditations,
+      infrastructures,
+      organization,
+    }) =>
+      Department({
+        name,
+        acronym,
+        yearOfStarting,
+        accreditations,
+        infrastructures,
+        organization,
+      }),
+  );
+
+  const departmentDocs = await Department.insertMany(departments);
+  return departmentDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -66,4 +102,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

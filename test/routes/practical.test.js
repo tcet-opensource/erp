@@ -23,7 +23,7 @@ describe("Practical API", () => {
     const response = await agent.post("/practical/create").send({
       no: 1,
       title: "Sample Practical",
-      type: "Experiment",
+      type: "BASIC",
       hours: 2,
       cognitiveLevels: ["L2", "L3"],
     });
@@ -39,7 +39,7 @@ describe("Practical API", () => {
       const id = await agent.post("/practical/create").send({
         no: 2,
         title: "new practical",
-        type: "fun experiment",
+        type: "BASIC",
         hours: 5,
         cognitiveLevels: ["L1", "L4"],
       });

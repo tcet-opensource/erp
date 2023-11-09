@@ -1,9 +1,16 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import timetableModel from "#models/timetable";
 import connector from "#models/databaseUtil";
+import facultyModel from "#models/faculty";
+import groupModel from "#models/group";
+import activityBPMode from "#models/activityBlueprint";
 
 jest.mock("#util");
 const { agent } = global;
+
+let facultyId;
+let groupId;
+let activityBPId;
 
 function cleanUp(callback) {
   timetableModel.remove({ lunchbreakStartTime: "test:45 PM" }).then(() => {
@@ -13,6 +20,20 @@ function cleanUp(callback) {
     });
   });
 }
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  facultyId = await facultyModel.read({}, 1);
+  facultyId = facultyId.data[0]._id;
+  groupId = await groupModel.read({}, 1);
+  groupId = groupId.data[0]._id;
+  activityBPId = await activityBPMode.read({}, 1);
+  activityBPId = activityBPId.data[0]._id;
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
 
 afterAll((done) => {
   cleanUp(done);
@@ -23,9 +44,9 @@ describe("checking timetable functions", () => {
     const response = await agent.post("/timetable/add").send({
       startDate: "2023-06-18T14:11:30Z",
       endDate: "2023-05-28T14:10:30Z",
-      classIncharge: "60a0e7e9a09c3f001c834e06",
-      group: "60a0e7e9a09c3f001c834e07",
-      activityBlueprints: "60a0e7e9a09c3f001c834e08",
+      classIncharge: facultyId,
+      group: groupId,
+      activityBlueprints: activityBPId,
       lunchbreakStartTime: "test:45 PM",
       lunchbreakDuration: 45, // minutes
       teabreakStartTime: "11:30 AM",
@@ -40,9 +61,9 @@ describe("checking timetable functions", () => {
     id = await agent.post("/timetable/add").send({
       startDate: "2023-06-18T14:11:30Z",
       endDate: "2023-05-28T14:10:30Z",
-      classIncharge: "60a0e7e9a09c3f001c834e06",
-      group: "60a0e7e9a09c3f001c834e07",
-      activityBlueprints: "60a0e7e9a09c3f001c834e08",
+      classIncharge: facultyId,
+      group: groupId,
+      activityBlueprints: activityBPId,
       lunchbreakStartTime: "test:45 PM",
       lunchbreakDuration: 45, // minutes
       teabreakStartTime: "11:30 AM",

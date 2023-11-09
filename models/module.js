@@ -3,8 +3,13 @@ import connector from "#models/databaseUtil";
 const moduleSchema = {
   no: { type: Number, required: true },
   name: { type: String, required: true },
-  outcome: { type: String, required: true },
-  contents: [{ type: String, required: true }],
+  contents: [
+    {
+      type: connector.Schema.Types.ObjectId,
+      ref: "Topic",
+      required: true,
+    },
+  ],
   hrsPerModule: { type: Number, required: true },
   cognitiveLevels: [
     {
@@ -23,18 +28,32 @@ async function remove(filter) {
 }
 
 async function create(moduleData) {
-  const { no, name, outcome, contents, hrsPerModule, cognitiveLevels } =
-    moduleData;
+  const { no, name, contents, hrsPerModule, cognitiveLevels } = moduleData;
   const module = new Module({
     no,
     name,
-    outcome,
     contents,
     hrsPerModule,
     cognitiveLevels,
   });
   const moduleDoc = await module.save();
   return moduleDoc;
+}
+
+async function createMultiple(moduleDataArray) {
+  const modules = moduleDataArray.map(
+    ({ no, name, contents, hrsPerModule, cognitiveLevels }) =>
+      Module({
+        no,
+        name,
+        contents,
+        hrsPerModule,
+        cognitiveLevels,
+      }),
+  );
+
+  const moduleDocs = await Module.insertMany(modules);
+  return moduleDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -61,4 +80,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

@@ -5,24 +5,42 @@ import {
   updateExamById,
 } from "#services/exam";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Infrastructure from "#models/infrastructure";
+import Course from "#models/course";
+import Faculty from "#models/faculty";
 
 async function addExam(req, res) {
   const { date, startTime, duration, infrastructure, supervisor, course } =
     req.body;
+
+  // Checking if the provided IDs exist in the database
+  const isInfrastructureValid = await isEntityIdValid(
+    infrastructure,
+    Infrastructure,
+  );
+  const isSupervisorValid = await isEntityIdValid(supervisor, Faculty);
+  const isCourseValid = await isEntityIdValid(course, Course);
+
   try {
-    const exam = await createExam(
-      date,
-      startTime,
-      duration,
-      supervisor,
-      infrastructure,
-      course,
-    );
-    res.json({ res: `added exam ${exam.id}`, id: exam.id });
+    if (!isInfrastructureValid || !isSupervisorValid || !isCourseValid) {
+      res.status(400).json({
+        error: `Invalid ID(s): Infra:${isInfrastructureValid} Supervisor:${isSupervisorValid} Course:${isCourseValid} `,
+      });
+    } else {
+      const exam = await createExam(
+        date,
+        startTime,
+        duration,
+        supervisor,
+        infrastructure,
+        course,
+      );
+      res.json({ res: `added exam ${exam.id}`, id: exam.id });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
-    res.status(500);
-    res.json({ err: "Error while inserting in DB" });
+    res.status(500).json({ err: "Error while inserting in DB" });
   }
 }
 

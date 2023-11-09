@@ -6,8 +6,6 @@ const activitySchema = {
     ref: "ActivityBlueprint",
     required: true,
   },
-  startTime: { type: Date, required: true },
-  duration: { type: Number, required: true },
   course: {
     type: connector.Schema.Types.ObjectId,
     ref: "Course",
@@ -20,13 +18,12 @@ const activitySchema = {
   },
   type: {
     type: String,
+    enum: ["TUTORIAL", "PRACTICAL", "TOPIC", "LECTURE"],
     required: true,
-    enum: ["LECTURE", "PRACTICAL", "TUTORIAL"],
   },
   task: [
     {
       type: connector.Schema.Types.ObjectId,
-      ref: ["Topic", "Practical", "Tutorial"],
       required: true,
     },
   ],
@@ -49,7 +46,6 @@ async function create(activityData) {
   const {
     activityBlueprint,
     startTime,
-    duration,
     course,
     faculty,
     type,
@@ -60,7 +56,6 @@ async function create(activityData) {
   const activity = new Activity({
     activityBlueprint,
     startTime,
-    duration,
     course,
     faculty,
     type,
@@ -70,6 +65,34 @@ async function create(activityData) {
   });
   const activityDoc = await activity.save();
   return activityDoc;
+}
+
+async function createMultiple(activityDataArray) {
+  const activities = activityDataArray.map(
+    ({
+      activityBlueprint,
+      startTime,
+      course,
+      faculty,
+      type,
+      task,
+      group,
+      students,
+    }) =>
+      Activity({
+        activityBlueprint,
+        startTime,
+        course,
+        faculty,
+        type,
+        task,
+        group,
+        students,
+      }),
+  );
+
+  const activityDocs = await Activity.insertMany(activities);
+  return activityDocs;
 }
 
 // Retrieve activity based on a given  filter and limit
@@ -106,4 +129,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

@@ -1,14 +1,17 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
 import connector from "#models/databaseUtil";
 import groupModel from "#models/group";
+import studentModel from "#models/student";
 
 jest.mock("#util");
 const { agent } = global;
 
+let studentIds;
+
 function cleanUp(callback) {
   groupModel
     .remove({
-      title: "Group 1",
+      student: "Group 1",
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -18,6 +21,17 @@ function cleanUp(callback) {
     });
 }
 
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  studentIds = await studentModel.read({}, 3);
+  studentIds = studentIds.data.flatMap((obj) => obj._id);
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
+
 afterAll((done) => {
   cleanUp(done);
 });
@@ -26,7 +40,7 @@ describe("group API", () => {
   it("should create group", async () => {
     const response = await agent.post("/group/add").send({
       title: "Group 1",
-      student: "64fdc67feca8a69f01b33614",
+      students: studentIds,
     });
     expect(response.headers["content-type"]).toMatch(/json/);
     expect(response.status).toBe(200);
@@ -38,21 +52,19 @@ describe("group API", () => {
     beforeEach(async () => {
       id = await agent.post("/group/add").send({
         title: "Group 1",
-        student: "64fdc67feca8a69f01b33614",
+        students: studentIds,
       });
       id = JSON.parse(id.res.text).id;
     });
 
     afterEach(async () => {
       await groupModel.remove({
-        id: "6500594e2b7b532006c073dd",
+        title: "Group 1",
       });
     });
 
     it("should read group", async () => {
-      const response = await agent
-        .get("/group/list")
-        .send({ name: "Building A" });
+      const response = await agent.get("/group/list");
       expect(response.status).toBe(200);
       expect(response.body.res).toBeDefined();
     });
@@ -60,7 +72,7 @@ describe("group API", () => {
     it("should update group", async () => {
       const response = await agent
         .post(`/group/update/${id}`)
-        .send({ title: "Group 1" }, { title: "Group 2" });
+        .send({ title: "Group 2" });
       expect(response.headers["content-type"]).toMatch(/json/);
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(/updated group/);

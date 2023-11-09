@@ -10,7 +10,6 @@ async function addActivity(req, res) {
   const {
     activityBlueprint,
     startTime,
-    duration,
     course,
     faculty,
     type,
@@ -22,7 +21,6 @@ async function addActivity(req, res) {
     const newActivity = await createActivity(
       activityBlueprint,
       startTime,
-      duration,
       course,
       faculty,
       type,

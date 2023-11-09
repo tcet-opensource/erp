@@ -6,6 +6,11 @@ const infrastructureSchema = {
   wing: { type: String, required: true },
   floor: { type: Number, required: true },
   capacity: { type: Number, required: true },
+  organization: {
+    type: connector.Schema.Types.ObjectId,
+    ref: "Organization",
+    required: true,
+  },
 };
 
 const Infrastructure = connector.model("Infrastructure", infrastructureSchema);
@@ -16,16 +21,35 @@ async function remove(filter) {
 }
 
 async function create(infrastructureData) {
-  const { name, type, wing, floor, capacity } = infrastructureData;
+  const { name, type, wing, floor, capacity, organization } =
+    infrastructureData;
   const infrastructure = new Infrastructure({
     name,
     type,
     wing,
     floor,
     capacity,
+    organization,
   });
   const infrastructureDoc = await infrastructure.save();
   return infrastructureDoc;
+}
+
+async function createMultiple(infrastructureDataArray) {
+  const infrastructures = infrastructureDataArray.map(
+    ({ name, type, wing, floor, capacity, organization }) =>
+      Infrastructure({
+        name,
+        type,
+        wing,
+        floor,
+        capacity,
+        organization,
+      }),
+  );
+
+  const infrastructureDocs = await Infrastructure.insertMany(infrastructures);
+  return infrastructureDocs;
 }
 
 async function read(filter, limit = 0, page = 1) {
@@ -52,4 +76,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };

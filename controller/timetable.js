@@ -6,6 +6,11 @@ import {
 } from "#services/timetable";
 import { logger } from "#util";
 
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Faculty from "#models/faculty";
+import Group from "#models/group";
+import ActivityBlueprint from "#models/activityBlueprint";
+
 async function addTimetable(req, res) {
   const {
     startDate,
@@ -18,22 +23,36 @@ async function addTimetable(req, res) {
     teabreakStartTime,
     teabreakDuration,
   } = req.body;
+
+  const isClassInchargeValid = await isEntityIdValid(classIncharge, Faculty);
+  const isGroupValid = await isEntityIdValid(group, Group);
+  const isActivityBlueprintValid = await isEntityIdValid(
+    activityBlueprints,
+    ActivityBlueprint,
+  );
+
   try {
-    const newTimetable = await createTimetable(
-      startDate,
-      endDate,
-      classIncharge,
-      group,
-      activityBlueprints,
-      lunchbreakStartTime,
-      lunchbreakDuration,
-      teabreakStartTime,
-      teabreakDuration,
-    );
-    res.json({
-      res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}`,
-      id: newTimetable.id,
-    });
+    if (!isClassInchargeValid || !isGroupValid || !isActivityBlueprintValid) {
+      res.status(400).json({
+        error: `Invalid IDs: ClassIncharge: ${isClassInchargeValid}, Group: ${isGroupValid}, ActivityBluePrint: ${isActivityBlueprintValid}`,
+      });
+    } else {
+      const newTimetable = await createTimetable(
+        startDate,
+        endDate,
+        classIncharge,
+        group,
+        activityBlueprints,
+        lunchbreakStartTime,
+        lunchbreakDuration,
+        teabreakStartTime,
+        teabreakDuration,
+      );
+      res.json({
+        res: `added timetable for: ${newTimetable.startDate} to ${newTimetable.endDate}`,
+        id: newTimetable.id,
+      });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);

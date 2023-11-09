@@ -30,6 +30,8 @@ import groupRouter from "#routes/group";
 import performarouter from "#routes/performance";
 import notificationRouter from "#routes/notification";
 import topicRouter from "#routes/topic";
+import courseRouter from "#routes/course";
+import activityBlueprintRouter from "#routes/activityBlueprint";
 
 const app = express();
 const currDirName = dirname(fileURLToPath(import.meta.url));
@@ -40,10 +42,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(morgan(
-  ":remote-addr - :remote-user \":method :url HTTP/:http-version\" :status \":referrer\" \":user-agent\"",
-  { stream: logger.stream },
-));
+app.use(
+  morgan(
+    ":remote-addr - :remote-user \":method :url HTTP/:http-version\" :status \":referrer\" \":user-agent\"",
+    { stream: logger.stream },
+  ),
+);
 
 app.use(express.static(path.join(currDirName, "public")));
 
@@ -71,6 +75,8 @@ app.use("/semester", semesterRouter);
 app.use("/faculty", facultyRouter);
 app.use("/performance", performarouter);
 app.use("/notification", notificationRouter);
-app.use("/topic",topicRouter);
+app.use("/topic", topicRouter);
+app.use("/course", courseRouter);
+app.use("/activityBlueprint", activityBlueprintRouter);
 
 export default app;

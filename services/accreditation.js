@@ -40,5 +40,5 @@ export async function updateAccreditationById(id, data) {
   if (updated) {
     return updated;
   }
-  throw new databaseError.DataEntryError("Accrediation");
+  throw new databaseError.DataEntryError("Accreditation");
 }

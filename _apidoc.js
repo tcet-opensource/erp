@@ -172,6 +172,7 @@
  * @apiBody {String} wing The wing where the infrastructure is located.
  * @apiBody {Number} floor The floor where the infrastructure is located.
  * @apiBody {Number} capacity The capacity of the infrastructure.
+ * @apiBody {connector.Schema.Types.ObjectId} organization The organization which is associated.
  *
  * @apiSuccess {String} res Success message with the ID of the added infrastructure.
  *
@@ -198,6 +199,7 @@
  * @apiSuccess {String} infrastructure.wing Wing of Infrastructure. One of possible A,B,C.
  * @apiSuccess {Number} infrastructure.floor Floor of Infrastructure.
  * @apiSuccess {Number} infrastructure.capacity Capacity of Infrastructure.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.organization associated Organization.
  */
 
 /**
@@ -226,6 +228,7 @@
  * @apiBody {String} [wing] The wing where the infrastructure is located.
  * @apiBody {Number} [floor] The floor where the infrastructure is located.
  * @apiBody {Number} [capacity] The capacity of the infrastructure.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.organization associated Organization.
  *
  * @apiSuccess {String} res infrastructure updated.
  * @apiError (Error 500) err Error in updating database
@@ -432,6 +435,7 @@
  * @apiBody {Date} yearOfStarting The year of establishment of the Department.
  * @apiBody {connector.Schema.Types.ObjectId} accreditations The accreditation which is associated.
  * @apiBody {connector.Schema.Types.ObjectId} infrastructure The infrastructure which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} organization The organization which is associated.
  *
  * @apiSuccess {String} res added Department successfully.
  *
@@ -450,6 +454,7 @@
  * @apiBody {Date} [yearOfStarting] The year of establishment of the Department.
  * @apiBody {connector.Schema.Types.ObjectId} [accreditations]  Accreditation which is associated.
  * @apiBody {connector.Schema.Types.ObjectId} [infrastructure] Infrastructure which is associated.
+ * @apiBody {connector.Schema.Types.ObjectId} organization The organization which is associated.
  *
  * @apiSuccess {Department[]} res Array of Filtered Department Doc .
  * @apiSuccess {String} department._id ID of document given by database.
@@ -458,6 +463,7 @@
  * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
  * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
  * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.organization associated Organization.
  * @apiError (Error 500) err Error while fetching the data.
  */
 
@@ -488,6 +494,7 @@
  * @apiSuccess {Date} department.yearOfStarting The year of establishment of the Department.
  * @apiSuccess {connector.Schema.Types.ObjectId} department.accreditations associated Accreditation.
  * @apiSuccess {connector.Schema.Types.ObjectId} department.infrastructure associatedInfrastructure.
+ * @apiSuccess {connector.Schema.Types.ObjectId} department.organization associated Organization.
  *
  * @apiSuccess {String} res updated infrastructure with id.
  * @apiError (Error 500) err Error while inserting in DB
@@ -655,8 +662,8 @@
  *
  * @apiQuery {Number} [no] Module number.
  * @apiQuery {String} [name] Name of the module.
- * @apiQuery {String} [outcome] Module outcome.
  * @apiQuery {String[]} [contents] Array of contents of the module.
+ * @apiQuery {ObjectId} content ID of the Topics (ObjectId).
  * @apiQuery {Number} [hrsPerModule] Number of hours required per module.
  * @apiQuery {String[]} [cognitiveLevels] Array of cognitive levels
  * of attainment as per Bloom's Taxanomy (L1-L6).
@@ -665,7 +672,6 @@
  * @apiSuccess {String} module._id ID of document given by database.
  * @apiSuccess {String} module.no Module number.
  * @apiSuccess {String} module.name Name of the module.
- * @apiSuccess {String} module.outcome Module outcome.
  * @apiSuccess {String[]} module.contents Array of contents of the module.
  * @apiSuccess {Number} module.hrsPerModule Number of hours required per module.
  * @apiSuccess {String[]} module.cognitiveLevels Array of cognitive levels of
@@ -741,8 +747,8 @@
  *
  * @apiBody {Number} [no] Module number.
  * @apiBody {String} [name] Name of the module.
- * @apiBody {String} [outcome] Module outcome.
  * @apiBody {String[]} [contents] Array of contents of the module.
+ * @apiBody {ObjectId} content ID of the Topics (ObjectId).
  * @apiBody {Number} [hrsPerModule] Number of hours required per module.
  * @apiBody {String[]} [cognitiveLevels] Array of cognitive levels
  * of attainment as per Bloom's Taxanomy (L1-L6).
@@ -772,8 +778,8 @@
  * @apiParam {String} moduleId The ID of the Module document to update.
  * @apiBody {Number} [no] Module number.
  * @apiBody {String} [name] Name of the module.
- * @apiBody {String} [outcome] Module outcome.
  * @apiBody {String[]} [contents] Array of contents of the module.
+ * @apiBody {ObjectId} content ID of the Topics (ObjectId).
  * @apiBody {Number} [hrsPerModule] Number of hours required per module.
  * @apiBody {String[]} [cognitiveLevels] Array of cognitive levels
  * of attainment as per Bloom's Taxanomy (L1-L6).
@@ -1875,3 +1881,5 @@
  * @apiError (Error 500) err Error in updating database
  *
  */
+
+// TODO ADD COURSE ENDPOINT APIDOCS

@@ -20,11 +20,31 @@ const Tutorial = connector.model("Tutorial", tutorialSchema);
 
 // Add a new tutorial to the database
 async function create(tutorialData) {
-  const tutorial = new Tutorial(tutorialData);
+  const { no, title, hours, cognitiveLevel } = tutorialData;
+  const tutorial = new Tutorial({
+    no,
+    title,
+    hours,
+    cognitiveLevel,
+  });
   const tutorialDoc = await tutorial.save();
   return tutorialDoc;
 }
 
+async function createMultiple(tutorialDataArray) {
+  const tutorials = tutorialDataArray.map(
+    ({ no, title, hours, cognitiveLevel }) =>
+      Tutorial({
+        no,
+        title,
+        hours,
+        cognitiveLevel,
+      }),
+  );
+
+  const tutorialDocs = await Tutorial.insertMany(tutorials);
+  return tutorialDocs;
+}
 // Retrieve tutorials based on a given filter and limit
 async function read(filter, limit = 0, page = 1) {
   const tutorialDoc = await Tutorial.find(filter)
@@ -58,4 +78,5 @@ export default {
   read,
   update,
   remove,
+  createMultiple,
 };
