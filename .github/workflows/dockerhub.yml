@@ -20,6 +20,6 @@ jobs:
       - name: Building Docker Image
         run: docker build -t ${{ secrets.username }}/erp-backend:prod .
       - name: DockerHub Login
-        run: docker login -u ${{ secrets.username }} -p ${{ secrets.pass }}
+        run: docker login -u "${{ secrets.username }}" -p "${{ secrets.pass }}"
       - name: Uploading Image to DockerHub
         run: docker push ${{ secrets.username }}/erp-backend:prod
