@@ -31,3 +31,12 @@ services:
       - ./data/mongo-3:/data/db
     ports:
       - 30003:30003
+
+  backend:
+    build: .
+    container_name: backend
+    env_file:
+      - .env
+    command: ["npm", "run", "serverstart"]
+    ports:
+      - 4000:4000
