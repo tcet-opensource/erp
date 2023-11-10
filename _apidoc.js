@@ -718,7 +718,7 @@
 /**
  * @api {post} /exam/add Add Exam
  * @apiName AddExam
- * @apiExam Exam
+ * @apiGroup Exam
  * @apiDescription Add a new exam.
  *
  * @apiBody {String} title Exam title.
@@ -1068,7 +1068,7 @@
 /**
  * @api {delete} /exam/delete/:id Delete Exam
  * @apiName DeleteExam
- * @apiExam Exam
+ * @apiGroup Exam
  *
  * @apiParam {ObjectId} id The ObjectID of the exam to delete.
  *
@@ -1170,7 +1170,7 @@
 /**
  * @api {post} /exam/update/:id Update Exam Details
  * @apiName UpdateExam
- * @apiExam Exam
+ * @apiGroup Exam
  * @apiDescription Update existing exam details.
  *
  * @apiParam {ObjectId} id The ObjectID of the exam to update.
@@ -1336,7 +1336,7 @@
 /**
  * @api {get} /exam/list Get Exam List
  * @apiName GetExamList
- * @apiExam Exam
+ * @apiGroup Exam
  *
  * @apiQuery {String} [title] Title of the exam.
  *
