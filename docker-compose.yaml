@@ -32,11 +32,11 @@ services:
     ports:
       - 30003:30003
 
-  backend:
-    build: .
-    container_name: backend
-    env_file:
-      - .env
-    command: ["npm", "run", "serverstart"]
-    ports:
-      - 4000:4000
+  # backend:
+  #   build: .
+  #   container_name: backend
+  #   env_file:
+  #     - .env
+  #   command: ["npm", "run", "serverstart"]
+  #   ports:
+  #     - 4000:4000
