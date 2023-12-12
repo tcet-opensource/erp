@@ -80,7 +80,10 @@ async function addFaculty(req, res) {
       addNewEmployeeCurrent(employeeCurrentDetails, session),
       createEmployeeBank(employeeBankDetails, session),
     ]);
-    res.json({ res: `added faculty ${newFaculty.ERPID}` });
+    res.json({
+      res: `added faculty ${newFaculty.ERPID}`,
+      id: newFaculty.ERPID,
+    });
     await session.commitTransaction();
     session.endSession();
   } catch (error) {
