@@ -6,39 +6,39 @@ const employeeBankSchema = {
     required: true,
     unique: true,
   },
-  bank_name: {
+  bankName: {
     type: String,
     required: true,
     minLength: 7,
   },
-  bank_acc: {
+  bankAcc: {
     type: String,
     required: true,
     unique: true,
   },
-  bank_branch: {
+  bankBranch: {
     type: String,
     required: true,
   },
-  bank_ifsc: {
+  bankIfsc: {
     type: String,
     required: true,
     maxLength: 11,
     minLength: 11,
   },
-  bank_micr: {
+  bankMicr: {
     type: String,
     required: true,
     maxLength: 9,
     minLength: 9,
   },
-  appointment_approve_sg_dte: {
+  appointmentApproveSgDte: {
     type: String,
   },
 };
 
 // eslint-disable-next-line  no-unused-vars
-const EmployeeBank = connector.model("Employee bank", employeeBankSchema);
+const EmployeeBank = connector.model("Employee Bank", employeeBankSchema);
 
 /// crud operation///
 
@@ -64,7 +64,7 @@ async function create(employeeBankData) {
     appointmentApproveSgDte,
   });
 
-  const empBankDoc = await empBank.save();
+  const empBankDoc = await empBank.save({ session: employeeBankData.session });
   return empBankDoc;
 }
 

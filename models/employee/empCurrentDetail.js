@@ -2,17 +2,17 @@ import connector from "#models/databaseUtil";
 
 const employeeCurrentEmploymentSchema = {
   uid: { type: String, require: true },
-  date_of_joining: { type: Date, required: true },
-  department_name: { type: String, required: true },
+  dateOfJoining: { type: Date, required: true },
+  departmentName: { type: String, required: true },
   designation: { type: String, required: true },
-  job_status: { type: String, required: true },
-  job_profile: { type: String, required: true },
-  current_ctc: { type: Number, required: true },
+  jobStatus: { type: String, required: true },
+  jobProfile: { type: String, required: true },
+  currentCtc: { type: Number, required: true },
 };
 
 // eslint-disable-next-line  no-unused-vars
 const EmployeeCurrentEmployment = connector.model(
-  "EmployeeCurrentEmployement",
+  "Employee Employment",
   employeeCurrentEmploymentSchema,
 );
 
@@ -26,7 +26,6 @@ async function create(employeeCurrentEmploymentData) {
     jobProfile,
     currentCtc,
   } = employeeCurrentEmploymentData;
-
   const empCurEmp = new EmployeeCurrentEmployment({
     uid,
     dateOfJoining,
@@ -37,7 +36,9 @@ async function create(employeeCurrentEmploymentData) {
     currentCtc,
   });
 
-  const empCurrentEmploymentDoc = await empCurEmp.save();
+  const empCurrentEmploymentDoc = await empCurEmp.save({
+    session: employeeCurrentEmploymentData.session,
+  });
   return empCurrentEmploymentDoc;
 }
 
