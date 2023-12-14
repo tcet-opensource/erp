@@ -93,7 +93,9 @@ async function create(studentCollegeData) {
     enrollmentNo,
   });
 
-  const stdCollegeDoc = await stdCollege.save();
+  const stdCollegeDoc = await stdCollege.save({
+    session: studentCollegeData.session,
+  });
   return stdCollegeDoc;
 }
 
