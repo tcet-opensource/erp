@@ -8,7 +8,6 @@ import { logger } from "#util";
 
 async function addFaculty(req, res) {
   const {
-    ERPID,
     dateOfJoining,
     dateOfLeaving,
     profileLink,
@@ -25,6 +24,15 @@ async function addFaculty(req, res) {
     additionalResponsibilities,
   } = req.body;
   try {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const randomIndex = Math.floor(Math.random() * alphabet.length);
+    const randomLetter = alphabet[randomIndex];
+    let randomNumber = Math.floor(Math.random() * 1000).toString();
+    if (randomNumber.length === 2) {
+      randomNumber = `0${  randomNumber}`;
+    }
+    const ERPID = `F${  randomLetter  }${randomNumber}`;
+
     const newFaculty = await createFaculty(
       ERPID,
       dateOfJoining,
