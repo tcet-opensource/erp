@@ -5,6 +5,9 @@ import {
   getAttendances,
 } from "#services/attendance";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Student from "#models/attendance";
+import Course from "#models/course";
 
 async function addAttendance(req, res) {
   const {
@@ -15,8 +18,15 @@ async function addAttendance(req, res) {
     cumulativeAttended,
     cumulativeOccured,
   } = req.body;
+  const isStudentValid = await isEntityIdValid(student, Student);
+  const isCourseValid = await isEntityIdValid(course, Course);
   try {
     // eslint-disable-next-line max-len
+    if (!isStudentValid || !isCourseValid) {
+      res.status(400).json({
+        error: "Invalid Id",
+      });
+    }
     const attendance = await addNewAttendance(
       student,
       course,
