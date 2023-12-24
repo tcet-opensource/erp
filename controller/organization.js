@@ -5,10 +5,20 @@ import {
   getOrganizations,
 } from "#services/organization";
 import { logger } from "#util";
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Accreditation from "#models/accreditation";
+import Parent from "#models/organization";
 
 async function addOrganization(req, res) {
   const { parent, startDate, name, accreditation } = req.body;
+  const isAccreditationValid = await isEntityIdValid(accreditation, Accreditation);
+  const isParentValid = await isEntityIdValid(parent, Parent);
   try {
+    if (!isAccreditationValid || !isParentValid) {
+      res.status(400).json({
+        error: "Invalid Id",
+      });
+    }
     const organization = await addNewOrganization(
       parent,
       startDate,
