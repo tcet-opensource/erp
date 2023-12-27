@@ -48,9 +48,8 @@ afterAll((done) => {
 describe("Student API", () => {
   it("should create student", async () => {
     const response = await agent.post("/student/create").send({
-      ERPID: "ST14556245",
-      name: "John",
-      joiningYear: 2022,
+      name: "Arya",
+      joiningYear: 2020,
       branch: branchId,
       division: "B",
       rollNo: 101,
@@ -217,9 +216,8 @@ describe("Student API", () => {
     let id;
     beforeEach(async () => {
       id = await agent.post("/student/create").send({
-        ERPID: "ST14556245",
-        name: "John",
-        joiningYear: 2022,
+        name: "Arya",
+        joiningYear: 2020,
         branch: branchId,
         division: "B",
         rollNo: 101,
@@ -381,12 +379,11 @@ describe("Student API", () => {
         stdMedHistory.remove({ uid: "USR25123456445" }),
         stdPersonal.remove({ uid: "USR25123456445" }),
         studentModel.remove({
-          ERPID: "ST14556245",
-          name: "John",
-          joiningYear: 2022,
+          name: "Arya",
+          joiningYear: 2020,
           branch: branchId,
-          division: "B",
-          rollNo: 101,
+          division: "A",
+          rollNo: 12,
           coursesOpted: courseIds,
         }),
       ]);
@@ -401,7 +398,7 @@ describe("Student API", () => {
     it("should update student", async () => {
       const response = await agent
         .post(`/student/update/${id}`)
-        .send({ ERPID: "S1032220999" }, { joiningYear: 2021 });
+        .send({ name: "Arya" }, { joiningYear: 2021 });
 
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(`updated Student with id ${id}`);

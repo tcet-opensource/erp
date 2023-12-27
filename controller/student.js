@@ -14,10 +14,10 @@ import { logger } from "#util";
 import { isEntityIdValid } from "#middleware/entityIdValidation";
 import Department from "#models/department";
 import Course from "#models/course";
+import { departmentAbbrev, departmentNames } from "#constant";
 
 async function addStudent(req, res) {
   const {
-    ERPID,
     name,
     joiningYear,
     branch,
@@ -192,6 +192,16 @@ async function addStudent(req, res) {
     const isBranchValid = await isEntityIdValid(branch, Department);
     const isCourseValid = await isEntityIdValid(coursesOpted, Course);
     if (isBranchValid && isCourseValid) {
+      const departmentData = await Department.read({ _id: branch });
+      const departmentName = departmentData.data[0].name;
+      const abbrev = departmentAbbrev[departmentNames.indexOf(departmentName)];
+      const year = joiningYear.toString().slice(-2);
+      let randomNumber = Math.floor(Math.random() * 1000).toString();
+      if (randomNumber.length === 2) {
+        randomNumber = `0${  randomNumber}`;
+      }
+      const ERPID = `S${  abbrev  }${year  }${randomNumber}`;
+
       const session = await mongoose.startSession();
       session.startTransaction();
 
