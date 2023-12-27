@@ -10,20 +10,26 @@ import Accreditation from "#models/accreditation";
 import Parent from "#models/organization";
 
 async function addOrganization(req, res) {
-  const { parent, startDate, name, accreditation } = req.body;
-  const isAccreditationValid = await isEntityIdValid(accreditation, Accreditation);
+  const { parent, startDate, name, accreditations } = req.body;
+  const isAccreditationsValid = await isEntityIdValid(
+    accreditations,
+    Accreditation,
+  );
   const isParentValid = await isEntityIdValid(parent, Parent);
   try {
-    if (!isAccreditationValid || !isParentValid) {
+    if (!isAccreditationsValid || !isParentValid) {
+      console.log(isAccreditationsValid);
+      console.log(isParentValid);
       res.status(400).json({
         error: "Invalid Id",
       });
+      return;
     }
     const organization = await addNewOrganization(
       parent,
       startDate,
       name,
-      accreditation,
+      accreditations,
     );
     res.json({
       res: `added organization${organization.name}`,

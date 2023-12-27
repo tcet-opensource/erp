@@ -5,13 +5,13 @@ export async function addNewOrganization(
   parent,
   startDate,
   name,
-  accreditation,
+  accreditations,
 ) {
   const newOrganization = await Organization.create({
     parent,
     startDate,
     name,
-    accreditation,
+    accreditations,
   });
   if (newOrganization.name === name) {
     return newOrganization;

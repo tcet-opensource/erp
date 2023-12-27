@@ -198,9 +198,9 @@ async function addStudent(req, res) {
       const year = joiningYear.toString().slice(-2);
       let randomNumber = Math.floor(Math.random() * 1000).toString();
       if (randomNumber.length === 2) {
-        randomNumber = `0${  randomNumber}`;
+        randomNumber = `0${randomNumber}`;
       }
-      const ERPID = `S${  abbrev  }${year  }${randomNumber}`;
+      const ERPID = `S${abbrev}${year}${randomNumber}`;
 
       const session = await mongoose.startSession();
       session.startTransaction();
@@ -393,13 +393,13 @@ async function addStudent(req, res) {
           session,
         );
         await session.commitTransaction();
-        res.json({
+        res.status(200).json({
           res: `added user ${newStudent.id} ${newStdBank.bankAccount} ,${newstdCollege.enrollmentNo}, ${newStdEduHistory.uid},${newStdMedHistory.uid},${newStdPersonal.uid}`,
           id: newStudent.id,
         });
       } catch (err) {
+        console.log(err);
         await session.abortTransaction();
-        console.log(`aborted by catch + ${err}`);
       } finally {
         session.endSession();
       }

@@ -60,9 +60,9 @@ async function addFaculty(req, res) {
     const randomLetter = alphabet[randomIndex];
     let randomNumber = Math.floor(Math.random() * 1000).toString();
     if (randomNumber.length === 2) {
-      randomNumber = `0${  randomNumber}`;
+      randomNumber = `0${randomNumber}`;
     }
-    const ERPID = `F${  randomLetter  }${randomNumber}`;
+    const ERPID = `F${randomLetter}${randomNumber}`;
 
     const newFaculty = await createFaculty(
       ERPID,
@@ -88,11 +88,11 @@ async function addFaculty(req, res) {
       addNewEmployeeCurrent(employeeCurrentDetails, session),
       createEmployeeBank(employeeBankDetails, session),
     ]);
+    await session.commitTransaction();
     res.json({
       res: `added faculty ${newFaculty.ERPID}`,
       id: newFaculty.ERPID,
     });
-    await session.commitTransaction();
     session.endSession();
   } catch (error) {
     await session.abortTransaction();
