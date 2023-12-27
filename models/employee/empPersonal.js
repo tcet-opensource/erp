@@ -12,7 +12,7 @@ const employeePersonalSchema = {
   motherTongue: { type: String, required: true },
   gender: { type: String, required: true },
   religion: { type: String, required: true },
-  numOfChildren: { type: Number },
+  numOfChildren: { type: Number, required: true },
   originalCastCategory: { type: String, required: true },
   caste: { type: String, required: true },
   subCaste: { type: String, required: true },
@@ -61,14 +61,16 @@ const employeePersonalSchema = {
   previousLastName: { type: String },
 };
 const EmployeePersonal = connector.model(
-  "EmplyeePersonalData",
+  "Employee Personal",
   employeePersonalSchema,
 );
 /// CRUD operations ///
 
 async function create(employeePersonalData) {
   const employeePersonal = new EmployeePersonal(employeePersonalData);
-  const employeePersonalDoc = await employeePersonal.save();
+  const employeePersonalDoc = await employeePersonal.save({
+    session: employeePersonalData.session,
+  });
   return employeePersonalDoc;
 }
 

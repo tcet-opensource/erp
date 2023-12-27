@@ -31,56 +31,17 @@ const employeeEducationHistorySchema = {
 
 // eslint-disable-next-line  no-unused-vars
 const EmployeeEducationHistory = connector.model(
-  "Employee education history",
+  "Employee Education",
   employeeEducationHistorySchema,
 );
 
 // CRUD Operations
 
 async function create(employeeEducationHistoryData) {
-  const {
-    educationType,
-    educationName,
-    specialization,
-    period,
-    institutionName,
-    university,
-    passingDivision,
-    fromYear,
-    uptoYear,
-    registrationNumber,
-    aggregatePct,
-    finalYearPct,
-    numberOfAttempts,
-    rank,
-    passingYear,
-    uid,
-    ssc,
-    hsc,
-    dip,
-    iti,
-    deg,
-    pgd,
-    phd,
-    pdoc,
-  } = employeeEducationHistoryData;
+  const { uid, ssc, hsc, dip, iti, deg, pgd, phd, pdoc } =
+    employeeEducationHistoryData;
 
   const empEduHistory = new EmployeeEducationHistory({
-    educationType,
-    educationName,
-    specialization,
-    period,
-    institutionName,
-    university,
-    passingDivision,
-    fromYear,
-    uptoYear,
-    registrationNumber,
-    aggregatePct,
-    finalYearPct,
-    numberOfAttempts,
-    rank,
-    passingYear,
     uid,
     ssc,
     hsc,
@@ -92,7 +53,9 @@ async function create(employeeEducationHistoryData) {
     pdoc,
   });
 
-  const empEduHistoryDoc = await empEduHistory.save();
+  const empEduHistoryDoc = await empEduHistory.save({
+    session: employeeEducationHistoryData.session,
+  });
   return empEduHistoryDoc;
 }
 

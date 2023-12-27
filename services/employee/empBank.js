@@ -1,15 +1,16 @@
 import EmployeeBank from "#models/employee/empBank";
 import databaseError from "#error/database";
 
-export async function createEmployeeBank(
-  uid,
-  bankName,
-  bankAcc,
-  bankBranch,
-  bankIfsc,
-  bankMicr,
-  appointmentApproveSgDte,
-) {
+export async function createEmployeeBank(empBankDetails, session) {
+  const {
+    uid,
+    bankName,
+    bankAcc,
+    bankBranch,
+    bankIfsc,
+    bankMicr,
+    appointmentApproveSgDte,
+  } = empBankDetails;
   const newEmployeeBank = await EmployeeBank.create({
     uid,
     bankName,
@@ -18,6 +19,7 @@ export async function createEmployeeBank(
     bankIfsc,
     bankMicr,
     appointmentApproveSgDte,
+    session,
   });
   if (newEmployeeBank.uid === uid) {
     return newEmployeeBank;

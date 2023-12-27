@@ -2,47 +2,11 @@ import EmployeeEducationHistory from "#models/employee/empEduHistory";
 import databaseError from "#error/database";
 
 export async function createEmployeeEducationHistory(
-  educationType,
-  educationName,
-  specialization,
-  period,
-  institutionName,
-  university,
-  passingDivision,
-  fromYear,
-  uptoYear,
-  registrationNumber,
-  aggregatePct,
-  finalYearPct,
-  numberOfAttempts,
-  rank,
-  passingYear,
-  uid,
-  ssc,
-  hsc,
-  dip,
-  iti,
-  deg,
-  pgd,
-  phd,
-  pdoc,
+  empEduHistoryDetails,
+  session,
 ) {
+  const { uid, ssc, hsc, dip, iti, deg, pgd, phd, pdoc } = empEduHistoryDetails;
   const newEmployeeEducationHistory = await EmployeeEducationHistory.create({
-    educationType,
-    educationName,
-    specialization,
-    period,
-    institutionName,
-    university,
-    passingDivision,
-    fromYear,
-    uptoYear,
-    registrationNumber,
-    aggregatePct,
-    finalYearPct,
-    numberOfAttempts,
-    rank,
-    passingYear,
     uid,
     ssc,
     hsc,
@@ -52,6 +16,7 @@ export async function createEmployeeEducationHistory(
     pgd,
     phd,
     pdoc,
+    session,
   });
   if (newEmployeeEducationHistory.uid === uid) {
     return newEmployeeEducationHistory;

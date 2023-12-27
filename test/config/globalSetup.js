@@ -1,5 +1,5 @@
 import { spawn } from "child_process";
-import { MongoMemoryServer } from "mongodb-memory-server";
+import { MongoMemoryReplSet } from "mongodb-memory-server";
 import { config } from "./config.js"; // eslint-disable-line import/extensions
 
 function runChildProcessWithTimeout(command, args, timeout) {
@@ -36,7 +36,7 @@ export default async function globalSetup() {
   if (config.Memory) {
     // Config to decided if an mongodb-memory-server instance should be used
     // it"s needed in global space, because we don"t want to create a new instance every test-suite
-    const instance = await MongoMemoryServer.create();
+    const instance = await MongoMemoryReplSet.create({ replSet: { count: 4 } });
     const uri = instance.getUri();
     global.MONGOINSTANCE = instance;
     process.env.DB_URL = uri.slice(0, uri.lastIndexOf("/"));

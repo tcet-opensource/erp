@@ -1,9 +1,34 @@
+import mongoose from "mongoose";
 import {
   createFaculty,
   facultyList,
   deleteFacultyById,
   updateFacultyById,
 } from "#services/faculty";
+import {
+  createEmployeeBank,
+  // employeeBankList,
+  // deleteEmployeeBankById,
+  // updateEmployeeBankById,
+} from "#services/employee/empBank";
+import {
+  addNewEmployeeCurrent,
+  // getEmployeeCurrent,
+  // deleteEmployeeCurrentById,
+  // updateEmployeeCurrentById,
+} from "#services/employee/empCurrentDetail";
+import {
+  createEmployeeEducationHistory,
+  // employeeEducationHistoryList,
+  // deleteEmployeeEducationHistoryById,
+  // updateEmployeeEducationHistoryById,
+} from "#services/employee/empEduHistory";
+import {
+  addNewEmployeePersonal,
+  // getEmployeePersonal,
+  // deleteEmployeePersonalById,
+  // updateEmployeePersonalById,
+} from "#services/employee/empPersonal";
 import { logger } from "#util";
 
 async function addFaculty(req, res) {
@@ -23,7 +48,13 @@ async function addFaculty(req, res) {
     designation,
     natureOfAssociation,
     additionalResponsibilities,
+    employeePersonalDetails,
+    employeeBankDetails,
+    employeeCurrentDetails,
+    employeeEducationDetails,
   } = req.body;
+  const session = await mongoose.startSession();
+  session.startTransaction();
   try {
     const newFaculty = await createFaculty(
       ERPID,
@@ -41,9 +72,23 @@ async function addFaculty(req, res) {
       designation,
       natureOfAssociation,
       additionalResponsibilities,
+      session,
     );
-    res.json({ res: `added faculty ${newFaculty.ERPID}` });
+    await Promise.all([
+      addNewEmployeePersonal(employeePersonalDetails, session),
+      createEmployeeEducationHistory(employeeEducationDetails, session),
+      addNewEmployeeCurrent(employeeCurrentDetails, session),
+      createEmployeeBank(employeeBankDetails, session),
+    ]);
+    res.json({
+      res: `added faculty ${newFaculty.ERPID}`,
+      id: newFaculty.ERPID,
+    });
+    await session.commitTransaction();
+    session.endSession();
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     logger.error("Error while inserting", error);
     res.status(500);
     res.json({ err: "Error while inserting in DB" });

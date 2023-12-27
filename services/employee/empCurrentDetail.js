@@ -1,15 +1,16 @@
 import databaseError from "#error/database";
-import EmployeeCurrent from "#models/employee/empPersonal";
+import EmployeeCurrent from "#models/employee/empCurrentDetail";
 
-export async function addNewEmployeeCurrent(
-  uid,
-  dateOfJoining,
-  departmentName,
-  designation,
-  jobStatus,
-  jobProfile,
-  currentCtc,
-) {
+export async function addNewEmployeeCurrent(basicEmpDetails, session) {
+  const {
+    uid,
+    dateOfJoining,
+    departmentName,
+    designation,
+    jobStatus,
+    jobProfile,
+    currentCtc,
+  } = basicEmpDetails;
   const newEmployeeCurrent = await EmployeeCurrent.create({
     uid,
     dateOfJoining,
@@ -18,6 +19,7 @@ export async function addNewEmployeeCurrent(
     jobStatus,
     jobProfile,
     currentCtc,
+    session,
   });
   if (newEmployeeCurrent.uid === uid) {
     return newEmployeeCurrent;
