@@ -4,7 +4,10 @@ import {
   listdepartment,
   deletedepartment,
 } from "#services/department";
-
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Accreditation from "#models/accreditation";
+import Infrastructure from "#models/infrastructure";
+import Organization from "#models/organization";
 import { logger } from "#util";
 
 async function addDepartment(req, res) {
@@ -16,7 +19,21 @@ async function addDepartment(req, res) {
     infrastructures,
     organization,
   } = req.body;
+
+  const isAccredationValid = await isEntityIdValid(accreditations, Accreditation);
+  const isInfrastructureValid = await isEntityIdValid(infrastructures, Infrastructure);
+  const isOrganizationValid = await isEntityIdValid(organization, Organization);
+
   try {
+   
+    if (!isAccredationValid && !isInfrastructureValid && !isOrganizationValid) {
+    
+    const error = "";
+    if (!isBranchValid) error.concat("Invalid branch");
+    if (!isCourseValid) error.concat(" Invalid course opted");
+    res.status(400).json({ err: error });
+  } 
+  else {
     const department = await createnewdepartment(
       name,
       acronym,
@@ -29,6 +46,7 @@ async function addDepartment(req, res) {
       res: `added Department successfully ${department.name}`,
       id: department.id,
     });
+  }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
