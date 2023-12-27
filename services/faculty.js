@@ -17,6 +17,7 @@ export async function createFaculty(
   designation,
   natureOfAssociation,
   additionalResponsibilities,
+  session,
 ) {
   const newFaculty = await Faculty.create({
     ERPID,
@@ -34,6 +35,7 @@ export async function createFaculty(
     designation,
     natureOfAssociation,
     additionalResponsibilities,
+    session,
   });
   if (newFaculty.ERPID === ERPID) {
     return newFaculty;

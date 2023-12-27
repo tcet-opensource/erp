@@ -248,7 +248,7 @@ async function create(studentData) {
     thumbUploaded,
     noOfDocumentsUploaded,
   });
-  const studentDoc = await student.save();
+  const studentDoc = await student.save({ session: studentData.session });
   return studentDoc;
 }
 

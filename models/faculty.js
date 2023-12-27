@@ -52,7 +52,7 @@ async function remove(filter) {
 
 async function create(facultyData) {
   const faculty = new Faculty(facultyData);
-  const facultyDoc = await faculty.save();
+  const facultyDoc = await faculty.save({ session: facultyData.session });
   return facultyDoc;
 }
 
