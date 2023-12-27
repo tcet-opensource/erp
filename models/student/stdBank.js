@@ -49,7 +49,7 @@ async function create(studentBankData) {
     bankMicr,
   });
 
-  const stdBankDoc = await stdBank.save();
+  const stdBankDoc = await stdBank.save({ session: studentBankData.session });
   return stdBankDoc;
 }
 
