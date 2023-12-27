@@ -10,7 +10,6 @@ import Infrastructure from "#models/infrastructure";
 import Organization from "#models/organization";
 import { logger } from "#util";
 
-
 async function addDepartment(req, res) {
   const {
     name,
@@ -20,21 +19,24 @@ async function addDepartment(req, res) {
     infrastructures,
     organization,
   } = req.body;
-  const isAccredationValid = await isEntityIdValid(accreditations, Accreditation);
-  const isInfrastructureValid = await isEntityIdValid(infrastructures, Infrastructure);
+  const isAccredationValid = await isEntityIdValid(
+    accreditations,
+    Accreditation,
+  );
+  const isInfrastructureValid = await isEntityIdValid(
+    infrastructures,
+    Infrastructure,
+  );
   const isOrganizationValid = await isEntityIdValid(organization, Organization);
 
-
   try {
-
     if (!isAccredationValid && !isInfrastructureValid && !isOrganizationValid) {
-
       const error = "";
-      if (!isBranchValid) error.concat("Invalid branch");
-      if (!isCourseValid) error.concat(" Invalid course opted");
+      if (!isAccredationValid) error.concat("Invalid Accreditation");
+      if (!isInfrastructureValid) error.concat(" Invalid Infrastruction");
+      if (!isOrganizationValid) error.concat(" Invalid Organization");
       res.status(400).json({ err: error });
-    }
-    else {
+    } else {
       const department = await createnewdepartment(
         name,
         acronym,
