@@ -5,13 +5,16 @@ import facultyEducationModel from "#models/employee/empEduHistory";
 import facultyPersonalModel from "#models/employee/empPersonal";
 import facultyBankModel from "#models/employee/empBank";
 import facultyCurrentModel from "#models/employee/empCurrentDetail";
+import courseModel from "#models/course";
+import departmentModel from "#models/department";
 
 jest.mock("#util");
 const { agent } = global;
+let departmentId;
+let courseId;
 
 // test case for deletion
 function cleanUp(callback) {
-
   facultyBankModel.remove({ uid: "aaaaa" });
   facultyCurrentModel.remove({ uid: "aaaaa" });
   facultyEducationModel.remove({ uid: "aaaaa" });
@@ -28,8 +31,8 @@ function cleanUp(callback) {
       areaOfSpecialization: ["Specialization 1", "Specialization 2"],
       papersPublishedPG: 10,
       papersPublishedUG: 5,
-      department: ["5f7b75a5c69e2d4f0c285e52"],
-      preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
+      department: [departmentId],
+      preferredSubjects: [courseId],
       designation: "Assistant Professor",
       natureOfAssociation: "Regular",
       additionalResponsibilities: "Teaching and Research",
@@ -41,6 +44,19 @@ function cleanUp(callback) {
       });
     });
 }
+
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  courseId = await courseModel.read({}, 1);
+  courseId = courseId.data[0]._id;
+  departmentId = await departmentModel.read({}, 1);
+  departmentId = departmentId.data[0]._id;
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
 
 afterAll((done) => {
   cleanUp(done);
@@ -58,8 +74,8 @@ describe("Faculty API", () => {
       areaOfSpecialization: ["Specialization 1", "Specialization 2"],
       papersPublishedPG: 10,
       papersPublishedUG: 5,
-      department: ["5f7b75a5c69e2d4f0c285e52"],
-      preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
+      department: [departmentId],
+      preferredSubjects: [courseId],
       designation: "Assistant Professor",
       natureOfAssociation: "Regular",
       additionalResponsibilities: "Teaching and Research",
@@ -292,8 +308,8 @@ describe("Faculty API", () => {
         areaOfSpecialization: ["Specialization 1", "Specialization 2"],
         papersPublishedPG: 10,
         papersPublishedUG: 5,
-        department: ["5f7b75a5c69e2d4f0c285e52"],
-        preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
+        department: [departmentId],
+        preferredSubjects: [courseId],
         designation: "Assistant Professor",
         natureOfAssociation: "Regular",
         additionalResponsibilities: "Teaching and Research",
@@ -521,8 +537,8 @@ describe("Faculty API", () => {
           areaOfSpecialization: ["Specialization 1", "Specialization 2"],
           papersPublishedPG: 10,
           papersPublishedUG: 5,
-          department: ["5f7b75a5c69e2d4f0c285e52"],
-          preferredSubjects: ["5f7b75a5c69e2d4f0c285e53"],
+          department: [departmentId],
+          preferredSubjects: [courseId],
           designation: "Assistant Professor",
           natureOfAssociation: "Regular",
           additionalResponsibilities: "Teaching and Research",
