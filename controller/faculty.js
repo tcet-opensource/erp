@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { commitWithRetry } from "#constant";
 import {
   createFaculty,
   facultyList,
@@ -88,15 +89,13 @@ async function addFaculty(req, res) {
       addNewEmployeeCurrent(employeeCurrentDetails, session),
       createEmployeeBank(employeeBankDetails, session),
     ]);
-    await session.commitTransaction();
+    await commitWithRetry(session);
     res.json({
       res: `added faculty ${newFaculty.ERPID}`,
       id: newFaculty.ERPID,
     });
-    session.endSession();
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
     logger.error("Error while inserting", error);
     res.status(500);
     res.json({ err: "Error while inserting in DB" });

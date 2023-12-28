@@ -14,7 +14,7 @@ import { logger } from "#util";
 import { isEntityIdValid } from "#middleware/entityIdValidation";
 import Department from "#models/department";
 import Course from "#models/course";
-import { departmentAbbrev, departmentNames } from "#constant";
+import { departmentAbbrev, departmentNames , commitWithRetry } from "#constant";
 
 async function addStudent(req, res) {
   const {
@@ -392,16 +392,13 @@ async function addStudent(req, res) {
           },
           session,
         );
-        await session.commitTransaction();
+        await commitWithRetry(session);
         res.status(200).json({
           res: `added user ${newStudent.id} ${newStdBank.bankAccount} ,${newstdCollege.enrollmentNo}, ${newStdEduHistory.uid},${newStdMedHistory.uid},${newStdPersonal.uid}`,
           id: newStudent.id,
         });
       } catch (err) {
-        console.log(err);
         await session.abortTransaction();
-      } finally {
-        session.endSession();
       }
     } else {
       let error = ""; // eslint-disable-line prefer-const
