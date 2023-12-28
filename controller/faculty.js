@@ -31,6 +31,10 @@ import {
 } from "#services/employee/empPersonal";
 import { logger } from "#util";
 
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Department from "#models/department";
+import Course from "#models/course";
+
 async function addFaculty(req, res) {
   const {
     dateOfJoining,
@@ -52,48 +56,62 @@ async function addFaculty(req, res) {
     employeeCurrentDetails,
     employeeEducationDetails,
   } = req.body;
+
+  const isDepartmentValid = await isEntityIdValid(department, Department);
+  const isPreferredSubjectsValid = await isEntityIdValid(preferredSubjects, Course);
+
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    const randomIndex = Math.floor(Math.random() * alphabet.length);
-    const randomLetter = alphabet[randomIndex];
-    let randomNumber = Math.floor(Math.random() * 1000).toString();
-    if (randomNumber.length === 2) {
-      randomNumber = `0${  randomNumber}`;
-    }
-    const ERPID = `F${  randomLetter  }${randomNumber}`;
 
-    const newFaculty = await createFaculty(
-      ERPID,
-      dateOfJoining,
-      dateOfLeaving,
-      profileLink,
-      qualifications,
-      totalExperience,
-      achievements,
-      areaOfSpecialization,
-      papersPublishedPG,
-      papersPublishedUG,
-      department,
-      preferredSubjects,
-      designation,
-      natureOfAssociation,
-      additionalResponsibilities,
-      session,
-    );
-    await Promise.all([
-      addNewEmployeePersonal(employeePersonalDetails, session),
-      createEmployeeEducationHistory(employeeEducationDetails, session),
-      addNewEmployeeCurrent(employeeCurrentDetails, session),
-      createEmployeeBank(employeeBankDetails, session),
-    ]);
-    res.json({
-      res: `added faculty ${newFaculty.ERPID}`,
-      id: newFaculty.ERPID,
-    });
-    await session.commitTransaction();
-    session.endSession();
+    if (!isDepartmentValid || !isPreferredSubjectsValid) {
+      res.status(400).json({
+        error: `Invalid IDs: Department: ${isDepartmentValid}, PreferredSubjects: ${isPreferredSubjectsValid}}`,
+      });
+    } else {
+      const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const randomIndex = Math.floor(Math.random() * alphabet.length);
+      const randomLetter = alphabet[randomIndex];
+      let randomNumber = Math.floor(Math.random() * 1000).toString();
+      if (randomNumber.length === 2) {
+        randomNumber = `0${randomNumber}`;
+      }
+      const ERPID = `F${randomLetter}${randomNumber}`;
+
+
+      const newFaculty = await createFaculty(
+        ERPID,
+        dateOfJoining,
+        dateOfLeaving,
+        profileLink,
+        qualifications,
+        totalExperience,
+        achievements,
+        areaOfSpecialization,
+        papersPublishedPG,
+        papersPublishedUG,
+        department,
+        preferredSubjects,
+        designation,
+        natureOfAssociation,
+        additionalResponsibilities,
+        session,
+      );
+      await Promise.all([
+        addNewEmployeePersonal(employeePersonalDetails, session),
+        createEmployeeEducationHistory(employeeEducationDetails, session),
+        addNewEmployeeCurrent(employeeCurrentDetails, session),
+        createEmployeeBank(employeeBankDetails, session),
+      ]);
+      res.json({
+        res: `added faculty ${newFaculty.ERPID}`,
+        id: newFaculty.ERPID,
+      });
+      await session.commitTransaction();
+      session.endSession();
+    }
+
+
   } catch (error) {
     await session.abortTransaction();
     session.endSession();
