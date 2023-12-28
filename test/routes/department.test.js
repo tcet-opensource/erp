@@ -1,10 +1,16 @@
 import { jest } from "@jest/globals"; // eslint-disable-line import/no-extraneous-dependencies
-import mongoose from "mongoose";
 import departmentmodel from "#models/department";
 import connector from "#models/databaseUtil";
+import accreditationModel from "#models/accreditation";
+import infrastructureModel from "#models/infrastructure";
+import organizationModel from "#models/organization";
 
 jest.mock("#util");
 const { agent } = global;
+
+let accreditationIds;
+let infrastructureIds;
+let organizationIds;
 
 // test case for deletion
 
@@ -14,9 +20,9 @@ function cleanUp(callback) {
       name: "Electronics",
       acronym: "COMPS",
       yearOfStarting: "2020-09-01T00:00:00.000Z",
-      accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-      infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-      organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+      accreditations: [accreditationIds],
+      infrastructures: [infrastructureIds],
+      organization: [organizationIds],
     })
     .then(() => {
       connector.disconnect((DBerr) => {
@@ -25,6 +31,21 @@ function cleanUp(callback) {
       });
     });
 }
+
+/* eslint-disable no-underscore-dangle */
+async function getIds(callback) {
+  accreditationIds = await accreditationModel.read({}, 1);
+  accreditationIds = accreditationIds.data[0]._id;
+  infrastructureIds = await infrastructureModel.read({}, 1);
+  infrastructureIds = infrastructureIds.data[0]._id;
+  organizationIds = await organizationModel.read({}, 1);
+  organizationIds = organizationIds.data[0]._id;
+  callback();
+}
+
+beforeAll((done) => {
+  getIds(done);
+});
 
 afterAll((done) => {
   cleanUp(done);
@@ -36,9 +57,9 @@ describe("Department CRUD", () => {
       name: "Computer",
       acronym: "COMPS",
       yearOfStarting: "2020-09-01T00:00:00.000Z",
-      accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-      infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-      organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+      accreditations: [accreditationIds],
+      infrastructures: [infrastructureIds],
+      organization: [organizationIds],
     });
 
     expect(response.status).toBe(200);
@@ -52,9 +73,9 @@ describe("Department CRUD", () => {
         name: "Computer",
         acronym: "COMPS",
         yearOfStarting: "2020-09-01T00:00:00.000Z",
-        accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-        infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-        organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+        accreditations: [accreditationIds],
+        infrastructures: [infrastructureIds],
+        organization: [organizationIds],
       });
       id = JSON.parse(id.res.text).id;
     });
@@ -64,9 +85,9 @@ describe("Department CRUD", () => {
         name: "Computer",
         acronym: "COMPS",
         yearOfStarting: "2020-09-01T00:00:00.000Z",
-        accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-        infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-        organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+        accreditations: [accreditationIds],
+        infrastructures: [infrastructureIds],
+        organization: [organizationIds],
       });
     });
 
@@ -75,9 +96,9 @@ describe("Department CRUD", () => {
         name: "Computer",
         acronym: "COMPS",
         yearOfStarting: "2020-09-01T00:00:00.000Z",
-        accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-        infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-        organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+        accreditations: [accreditationIds],
+        infrastructures: [infrastructureIds],
+        organization: [organizationIds],
       });
       expect(response.body.res).not.toBeNull();
     });
@@ -87,9 +108,9 @@ describe("Department CRUD", () => {
         name: "Electronics",
         acronym: "COMPS",
         yearOfStarting: "2020-09-01T00:00:00.000Z",
-        accreditations: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03a")],
-        infrastructures: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
-        organization: [mongoose.Types.ObjectId("5f8778b54b553439ac49a03b")],
+        accreditations: [accreditationIds],
+        infrastructures: [infrastructureIds],
+        organization: [organizationIds],
       });
       expect(response.status).toBe(200);
       expect(response.body.res).toMatch(/department updated/);
