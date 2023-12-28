@@ -6,7 +6,7 @@ import {
 } from "#services/attendance";
 import { logger } from "#util";
 import { isEntityIdValid } from "#middleware/entityIdValidation";
-import Student from "#models/attendance";
+import Student from "#models/student";
 import Course from "#models/course";
 
 async function addAttendance(req, res) {
@@ -26,6 +26,7 @@ async function addAttendance(req, res) {
       res.status(400).json({
         error: "Invalid Id",
       });
+      return;
     }
     const attendance = await addNewAttendance(
       student,

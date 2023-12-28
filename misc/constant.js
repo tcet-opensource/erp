@@ -38,3 +38,16 @@ export const departmentAbbrev = [
   "AGD",
   "DA",
 ];
+
+export async function commitWithRetry(session) {
+  let i = 0;
+  while (i < 3) {
+    try {
+      session.commitTransaction(); // Uses write concern set at transaction start.
+      break;
+    } catch (error) {
+      console.log(error);
+      i += 1;
+    }
+  }
+}

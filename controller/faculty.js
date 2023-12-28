@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { commitWithRetry } from "#constant";
 import {
   createFaculty,
   facultyList,
@@ -63,7 +64,6 @@ async function addFaculty(req, res) {
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-
     if (!isDepartmentValid || !isPreferredSubjectsValid) {
       res.status(400).json({
         error: `Invalid IDs: Department: ${isDepartmentValid}, PreferredSubjects: ${isPreferredSubjectsValid}}`,
@@ -77,7 +77,6 @@ async function addFaculty(req, res) {
         randomNumber = `0${randomNumber}`;
       }
       const ERPID = `F${randomLetter}${randomNumber}`;
-
 
       const newFaculty = await createFaculty(
         ERPID,
@@ -103,18 +102,14 @@ async function addFaculty(req, res) {
         addNewEmployeeCurrent(employeeCurrentDetails, session),
         createEmployeeBank(employeeBankDetails, session),
       ]);
+      await commitWithRetry(session);
       res.json({
         res: `added faculty ${newFaculty.ERPID}`,
         id: newFaculty.ERPID,
       });
-      await session.commitTransaction();
-      session.endSession();
     }
-
-
   } catch (error) {
     await session.abortTransaction();
-    session.endSession();
     logger.error("Error while inserting", error);
     res.status(500);
     res.json({ err: "Error while inserting in DB" });
