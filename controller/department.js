@@ -4,7 +4,10 @@ import {
   listdepartment,
   deletedepartment,
 } from "#services/department";
-
+import { isEntityIdValid } from "#middleware/entityIdValidation";
+import Accreditation from "#models/accreditation";
+import Infrastructure from "#models/infrastructure";
+import Organization from "#models/organization";
 import { logger } from "#util";
 
 async function addDepartment(req, res) {
@@ -16,19 +19,37 @@ async function addDepartment(req, res) {
     infrastructures,
     organization,
   } = req.body;
+  const isAccredationValid = await isEntityIdValid(
+    accreditations,
+    Accreditation,
+  );
+  const isInfrastructureValid = await isEntityIdValid(
+    infrastructures,
+    Infrastructure,
+  );
+  const isOrganizationValid = await isEntityIdValid(organization, Organization);
+
   try {
-    const department = await createnewdepartment(
-      name,
-      acronym,
-      yearOfStarting,
-      accreditations,
-      infrastructures,
-      organization,
-    );
-    res.json({
-      res: `added Department successfully ${department.name}`,
-      id: department.id,
-    });
+    if (!isAccredationValid && !isInfrastructureValid && !isOrganizationValid) {
+      const error = "";
+      if (!isAccredationValid) error.concat("Invalid Accreditation");
+      if (!isInfrastructureValid) error.concat(" Invalid Infrastruction");
+      if (!isOrganizationValid) error.concat(" Invalid Organization");
+      res.status(400).json({ err: error });
+    } else {
+      const department = await createnewdepartment(
+        name,
+        acronym,
+        yearOfStarting,
+        accreditations,
+        infrastructures,
+        organization,
+      );
+      res.json({
+        res: `added Department successfully ${department.name}`,
+        id: department.id,
+      });
+    }
   } catch (error) {
     logger.error("Error while inserting", error);
     res.status(500);
