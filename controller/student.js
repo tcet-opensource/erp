@@ -1,4 +1,10 @@
+import mongoose from "mongoose";
 import {
+  createStdBank,
+  createStdCollege,
+  createStdEduHistory,
+  createStdMedHistory,
+  createStdPersonal,
   createStudent,
   deleteStudentById,
   studentList,
@@ -8,28 +14,396 @@ import { logger } from "#util";
 import { isEntityIdValid } from "#middleware/entityIdValidation";
 import Department from "#models/department";
 import Course from "#models/course";
+import { departmentAbbrev, departmentNames , commitWithRetry } from "#constant";
 
 async function addStudent(req, res) {
-  const { ERPID, name, joiningYear, branch, division, rollNo, coursesOpted } =
-    req.body;
+  const {
+    name,
+    joiningYear,
+    branch,
+    division,
+    rollNo,
+    coursesOpted,
+    uid,
+    /* Model stdBAnkdetails */
+    bankName,
+    bankAccount,
+    bankBranch,
+    bankIfsc,
+    bankMicr,
+    /* Model  stdCollege */
+    /* uid, */
+    admissionYear,
+    studentCode,
+    /* rollNo,
+    //it rollNo is repeated as uid is being repeated */
+    admissionStatus,
+    admissionPattern,
+    admissionCategory,
+    seatDesc,
+    quotaType,
+    isBoarderStudent,
+    seatType,
+    seatSubType,
+    eligibilityNo,
+    enrollmentNo,
+    /* Model stdEduHistory */
+    /* uid, */
+    //  tenth: {
+    marks,
+    percentage,
+    seatNumber,
+    examName,
+    examBoard,
+    msOms,
+    meritNumberInQualifyingExam,
+    admittedNumber,
+    // },
+    // cetHscDetails: {
+    cetRollNo,
+    cetMarks,
+    qualifyingExamForAdmission,
+    stdType,
+    streamOpted,
+    mediumOfInstruction,
+    aggTotalMarks,
+    totalMarksOutOf,
+    percentOfMarks,
+    attemptNo,
+    passingMonth,
+    passingYear,
+    institutionName,
+    educBoardName,
+    pcmPercent,
+    pbmPercent,
+    stuQualifyingExam,
+    marksObtained,
+    stateRank,
+    prevExamSeatNumber,
+    prevTcNumber,
+    hscPassedSchoolName,
+    boardPattern,
+    scholarshipName,
+    scholarshipType,
+    dteSeatType,
+    dteUserPassword,
+    dteUserId,
+    // },
+    // graduationDetails: {
+    graduationInstitute,
+    graduationBranch,
+    graduationDegree,
+    graduationMarksPct,
+    graduationsPassingYear,
+    urbanRural,
+    scholarshipNumber,
+    lastSchoolCollegeAttended,
+    // },
+    /* Model stdMedHistory */
+    /* uid, */
+    bloodGroup,
+    pastMedicalHistory,
+    immunisationHistory,
+    chronicMedicalConditions,
+    parentsEmailId,
+    parentsContact,
+    relativeContacts,
+    /* Model stdPersonal */
+    /* uid, */
+    title,
+    firstName,
+    middleName,
+    motherName,
+    gender,
+    dob,
+    age,
+    birthPlace,
+    nationality,
+    motherTongue,
+    domicileState,
+    religion,
+    castCategory,
+    maharashtraKarnatakaBorderCandidate,
+    castDescription,
+    subCasteDescription,
+    nonCreamyLayerCertificateAttached,
+    hobby,
+    passportNo,
+    /* bloodGroup, */
+    physicallyHandicapped,
+    studentMobNo,
+    studentMail,
+    parentMobNo,
+    parentMail,
+    perAddrDescr,
+    perPlotNo,
+    perStreetName,
+    perStuAddr1,
+    perStuAddr2,
+    city,
+    percellphone,
+    perpincode,
+    perresiphone,
+    permailaddress,
+    country,
+    state,
+    district,
+    tahsil,
+    correspondanceAddrDescr,
+    correspondancePlotNo,
+    correspondanceStreetName,
+    correspondanceStuAddr1,
+    correspondanceStuAddr2,
+    correspondanceCity,
+    correspondanceCellPhone,
+    correspondancePincode,
+    correspondanceResiPhone,
+    correspondanceMailAddress,
+    correspondanceCountry,
+    correspondanceState,
+    correspondanceDistrict,
+    correspondanceTahsil,
+    fatherDetails,
+    fathersOccupation,
+    parentsFirstName,
+    parentsMiddleName,
+    parentsLastName,
+    guardianMobNo,
+    guardianMailId,
+    nameAsPerTc,
+    casteAsPerTc,
+    birthStatus,
+    maritalStatus,
+    panCardNo,
+    passportExpiry,
+    drivingLicNo,
+    drivingLicValidTo,
+    aadharCardNo,
+    electionCardNo,
+    motherMobNo,
+    motherEmailId,
+    parentIncome,
+    photoUploaded,
+    signUploaded,
+    thumbUploaded,
+    noOfDocumentsUploaded,
+  } = req.body;
   try {
     const isBranchValid = await isEntityIdValid(branch, Department);
     const isCourseValid = await isEntityIdValid(coursesOpted, Course);
     if (isBranchValid && isCourseValid) {
-      const newStudent = await createStudent(
-        ERPID,
-        name,
-        joiningYear,
-        branch,
-        division,
-        rollNo,
-        coursesOpted,
-      );
-      res.json({ res: `added user ${newStudent.id}`, id: newStudent.id });
+      const departmentData = await Department.read({ _id: branch });
+      const departmentName = departmentData.data[0].name;
+      const abbrev = departmentAbbrev[departmentNames.indexOf(departmentName)];
+      const year = joiningYear.toString().slice(-2);
+      let randomNumber = Math.floor(Math.random() * 1000).toString();
+      if (randomNumber.length === 2) {
+        randomNumber = `0${randomNumber}`;
+      }
+      const ERPID = `S${abbrev}${year}${randomNumber}`;
+
+      const session = await mongoose.startSession();
+      session.startTransaction();
+
+      try {
+        const newStudent = await createStudent(
+          { ERPID, name, joiningYear, branch, division, rollNo, coursesOpted },
+          session,
+        );
+        const newStdBank = await createStdBank(
+          {
+            uid,
+            bankName,
+            bankAccount,
+            bankBranch,
+            bankIfsc,
+            bankMicr,
+          },
+          session,
+        );
+        const newstdCollege = await createStdCollege(
+          {
+            uid,
+            admissionYear,
+            studentCode,
+            rollNo,
+            admissionStatus,
+            admissionPattern,
+            admissionCategory,
+            seatDesc,
+            quotaType,
+            isBoarderStudent,
+            seatType,
+            seatSubType,
+            eligibilityNo,
+            enrollmentNo,
+          },
+          session,
+        );
+        const newStdEduHistory = await createStdEduHistory(
+          {
+            uid,
+            // tenth: {
+            marks,
+            percentage,
+            seatNumber,
+            examName,
+            examBoard,
+            msOms,
+            meritNumberInQualifyingExam,
+            admittedNumber,
+            // },
+            // cetHscDetails: {
+            cetRollNo,
+            cetMarks,
+            qualifyingExamForAdmission,
+            stdType,
+            streamOpted,
+            mediumOfInstruction,
+            aggTotalMarks,
+            totalMarksOutOf,
+            percentOfMarks,
+            attemptNo,
+            passingMonth,
+            passingYear,
+            institutionName,
+            educBoardName,
+            pcmPercent,
+            pbmPercent,
+            stuQualifyingExam,
+            marksObtained,
+            stateRank,
+            prevExamSeatNumber,
+            prevTcNumber,
+            hscPassedSchoolName,
+            boardPattern,
+            scholarshipName,
+            scholarshipType,
+            dteSeatType,
+            dteUserPassword,
+            dteUserId,
+            // },
+            // graduationDetails: {
+            graduationInstitute,
+            graduationBranch,
+            graduationDegree,
+            graduationMarksPct,
+            graduationsPassingYear,
+            urbanRural,
+            scholarshipNumber,
+            lastSchoolCollegeAttended,
+            // },
+          },
+          session,
+        );
+        const newStdMedHistory = await createStdMedHistory(
+          {
+            uid,
+            bloodGroup,
+            pastMedicalHistory,
+            immunisationHistory,
+            chronicMedicalConditions,
+            parentsEmailId,
+            parentsContact,
+            relativeContacts,
+          },
+          session,
+        );
+        const newStdPersonal = await createStdPersonal(
+          {
+            uid,
+            title,
+            firstName,
+            middleName,
+            motherName,
+            gender,
+            dob,
+            age,
+            birthPlace,
+            nationality,
+            motherTongue,
+            domicileState,
+            religion,
+            castCategory,
+            maharashtraKarnatakaBorderCandidate,
+            castDescription,
+            subCasteDescription,
+            nonCreamyLayerCertificateAttached,
+            hobby,
+            passportNo,
+            bloodGroup,
+            physicallyHandicapped,
+            studentMobNo,
+            studentMail,
+            parentMobNo,
+            parentMail,
+            perAddrDescr,
+            perPlotNo,
+            perStreetName,
+            perStuAddr1,
+            perStuAddr2,
+            city,
+            percellphone,
+            perpincode,
+            perresiphone,
+            permailaddress,
+            country,
+            state,
+            district,
+            tahsil,
+            correspondanceAddrDescr,
+            correspondancePlotNo,
+            correspondanceStreetName,
+            correspondanceStuAddr1,
+            correspondanceStuAddr2,
+            correspondanceCity,
+            correspondanceCellPhone,
+            correspondancePincode,
+            correspondanceResiPhone,
+            correspondanceMailAddress,
+            correspondanceCountry,
+            correspondanceState,
+            correspondanceDistrict,
+            correspondanceTahsil,
+            fatherDetails,
+            fathersOccupation,
+            parentsFirstName,
+            parentsMiddleName,
+            parentsLastName,
+            guardianMobNo,
+            guardianMailId,
+            nameAsPerTc,
+            casteAsPerTc,
+            birthStatus,
+            maritalStatus,
+            panCardNo,
+            passportExpiry,
+            drivingLicNo,
+            drivingLicValidTo,
+            aadharCardNo,
+            electionCardNo,
+            motherMobNo,
+            motherEmailId,
+            parentIncome,
+            photoUploaded,
+            signUploaded,
+            thumbUploaded,
+            noOfDocumentsUploaded,
+          },
+          session,
+        );
+        await commitWithRetry(session);
+        res.status(200).json({
+          res: `added user ${newStudent.id} ${newStdBank.bankAccount} ,${newstdCollege.enrollmentNo}, ${newStdEduHistory.uid},${newStdMedHistory.uid},${newStdPersonal.uid}`,
+          id: newStudent.id,
+        });
+      } catch (err) {
+        await session.abortTransaction();
+      }
     } else {
       let error = ""; // eslint-disable-line prefer-const
-      if (!isBranchValid) error.concat("Invalid branch");
-      if (!isCourseValid) error.concat(" Invalid course opted");
+      if (!isBranchValid) error = error.concat("Invalid branch");
+      if (!isCourseValid) error = error.concat(" Invalid course opted");
       res.status(400).json({ err: error });
     }
   } catch (caughtError) {

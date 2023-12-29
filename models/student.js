@@ -39,7 +39,7 @@ async function create(studentData) {
     rollNo,
     coursesOpted,
   });
-  const studentDoc = await student.save();
+  const studentDoc = await student.save({ session: studentData.session });
   return studentDoc;
 }
 

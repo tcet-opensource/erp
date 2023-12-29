@@ -41,7 +41,9 @@ async function create(studentMedicalData) {
     parentsContact,
     relativeContacts,
   });
-  const medicalHistoryDoc = await medicalHistory.save();
+  const medicalHistoryDoc = await medicalHistory.save({
+    session: studentMedicalData.session,
+  });
   return medicalHistoryDoc;
 }
 

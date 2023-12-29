@@ -1,40 +1,5 @@
 import { faker } from "@faker-js/faker"; // eslint-disable-line import/no-extraneous-dependencies
-
-/* eslint-disable no-underscore-dangle */
-const departmentNames = [
-  "Mechanical Engineering",
-  "Civil Engineering",
-  "Computer Engineering",
-  "Information Technology",
-  "Electronics and Telecommunication Engineering",
-  "Electronics and Computer Science",
-  "Artificial Intelligence and Data Science",
-  "Internet of Things",
-  "Artificial Intelligence and Machine Learning",
-  "Computer Science and Engineering (Cyber Security)",
-  "Mechanical and Mechatronics Engineering (Additive Manufacturing)",
-  "Artificial Intelligence and Data Science",
-  "Software Development",
-  "Animation & Graphic Designing",
-  "Data Analytics",
-];
-const departmentAbbrev = [
-  "ME",
-  "CE",
-  "CS",
-  "IT",
-  "ETE",
-  "ECS",
-  "AIDS",
-  "IOT",
-  "AIML",
-  "CSS",
-  "MEMM",
-  "AIDS",
-  "SD",
-  "AGD",
-  "DA",
-];
+import { departmentNames, departmentAbbrev } from "#constant";
 
 const createRandomDepartment = (
   i,
